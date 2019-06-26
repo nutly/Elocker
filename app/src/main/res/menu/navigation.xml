@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_unlock"
+        android:icon="@drawable/ic_unlock"
+        android:title="@string/navigate_unlock" />
+
+    <item
+        android:id="@+id/navigation_lockers"
+        android:icon="@drawable/ic_keys"
+        android:title="@string/navigate_keys" />
+
+    <item
+        android:id="@+id/navigation_authority"
+        android:icon="@drawable/ic_authority"
+        android:title="@string/navigate_authority" />
+    <item
+        android:id="@+id/navigation_setting"
+        android:icon="@drawable/ic_settings"
+        android:title="@string/navigate_setting" />
+
+</menu>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="main_activity_name" tools:ignore="ExtraTranslation">智能锁</string>
+    <string name="query_activity_name" tools:ignore="ExtraTranslation">柜锁</string>
+    <string name="share_activity_name" tools:ignore="ExtraTranslation">通过手机号分享</string>
+    <string name="navigate_unlock">开锁</string>
+    <string name="navigate_keys">钥匙</string>
+    <string name="navigate_authority">授权</string>
+    <string name="navigate_setting">设置</string>
+    <string name="UnlockFragment">欢迎登陆第一个页面</string>
+    <string name="test">测试文本</string>
+    <string name="lastOpen">上次开锁：</string>
+</resources>

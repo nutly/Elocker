@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.feiyang.elocker">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <!-- 主活动 -->
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/main_activity_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+
+        <activity
+            android:name=".EfficientTimeActivity"
+            android:label="@string/query_activity_name"></activity>
+
+        <!--锁柜查看-->
+        <activity
+            android:name=".QueryActivity"
+            android:label="@string/query_activity_name"></activity>
+
+    </application>
+    <uses-permission android:name="android.permission.INTERNET" />
+
+</manifest>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#1B82D2</color><!--蓝色-->
+    <color name="colorLightGray">#FFFFFE</color><!--白色-->
+    <color name="colorLightBlue">#2196F3</color><!--蓝色-->
+    <color name="mainBgColor">#F7F7F7</color><!--浅灰色 主屏背景色-->
+    <color name="textColor">#212121</color><!--黑色 字体-->
+</resources>
