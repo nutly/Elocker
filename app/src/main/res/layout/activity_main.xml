@@ -8,12 +8,6 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
     <!--主屏切换视图-->
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?android:attr/windowBackground"
-        app:menu="@menu/navigation" />
     <!--屏幕底部导航菜单-->
     <android.support.v4.view.ViewPager
         android:id="@+id/fragment_container"
@@ -23,5 +17,12 @@
         android:background="@color/mainBgColor"
 
         />
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/windowBackground"
+        app:menu="@menu/navigation" />
 
 </LinearLayout>

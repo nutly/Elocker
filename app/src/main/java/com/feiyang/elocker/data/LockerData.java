@@ -24,9 +24,9 @@ public class LockerData extends Thread {
 
     private String enc_pass;
     private String appid;
-    private String sign;
-    private String url;
     private Handler mHandler;
+    private String mSerial;
+    private Task mTask;
 
     public LockerData(Handler handler) {
         super();
@@ -36,30 +36,67 @@ public class LockerData extends Thread {
         this.enc_pass = MD5Util.md5(this.appid + MD5Util.md5("12345"));
     }
 
+    public void getAllLocker() {
+        mTask = Task.GET_ALL_lOCKER;
+        /*开启子进程*/
+        this.start();
+    }
+
+    public void getLockerBySerial(String serial) {
+        mSerial = serial;
+        mTask = Task.GET_LOCKER_BY_SERIAL;
+        this.start();
+    }
+
     @Override
     public void run() {
-        List<Locker> lockers = new ArrayList<Locker>();
-        Response response = HttpsUtil.get(this.url);
-        if (response != null && response.isSuccessful()) {
-            JsonParser jsonParser = new JsonParser();
-            JsonObject responseData = null;
-            try {
-                responseData = jsonParser.parse(response.body().string()).getAsJsonObject();
-                JsonArray lockerArray = responseData.getAsJsonArray("lockerList");
-                for (int i = 0; i < lockerArray.size(); i++) {
-                    Locker locker = new Locker();
-                    JsonObject lockerObject = lockerArray.get(i).getAsJsonObject();
-                    locker.setSerial(lockerObject.get("serial").getAsString());
-                    locker.setPhoneNum(lockerObject.get("phoneNum").getAsString());
-                    locker.setDescription(lockerObject.get("description").getAsString());
-                    locker.setCreateTime(lockerObject.get("createTime").getAsString());
-                    locker.setLastOpenTime(lockerObject.get("lastOpenTime").getAsString());
-                    locker.setHwType(lockerObject.get("hwType").getAsString());
-                    lockers.add(locker);
-                }
-            } catch (IOException e) {
-                Log.e("LockerData", "Failed to parse https response data");
+        if (mTask != null) {
+            switch (mTask) {
+                case GET_ALL_lOCKER:
+                    mSerial = null;
+                    getLockerTask();
+                    break;
+                case GET_LOCKER_BY_SERIAL:
+                    getLockerTask();
+                    break;
+                default:
+                    break;
             }
+        }
+    }
+
+    private void getLockerTask() {
+        String sign = MD5Util.md5("/locker/get" + this.enc_pass);
+        String url = BASE_REQUEST_URL + "/locker/get?appid=" + this.appid + "&sign=" + sign;
+        if (mSerial != null && !mSerial.equals("")) {
+            url = url + "&serial=" + mSerial;
+        }
+
+        List<Locker> lockers = new ArrayList<Locker>();
+        Response response = HttpsUtil.get(url);
+        if (response != null) {
+            if (response.isSuccessful()) {
+                JsonParser jsonParser = new JsonParser();
+                JsonObject responseData = null;
+                try {
+                    responseData = jsonParser.parse(response.body().string()).getAsJsonObject();
+                    JsonArray lockerArray = responseData.getAsJsonArray("lockerList");
+                    for (int i = 0; i < lockerArray.size(); i++) {
+                        Locker locker = new Locker();
+                        JsonObject lockerObject = lockerArray.get(i).getAsJsonObject();
+                        locker.setSerial(lockerObject.get("serial").getAsString());
+                        locker.setPhoneNum(lockerObject.get("phoneNum").getAsString());
+                        locker.setDescription(lockerObject.get("description").getAsString());
+                        locker.setCreateTime(lockerObject.get("createTime").getAsString());
+                        locker.setLastOpenTime(lockerObject.get("lastOpenTime").getAsString());
+                        locker.setHwType(lockerObject.get("hwType").getAsString());
+                        lockers.add(locker);
+                    }
+                } catch (IOException e) {
+                    Log.e("LockerData", "Failed to parse https response data");
+                }
+            }
+            response.close();
         }
         Bundle data = new Bundle();
         data.putSerializable("lockerList", (Serializable) lockers);
@@ -70,19 +107,7 @@ public class LockerData extends Thread {
         message.sendToTarget();
     }
 
-    public void getLockerBySerial(String serial) {
-        this.sign = MD5Util.md5("/locker/get" + this.enc_pass);
-        this.url = BASE_REQUEST_URL + "/locker/get?appid=" + this.appid + "&sign=" + sign;
-
-        if (serial != null && !serial.equals("")) {
-            url = url + "&serial=" + serial;
-        }
-        /*开始子进程*/
-        this.start();
+    private enum Task {
+        GET_ALL_lOCKER, GET_LOCKER_BY_SERIAL
     }
-
-    public void getAllLocker() {
-        getLockerBySerial(null);
-    }
-
 }

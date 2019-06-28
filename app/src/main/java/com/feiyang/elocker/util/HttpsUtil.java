@@ -1,6 +1,7 @@
 package com.feiyang.elocker.util;
 
 import android.util.Log;
+import com.google.gson.JsonObject;
 import okhttp3.*;
 
 import javax.net.ssl.*;
@@ -36,14 +37,14 @@ public class HttpsUtil {
     }
 
     /*
-     * @param url 请求URL
-     * @param params JSON字符串格式的参数
-     * @return okhttp3.Response
+     * @param url   请求URL
+     * @param params JSON格式参数
+     * @return okhttp3.Response 响应
      */
-    public static Response post(String url, String params) {
+    public static Response post(String url, JsonObject params) {
         Response response = null;
         MediaType mediaType = MediaType.parse("application/json;charset=utf-8");
-        RequestBody requestBody = RequestBody.create(mediaType, params);
+        RequestBody requestBody = RequestBody.create(mediaType, params.toString());
         Request request = new Request.Builder()
                 .url(url)
                 .post(requestBody)
