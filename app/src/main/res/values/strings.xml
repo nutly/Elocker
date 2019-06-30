@@ -18,11 +18,15 @@
         <item>Authorization</item>
         <item>Transfer</item>
     </string-array>
+    <string name="serial">serial</string>
+    <string name="hwType">type</string>
+    <string name="toggleTimes">toggleTimes</string>
+    <string name="lockerDescription">Name</string>
     <string-array name="lockerDetailItem">　
         <item>Serial</item>
         <item>Type</item>
         <item>AddTime</item>
         <item>LastOpenTime</item>
-        <item>Transfer</item>
+        <item>toggleTimes</item>
     </string-array>
 </resources>

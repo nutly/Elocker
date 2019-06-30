@@ -21,10 +21,6 @@ import java.util.TimeZone;
 
 import static com.feiyang.elocker.Constant.DATE_PATTERN;
 
-
-/**
- * 开锁
- */
 public class UnlockFragment extends Fragment {
 
     private OnUnlockFragmentInteractionListener mListener;
@@ -125,7 +121,7 @@ public class UnlockFragment extends Fragment {
             if (mLocker != null) {
                 mLockerDescriptionTv.setText(mLocker.getDescription());
                 mLastOpenDateTv.setText(mLocker.getLastOpenTime());
-                mToggleTimesTv.setText(mLocker.getToggleTimes());
+                mToggleTimesTv.setText(String.valueOf(mLocker.getToggleTimes()));
                 Log.i("UnlockFragment", "Update unlockfragment ui");
             }
         }
@@ -141,7 +137,7 @@ public class UnlockFragment extends Fragment {
             mLocker.setLastOpenTime(sTime);
             mLocker.setToggleTimes(mLocker.getToggleTimes() + 1);
             mLastOpenDateTv.setText(sTime);
-            mToggleTimesTv.setText(mLocker.getToggleTimes());
+            mToggleTimesTv.setText(String.valueOf(mLocker.getToggleTimes()));
             /*上传日志*/
             OperationLog operationLog = new OperationLog();
             operationLog.setSerial(mLocker.getSerial());

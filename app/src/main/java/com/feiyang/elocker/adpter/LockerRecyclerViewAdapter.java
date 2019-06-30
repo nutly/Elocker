@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +20,7 @@ import com.feiyang.elocker.fragment.LockerFragment;
 import com.feiyang.elocker.fragment.LockerFragment.OnLockerFragmentInteractionListener;
 import com.feiyang.elocker.model.Locker;
 
+import java.io.Serializable;
 import java.util.List;
 
 
@@ -27,8 +29,6 @@ public class LockerRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
     private final List<Locker> mValues;
     private final String btnText = ">>";
     private final LockerFragment.OnLockerFragmentInteractionListener mListener;
-    /*获取当前点击的列表项*/
-    private int mPosition = 0;
 
     public LockerRecyclerViewAdapter(List<Locker> lockers, OnLockerFragmentInteractionListener listener) {
         mValues = lockers;
@@ -52,7 +52,7 @@ public class LockerRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
             lockerViewHolder.mDescriptionView.setText(mValues.get(position).getDescription());
             lockerViewHolder.mPhoneNumView.setText(mValues.get(position).getPhoneNum());
             lockerViewHolder.mTextButtonView.setText(this.btnText);
-            mPosition = position;
+            lockerViewHolder.mTextButtonView.setTag(position);
             lockerViewHolder.mTextButtonView.setOnClickListener(new LockerMenu());
             lockerViewHolder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -104,7 +104,8 @@ public class LockerRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
             String[] lockerMenu = res.getStringArray(R.array.lockerMenu);
             // lockerMenu = {"查看", "编辑", "删除", "授权", "转移"};
             AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
-            alertBuilder.setTitle(mValues.get(mPosition).getDescription());
+            final int position = (int) v.getTag();
+            alertBuilder.setTitle(mValues.get(position).getDescription());
             alertBuilder.setItems(lockerMenu, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -113,6 +114,9 @@ public class LockerRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
                         case 0:
                             /*查看*/
                             intent = new Intent(context, LockerDetailActivity.class);
+                            Bundle data = new Bundle();
+                            data.putSerializable("locker", (Serializable) mValues.get(position));
+                            intent.putExtras(data);
                             context.startActivity(intent);
                             break;
                         case 1:

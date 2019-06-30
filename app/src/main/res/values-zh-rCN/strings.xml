@@ -17,4 +17,15 @@
         <item>授权</item>
         <item>转移</item>
     </string-array>
+    <string name="serial">序列号</string>
+    <string name="hwType">类型</string>
+    <string name="toggleTimes">开锁次数</string>
+    <string name="lockerDescription">名称</string>
+    <string-array name="lockerDetailItem">　
+        <item>序列号</item>
+        <item>类型</item>
+        <item>添加时间</item>
+        <item>最后开锁时间</item>
+        <item>开锁次数</item>
+    </string-array>
 </resources>

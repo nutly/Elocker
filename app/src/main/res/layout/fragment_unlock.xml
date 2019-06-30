@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/mainBgColor"
     android:orientation="vertical">
+
     <ImageButton
         android:id="@+id/locker_toggle_btn"
         android:layout_width="wrap_content"
@@ -110,5 +111,6 @@
         android:textSize="24sp"
         android:textStyle="bold"
         android:typeface="normal" />
+
 
 </LinearLayout>

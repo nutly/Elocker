@@ -1,21 +1,15 @@
 package com.feiyang.elocker;
 
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.TimeZone;
+import com.google.gson.JsonObject;
 
-import static com.feiyang.elocker.Constant.DATE_PATTERN;
+import java.io.IOException;
 
 
 public class Test {
     public static void main(String[] args) throws IOException {
-        TimeZone tz = TimeZone.getDefault();
-        Date date = new Date();
-        SimpleDateFormat sf = new SimpleDateFormat(DATE_PATTERN);
-        String time = sf.format(date);
-        sf.setTimeZone(TimeZone.getDefault());
-        System.out.println(sf.getTimeZone());
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("test1", "test1");
+
     }
 
     public enum Operation {
