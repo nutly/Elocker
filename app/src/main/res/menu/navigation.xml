@@ -14,7 +14,7 @@
     <item
         android:id="@+id/navigation_authority"
         android:icon="@drawable/ic_authority"
-        android:title="@string/navigate_authority" />
+        android:title="@string/navigate_authorization" />
     <item
         android:id="@+id/navigation_setting"
         android:icon="@drawable/ic_settings"

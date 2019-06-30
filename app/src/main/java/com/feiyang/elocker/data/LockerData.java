@@ -73,6 +73,9 @@ public class LockerData extends Thread {
         }
 
         List<Locker> lockers = new ArrayList<Locker>();
+        Message message = new Message();
+        Bundle data = new Bundle();
+
         Response response = HttpsUtil.get(url);
         if (response != null) {
             if (response.isSuccessful()) {
@@ -90,6 +93,7 @@ public class LockerData extends Thread {
                         locker.setCreateTime(lockerObject.get("createTime").getAsString());
                         locker.setLastOpenTime(lockerObject.get("lastOpenTime").getAsString());
                         locker.setHwType(lockerObject.get("hwType").getAsString());
+                        locker.setToggleTimes(lockerObject.get("toggleTimes").getAsInt());
                         lockers.add(locker);
                     }
                 } catch (IOException e) {
@@ -97,10 +101,10 @@ public class LockerData extends Thread {
                 }
             }
             response.close();
+        } else {
+            data.putInt("error", -1);
         }
-        Bundle data = new Bundle();
         data.putSerializable("lockerList", (Serializable) lockers);
-        Message message = new Message();
         message.what = MESSAGE_lOCKER_LIST;
         message.setData(data);
         message.setTarget(mHandler);

@@ -1,4 +1,4 @@
-package com.feiyang.elocker;
+package com.feiyang.elocker.activity;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
@@ -6,8 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TextView;
+import com.feiyang.elocker.R;
 
-public class EfficientTimeActivity extends AppCompatActivity implements View.OnClickListener {
+public class AuthorizationEditActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView btnDate, btnTime;
 

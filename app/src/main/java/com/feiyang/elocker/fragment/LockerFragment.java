@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 import com.feiyang.elocker.R;
 import com.feiyang.elocker.adpter.LockerRecyclerViewAdapter;
 import com.feiyang.elocker.data.LockerData;
@@ -69,10 +70,6 @@ public class LockerFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mHandler = new LockerHandler(this);
         mViewAdapter = new LockerRecyclerViewAdapter(mLockers, mListener);
-        /*Get args*/
-        /*if (getArguments() != null) {
-            mColumnCount = getArguments().getInt("columnCount");
-        }*/
     }
 
     @Override
@@ -132,11 +129,14 @@ public class LockerFragment extends Fragment {
         public void handleMessage(Message message) {
             LockerFragment lockerFragment = this.mFragment.get();
             if (message.what == MESSAGE_lOCKER_LIST) {
-                Log.i("LockerFragment", "Update Locker List");
                 Bundle data = message.getData();
-                lockerFragment.mLockers.clear();
-                lockerFragment.mLockers.addAll((List) data.getSerializable("lockerList"));
-                lockerFragment.mViewAdapter.notifyDataSetChanged();
+                if (data.containsKey("error")) {
+                    Toast.makeText(lockerFragment.getContext(), R.string.network_error, Toast.LENGTH_LONG).show();
+                } else {
+                    lockerFragment.mLockers.clear();
+                    lockerFragment.mLockers.addAll((List) data.getSerializable("lockerList"));
+                    lockerFragment.mViewAdapter.notifyDataSetChanged();
+                }
             }
         }
     }

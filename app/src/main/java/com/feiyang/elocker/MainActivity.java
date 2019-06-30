@@ -1,6 +1,5 @@
 package com.feiyang.elocker;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,7 +13,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 import com.feiyang.elocker.adpter.ELFragmentPagerAdapter;
 import com.feiyang.elocker.fragment.AuthorityFragment;
 import com.feiyang.elocker.fragment.LockerFragment;
@@ -44,20 +42,16 @@ public class MainActivity extends AppCompatActivity implements LockerFragment.On
             switch (item.getItemId()) {
                 case R.id.navigation_unlock:
                     mViewPager.setCurrentItem(UNLOCK_FRAGMENT, true);
-                    Log.i("Unlock", "Visit Unlock Fragment");
                     return true;
                 case R.id.navigation_lockers: {
                     mViewPager.setCurrentItem(LOCKER_FRAGMENT, true);
-                    Log.i("Lockers", "Visit Lockers Fragment");
                     return true;
                 }
                 case R.id.navigation_authority:
                     mViewPager.setCurrentItem(AUTH_FRAGMENT, true);
-                    Log.i("Authority", "Visit Authority Fragment");
                     return true;
                 case R.id.navigation_setting:
                     mViewPager.setCurrentItem(SETTING_FRAGMENT, true);
-                    Log.i("Setting", "Visit Setting Fragment");
                     return true;
             }
             return false;
@@ -88,8 +82,6 @@ public class MainActivity extends AppCompatActivity implements LockerFragment.On
         mViewPager = (ViewPager) findViewById(R.id.fragment_container);
         ELFragmentPagerAdapter eLFragmentPagerAdapter = new ELFragmentPagerAdapter(this.getSupportFragmentManager(), this, mFragmentList);
         mViewPager.setAdapter(eLFragmentPagerAdapter);
-
-
     }
 
     @Override
@@ -104,21 +96,14 @@ public class MainActivity extends AppCompatActivity implements LockerFragment.On
 
     @Override
     public void onUnlockFragmentInteraction(Locker locker) {
-
         Log.i("onUnlockFragmentInter", locker.toString());
     }
-
-    public void demo(View view) {
-        Toast.makeText(MainActivity.this, "点击事件结果", Toast.LENGTH_SHORT).show();
-    }
-
 
     /**
      * 钥匙列表菜单
      *
      * @param view
      */
-    @SuppressLint("ResourceType")
     public void showList(View view) {
 /*        final String[] items = {"查看", "编辑", "删除", "创建快捷方式","通过手机号分享","通过链接分享","转移锁"};
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
@@ -129,11 +114,11 @@ public class MainActivity extends AppCompatActivity implements LockerFragment.On
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 if(i==0){
-                    Intent intent = new Intent(MainActivity.this, QueryActivity.class);
+                    Intent intent = new Intent(MainActivity.this, LockerDetailActivity.class);
                     startActivity(intent);
                 }
                 if(i==6){
-                    Intent intent = new Intent(MainActivity.this, EfficientTimeActivity.class);
+                    Intent intent = new Intent(MainActivity.this, AuthorizationEditActivity.class);
                     startActivity(intent);
                 }
 

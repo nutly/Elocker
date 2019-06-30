@@ -1,14 +1,28 @@
 <resources>
     <string name="navigate_unlock">Unlock</string>
     <string name="navigate_keys">Keys</string>
-    <string name="navigate_authority">Authority</string>
+    <string name="navigate_authorization">Authority</string>
     <string name="navigate_setting">Setting</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="UnlockFragment">Hello blank fragment</string>
     <string name="test">This is a test text</string>
     <string name="main_activity_name">Elocker</string>
-    <string name="query_activity_name">Locker</string>
-    <string name="share_activity_name">Share by phone number</string>
     <string name="lastOpen">LastOpen:</string>
+    <string name="locker_detail_activity_name">Locker Detail</string>
+    <string name="time_picker_activity_name">Select Time</string>
+    <string name="network_error">Please check network connectivity</string>
+    <string-array name="lockerMenu">　
+        <item>Detail</item>
+        <item>Edit</item>
+        <item>Delete</item>
+        <item>Authorization</item>
+        <item>Transfer</item>
+    </string-array>
+    <string-array name="lockerDetailItem">　
+        <item>Serial</item>
+        <item>Type</item>
+        <item>AddTime</item>
+        <item>LastOpenTime</item>
+        <item>Transfer</item>
+    </string-array>
 </resources>

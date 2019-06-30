@@ -12,8 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:background="#00e6e6e6"
-        android:onClick="showList" />
+        android:background="#00e6e6e6" />
 
     <ImageView
         android:id="@+id/locker_ic"

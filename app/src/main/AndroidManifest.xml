@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.feiyang.elocker">
 
     <application
@@ -7,29 +8,24 @@
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
         <!-- 主活动 -->
         <activity
             android:name=".MainActivity"
             android:label="@string/main_activity_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
         <activity
-            android:name=".EfficientTimeActivity"
-            android:label="@string/query_activity_name"></activity>
-
-        <!--锁柜查看-->
+            android:name=".activity.AuthorizationEditActivity"
+            android:label="@string/time_picker_activity_name"></activity>
+        <!--锁的详细信息-->
         <activity
-            android:name=".QueryActivity"
-            android:label="@string/query_activity_name"></activity>
-
+            android:name=".activity.LockerDetailActivity"
+            android:label="@string/locker_detail_activity_name"></activity>
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
 

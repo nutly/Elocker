@@ -30,6 +30,7 @@ public class UnlockFragment extends Fragment {
     private OnUnlockFragmentInteractionListener mListener;
     private TextView mLockerDescriptionTv;
     private TextView mLastOpenDateTv;
+    private TextView mToggleTimesTv;
     private boolean mIsViewCreated;
     private Locker mLocker;
 
@@ -72,7 +73,8 @@ public class UnlockFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_unlock, container, false);
         ImageButton lockerToggleBtn = (ImageButton) view.findViewById(R.id.locker_toggle_btn);
         mLockerDescriptionTv = view.findViewById(R.id.locker_description_unlock);
-        mLastOpenDateTv = view.findViewById(R.id.last_open_date);
+        mLastOpenDateTv = view.findViewById(R.id.last_unlock_date);
+        mToggleTimesTv = view.findViewById(R.id.toggle_times);
 
         lockerToggleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,6 +125,7 @@ public class UnlockFragment extends Fragment {
             if (mLocker != null) {
                 mLockerDescriptionTv.setText(mLocker.getDescription());
                 mLastOpenDateTv.setText(mLocker.getLastOpenTime());
+                mToggleTimesTv.setText(mLocker.getToggleTimes());
                 Log.i("UnlockFragment", "Update unlockfragment ui");
             }
         }
@@ -131,9 +134,15 @@ public class UnlockFragment extends Fragment {
     private void openLocker(View v) {
         if (mLocker != null) {
             Toast.makeText(v.getContext(), "正在开锁……", Toast.LENGTH_SHORT).show();
+
             SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN);
             sdf.setTimeZone(TimeZone.getDefault());
             String sTime = sdf.format(new Date());
+            mLocker.setLastOpenTime(sTime);
+            mLocker.setToggleTimes(mLocker.getToggleTimes() + 1);
+            mLastOpenDateTv.setText(sTime);
+            mToggleTimesTv.setText(mLocker.getToggleTimes());
+            /*上传日志*/
             OperationLog operationLog = new OperationLog();
             operationLog.setSerial(mLocker.getSerial());
             operationLog.setPhoneNum(mLocker.getPhoneNum());

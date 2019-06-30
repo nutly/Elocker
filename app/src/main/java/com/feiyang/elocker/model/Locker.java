@@ -9,6 +9,7 @@ public class Locker implements Serializable {
     private String createTime;
     private String lastOpenTime;
     private String hwType;
+    private int toggleTimes;
 
     public String getSerial() {
         return serial;
@@ -58,4 +59,11 @@ public class Locker implements Serializable {
         this.hwType = hwType;
     }
 
+    public int getToggleTimes() {
+        return toggleTimes;
+    }
+
+    public void setToggleTimes(int toggleTimes) {
+        this.toggleTimes = toggleTimes;
+    }
 }
