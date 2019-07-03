@@ -99,6 +99,8 @@ public class LockerData extends Thread {
                 } catch (IOException e) {
                     Log.e("LockerData", "Failed to parse https response data");
                 }
+            } else {
+                data.putInt("error", -1);
             }
             response.close();
         } else {

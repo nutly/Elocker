@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.feiyang.elocker.R;
-import com.feiyang.elocker.fragment.AuthorityFragment;
 import com.feiyang.elocker.model.Locker;
 
 import java.util.List;
@@ -17,12 +16,10 @@ import java.util.List;
 public class AuthorityRecyclerViewAdapter extends RecyclerView.Adapter<AuthorityRecyclerViewAdapter.ViewHolder> {
 
     private final List<Locker> mValues;
-    private final AuthorityFragment.OnAuthorityFragmentInteractionListener mListener;
     private final String buttonType = ">>";
 
-    public AuthorityRecyclerViewAdapter(List<Locker> lockers, AuthorityFragment.OnAuthorityFragmentInteractionListener listener) {
+    public AuthorityRecyclerViewAdapter(List<Locker> lockers) {
         mValues = lockers;
-        mListener = listener;
     }
 
     @Override
@@ -42,11 +39,7 @@ public class AuthorityRecyclerViewAdapter extends RecyclerView.Adapter<Authority
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
-                    mListener.onAuthorityFragmentInteraction(holder.mLocker);
-                }
+                //TODO 点击回调函数
             }
         });
     }

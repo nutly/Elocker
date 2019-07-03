@@ -10,23 +10,29 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <!-- 主活动 -->
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.UnlockActivity"
             android:label="@string/main_activity_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.AuthorizationEditActivity"
-            android:label="@string/time_picker_activity_name"></activity>
-        <!--锁的详细信息-->
+            android:name=".activity.LockerListActivity"
+            android:label="@string/main_activity_name"></activity>
         <activity
-            android:name=".activity.LockerDetailActivity"
-            android:label="@string/locker_detail_activity_name"></activity>
+            android:name=".activity.AuthorizationActivity"
+            android:label="@string/main_activity_name"></activity>
+        <activity
+            android:name=".activity.SettingActivity"
+            android:label="@string/main_activity_name"></activity>
+        <activity
+            android:name=".activity.AuthorizationEditActivity"
+            android:label="@string/time_picker_activity_name" />
     </application>
+
     <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

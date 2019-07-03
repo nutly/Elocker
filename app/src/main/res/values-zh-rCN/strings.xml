@@ -9,7 +9,6 @@
     <string name="test">测试文本</string>
     <string name="lastOpen">上次开锁：</string>
     <string name="time_picker_activity_name">选择时间</string>
-    <string name="network_error">请检查网络连接</string>
     <string-array name="lockerMenu">　
         <item>详细</item>
         <item>修改</item>
@@ -28,4 +27,8 @@
         <item>最后开锁时间</item>
         <item>开锁次数</item>
     </string-array>
+    <string name="network_error">请检查网络连接</string>
+    <string name="title_activity_settings">设置</string>
+    <string name="create_time">创建时间</string>
+    <string name="phone">账号</string>
 </resources>

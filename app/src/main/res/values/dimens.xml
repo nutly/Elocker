@@ -3,4 +3,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+    <dimen name="locker_detail_menu_item_width">150dp</dimen>
+    <dimen name="locker_detail_menu_item_padding">20dp</dimen>
+    <dimen name="none_padding">0dp</dimen>
 </resources>
