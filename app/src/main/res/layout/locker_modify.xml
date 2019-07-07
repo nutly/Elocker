@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/locker_detail"
     android:columnCount="2"
     android:rowCount="7"
@@ -15,12 +16,16 @@
         android:text="@string/lockerDescription"
         android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/locker_detail_name"
-        android:layout_width="match_parent"
+    <EditText
+        android:id="@+id/locker_modify_name"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="fill_horizontal"
-        android:layout_marginTop="30dp" />
+        android:layout_marginTop="30dp"
+        android:ems="10"
+        android:hint="@string/lockerDescription"
+        android:inputType="text"
+        android:autofillHints=""
+        tools:targetApi="o" />
 
     <TextView
         android:layout_width="@dimen/locker_detail_menu_item_width"
@@ -31,7 +36,7 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/locker_detail_phone_num"
+        android:id="@+id/locker_modify_phone_num"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="fill_horizontal" />
@@ -45,7 +50,7 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/locker_detail_serial"
+        android:id="@+id/locker_modify_serial"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="fill_horizontal" />
@@ -59,50 +64,9 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/locker_detail_type"
+        android:id="@+id/locker_modify_type"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="fill_horizontal" />
 
-    <TextView
-        android:layout_width="@dimen/locker_detail_menu_item_width"
-        android:layout_height="wrap_content"
-        android:paddingStart="@dimen/locker_detail_menu_item_padding"
-        android:paddingEnd="@dimen/none_padding"
-        android:text="@string/lastOpen"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/locker_detail_lastopen"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="fill_horizontal" />
-
-    <TextView
-        android:layout_width="@dimen/locker_detail_menu_item_width"
-        android:layout_height="wrap_content"
-        android:paddingStart="@dimen/locker_detail_menu_item_padding"
-        android:paddingEnd="@dimen/none_padding"
-        android:text="@string/create_time"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/locker_detail_createtime"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="fill_horizontal" />
-
-    <TextView
-        android:layout_width="@dimen/locker_detail_menu_item_width"
-        android:layout_height="wrap_content"
-        android:paddingStart="@dimen/locker_detail_menu_item_padding"
-        android:paddingEnd="@dimen/none_padding"
-        android:text="@string/toggleTimes"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/locker_detail_toggletime"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="fill_horizontal" />
 </GridLayout>

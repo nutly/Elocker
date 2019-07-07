@@ -33,5 +33,27 @@
     </string-array>
     <string name="create_time">Create Time</string>
     <string name="phone">Account</string>
+    <string name="yes">Confirm</string>
+    <string name="transfer_to">Transfer To</string>
+    <string name="authorize_to">Authorize TO</string>
+    <string name="start_date">Start Date</string>
+    <string name="end_date">End Date</string>
+    <string name="available_time">Available Time</string>
+    <string name="authorization_description">Description</string>
+    <string name="whole_day">Whole Day</string>
+    <string name="custom">Custom</string>
+    <string name="start_time">Start Time</string>
+    <string name="end_time">End Time</string>
+    <string name="available_day_of_week">Avalible Day</string>
+    <string name="every_day">Every Day</string>
+    <string name="monday">Mon</string>
+    <string name="Tuesday">Tue</string>
+    <string name="Wednesday">Wed</string>
+    <string name="Thursday">Thu</string>
+    <string name="Friday">Fri</string>
+    <string name="Saturday">Sat</string>
+    <string name="Sunday">Sun</string>
+    <string name="to_acount">acount to authrize to</string>
+    <string name="click_to_select">Click to select</string>
 
 </resources>

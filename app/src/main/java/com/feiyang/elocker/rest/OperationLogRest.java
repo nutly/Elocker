@@ -1,4 +1,4 @@
-package com.feiyang.elocker.data;
+package com.feiyang.elocker.rest;
 
 import com.feiyang.elocker.model.OperationLog;
 import com.feiyang.elocker.util.HttpsUtil;
@@ -8,13 +8,13 @@ import okhttp3.Response;
 
 import static com.feiyang.elocker.Constant.BASE_REQUEST_URL;
 
-public class OperationLogData extends Thread {
+public class OperationLogRest extends Thread {
 
     private String appid;
     private String enc_pass;
     private OperationLog mOperationLog;
 
-    public OperationLogData(OperationLog operationLog) {
+    public OperationLogRest(OperationLog operationLog) {
         super();
         //TODO 更换成直接从配置文件获取当前登录的用户名和加密后的密码
         this.appid = "15851841387";

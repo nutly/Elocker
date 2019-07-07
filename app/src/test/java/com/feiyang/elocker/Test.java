@@ -1,15 +1,18 @@
 package com.feiyang.elocker;
 
-import com.google.gson.JsonObject;
-
 import java.io.IOException;
+import java.util.TreeSet;
 
 
 public class Test {
     public static void main(String[] args) throws IOException {
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("test1", "test1");
-
+        TreeSet<Integer> test = new TreeSet<Integer>();
+        test.add(3);
+        test.add(1);
+        test.add(3);
+        test.add(3);
+        test.remove(3);
+        System.out.println(test.toString().replace("[", ""));
     }
 
     public enum Operation {

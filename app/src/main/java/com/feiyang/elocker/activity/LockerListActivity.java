@@ -11,9 +11,9 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 import com.feiyang.elocker.R;
 import com.feiyang.elocker.adpter.LockerRecyclerViewAdapter;
-import com.feiyang.elocker.data.LockerData;
 import com.feiyang.elocker.fragment.NavigationFragment;
 import com.feiyang.elocker.model.Locker;
+import com.feiyang.elocker.rest.LockerRest;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -48,8 +48,8 @@ public class LockerListActivity extends AppCompatActivity implements NavigationF
     protected void onStart() {
         super.onStart();
         if (mHandler != null) {
-            LockerData lockerData = new LockerData(mHandler);
-            lockerData.getAllLocker();
+            LockerRest lockerRest = new LockerRest();
+            lockerRest.getAllLocker(mHandler);
         }
     }
 

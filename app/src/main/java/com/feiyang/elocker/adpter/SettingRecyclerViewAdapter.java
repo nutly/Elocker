@@ -29,7 +29,7 @@ public class SettingRecyclerViewAdapter extends RecyclerView.Adapter<SettingRecy
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.locker_list_item, parent, false);
+                .inflate(R.locker_modify.locker_list_item, parent, false);
         return new ViewHolder(view);
     }
 

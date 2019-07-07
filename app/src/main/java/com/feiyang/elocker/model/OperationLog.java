@@ -1,5 +1,11 @@
 package com.feiyang.elocker.model;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
+
+import static com.feiyang.elocker.Constant.DATE_PATTERN;
+
 public class OperationLog {
     private String phoneNum;
     private String serial;
@@ -7,6 +13,12 @@ public class OperationLog {
     /*字符串类型的时间 YYYY-MM-DD HH-MM-SS*/
     private String sTime;
     private String description;
+
+    public OperationLog() {
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN);
+        sdf.setTimeZone(TimeZone.getDefault());
+        this.sTime = sdf.format(new Date());
+    }
 
     public String getPhoneNum() {
         return phoneNum;
@@ -34,10 +46,6 @@ public class OperationLog {
 
     public String getsTime() {
         return sTime;
-    }
-
-    public void setsTime(String sTime) {
-        this.sTime = sTime;
     }
 
     public String getDescription() {

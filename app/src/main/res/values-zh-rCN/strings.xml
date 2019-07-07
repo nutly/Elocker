@@ -31,4 +31,26 @@
     <string name="title_activity_settings">设置</string>
     <string name="create_time">创建时间</string>
     <string name="phone">账号</string>
+    <string name="yes">确认</string>
+    <string name="transfer_to">转移给</string>
+    <string name="authorize_to">授权给</string>
+    <string name="start_date">开始日期</string>
+    <string name="end_date">结束日期</string>
+    <string name="available_time">可用时间</string>
+    <string name="authorization_description">说明</string>
+    <string name="whole_day">全天</string>
+    <string name="custom">自定义</string>
+    <string name="start_time">开始时间</string>
+    <string name="end_time">结束时间</string>
+    <string name="available_day_of_week">可用日期</string>
+    <string name="every_day">每天</string>
+    <string name="monday">一</string>
+    <string name="Tuesday">二</string>
+    <string name="Wednesday">三</string>
+    <string name="Thursday">四</string>
+    <string name="Friday">五</string>
+    <string name="Saturday">六</string>
+    <string name="Sunday">日</string>
+    <string name="to_acount">被授权者账号</string>
+    <string name="click_to_select">点击选择</string>
 </resources>
