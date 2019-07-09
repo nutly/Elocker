@@ -90,6 +90,6 @@ public class UnlockActivity extends AppCompatActivity implements NavigationFragm
 
     @Override
     public void onNavigationFragmentInteraction(Uri uri) {
-
+        //Interaction with nvationgation fragment
     }
 }

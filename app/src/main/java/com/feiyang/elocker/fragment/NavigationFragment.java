@@ -118,12 +118,17 @@ public class NavigationFragment extends Fragment {
         mListener = null;
     }
 
+    /*切换选项卡时切换选中状态*/
     private void setSelectItem() {
         FragmentActivity activity = this.getActivity();
         if (activity instanceof UnlockActivity) {
             mNavigation.setSelectedItemId(R.id.navigation_unlock);
         } else if (activity instanceof LockerListActivity) {
             mNavigation.setSelectedItemId(R.id.navigation_lockers);
+        } else if (activity instanceof AuthorizationActivity) {
+            mNavigation.setSelectedItemId(R.id.navigation_authority);
+        } else if (activity instanceof SettingActivity) {
+            mNavigation.setSelectedItemId(R.id.navigation_setting);
         }
     }
 

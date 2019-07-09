@@ -2,6 +2,7 @@
   <library name="Gradle: com.android.support:support-v4:27.1.1@aar">
     <CLASSES>
       <root url="jar://D:/codesource/gradle/caches/transforms-1/files-1.1/support-v4-27.1.1.aar/06d9855889b2b3ea27d7d1dbd6da58d0/jars/classes.jar!/" />
+      <root url="file://D:/codesource/gradle/caches/transforms-1/files-1.1/support-v4-27.1.1.aar/06d9855889b2b3ea27d7d1dbd6da58d0/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

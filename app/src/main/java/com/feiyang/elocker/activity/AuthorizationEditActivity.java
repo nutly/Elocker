@@ -214,7 +214,7 @@ public class AuthorizationEditActivity extends AppCompatActivity implements View
     private void initView() {
         mSerial = (TextView) findViewById(R.id.authorization_serial);
         mLockerName = (TextView) findViewById(R.id.authorization_locker_name);
-        mToAccount = (EditText) findViewById(R.id.authorization_to_account);
+        mToAccount = (EditText) findViewById(R.id.authorization_list_to_account);
         mStartDate = (TextView) findViewById(R.id.authorization_start_date);
         mEndDate = (TextView) findViewById(R.id.authorization_end_date);
         mStartTime = (TextView) findViewById(R.id.authorization_start_time);

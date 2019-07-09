@@ -14,6 +14,7 @@ import okhttp3.Response;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import static com.feiyang.elocker.Constant.BASE_REQUEST_URL;
@@ -51,7 +52,8 @@ public class AuthorizationRest extends Thread {
                     this.addAuthorizationTask();
                     break;
                 case GET_ALL_AUTHORIZATION:
-
+                    this.getAuthorizationListTask();
+                    break;
                 default:
                     break;
             }
@@ -80,12 +82,12 @@ public class AuthorizationRest extends Thread {
     }
 
     private void getAuthorizationListTask() {
-        String url = BASE_REQUEST_URL + "/authorization/get";
         String sign = MD5Util.md5("/authorization/get" + this.enc_pass);
+        String url = BASE_REQUEST_URL + "/authorization/get?appid=" + this.appid + "&sign=" + sign;
 
         Bundle data = new Bundle();
+        LinkedHashMap<String, List<Authorization>> authorizationsMap = new LinkedHashMap<String, List<Authorization>>();
         Response response = HttpsUtil.get(url);
-        List<Authorization> authorizations = new ArrayList<Authorization>();
         if (response != null) {
             if (response.isSuccessful()) {
                 JsonParser jsonParser = new JsonParser();
@@ -93,21 +95,7 @@ public class AuthorizationRest extends Thread {
                 try {
                     responseData = jsonParser.parse(response.body().string()).getAsJsonObject();
                     JsonArray authorizationArray = responseData.getAsJsonArray("authorizationList");
-                    for (int i = 0; i < authorizationArray.size(); i++) {
-                        Authorization authorization = new Authorization();
-                        JsonObject authObj = authorizationArray.get(i).getAsJsonObject();
-                        authorization.setId(authObj.get("id").getAsLong());
-                        authorization.setSerial(authObj.get("serial").getAsString());
-                        authorization.setFromAccount(authObj.get("fromAccount").getAsString());
-                        authorization.setToAccount(authObj.get("toAccount").getAsString());
-                        authorization.setStartTime(authObj.get("startTime").getAsString());
-                        authorization.setEndTime(authObj.get("endTime").getAsString());
-                        authorization.setDescription(authObj.get("description").getAsString());
-                        authorization.setWeekDay(authObj.get("weekday").getAsString());
-                        authorization.setDailyStartTime(authObj.get("dailyStartTime").getAsString());
-                        authorization.setDailyEndTime(authObj.get("dailyEndTime").getAsString());
-                        authorizations.add(authorization);
-                    }
+                    authorizationsMap = this.groupResultByLockerName(authorizationArray);
                 } catch (Exception e) {
                     Log.e("AuthorizationRest", "Failed to parse authorization list from response");
                     data.putInt("error", -1);
@@ -120,12 +108,44 @@ public class AuthorizationRest extends Thread {
             data.putInt("error", -1);
         }
 
-        data.putSerializable("authorizationList", (Serializable) authorizations);
+        data.putSerializable("authorizationList", (Serializable) authorizationsMap);
         Message message = new Message();
         message.what = MESSAGE_AUTHORIZATION_LIST;
         message.setData(data);
         message.setTarget(this.mHandler);
         message.sendToTarget();
+    }
+
+    private LinkedHashMap<String, List<Authorization>> groupResultByLockerName(JsonArray authorizationArray) {
+        LinkedHashMap<String, List<Authorization>> authorizations = new LinkedHashMap<String, List<Authorization>>();
+
+        for (int i = 0; i < authorizationArray.size(); i++) {
+            Authorization authorization = new Authorization();
+            JsonObject authObj = authorizationArray.get(i).getAsJsonObject();
+            authorization.setId(authObj.get("id").getAsLong());
+            authorization.setSerial(authObj.get("serial").getAsString());
+            String lockerName = authObj.get("lockerDescription").getAsString();
+            authorization.setLockerName(lockerName);
+            authorization.setFromAccount(authObj.get("fromAccount").getAsString());
+            authorization.setToAccount(authObj.get("toAccount").getAsString());
+            authorization.setStartTime(authObj.get("startTime").getAsString());
+            authorization.setEndTime(authObj.get("endTime").getAsString());
+            authorization.setDescription(authObj.get("description").getAsString());
+            authorization.setWeekDay(authObj.get("weekday").getAsString());
+            authorization.setDailyStartTime(authObj.get("dailyStartTime").getAsString());
+            authorization.setDailyEndTime(authObj.get("dailyEndTime").getAsString());
+
+            /*已经有一个lockerName组*/
+            if (authorizations.containsKey(lockerName)) {
+                authorizations.get(lockerName).add(authorization);
+            } else {
+                /*该lockerName不存在，创建一个新组*/
+                List<Authorization> authorizationList = new ArrayList<Authorization>();
+                authorizationList.add(authorization);
+                authorizations.put(lockerName, authorizationList);
+            }
+        }
+        return authorizations;
     }
 
     private enum Task {

@@ -97,7 +97,7 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/authorization_to_account"
+            android:id="@+id/authorization_list_to_account"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
@@ -242,7 +242,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0"
             android:checked="true"
-            android:text="@string/monday" />
+            android:text="@string/Monday" />
 
         <CheckBox
             android:id="@+id/authorization_tuesday"

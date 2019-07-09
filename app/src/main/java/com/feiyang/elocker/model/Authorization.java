@@ -1,5 +1,8 @@
 package com.feiyang.elocker.model;
 
+import android.content.res.Resources;
+import com.feiyang.elocker.R;
+
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -9,6 +12,7 @@ import static com.feiyang.elocker.Constant.DATE_PATTERN;
 public class Authorization implements Serializable {
     private Long id;
     private String serial;
+    private String lockerName;
     private String fromAccount;
     private String toAccount;
     private String startTime;
@@ -89,7 +93,8 @@ public class Authorization implements Serializable {
     }
 
     public void setDescription(String description) {
-        this.description = description;
+
+        this.description = description != null ? description : "";
     }
 
     public String getWeekDay() {
@@ -114,5 +119,24 @@ public class Authorization implements Serializable {
 
     public void setDailyEndTime(String dailyEndTime) {
         this.dailyEndTime = dailyEndTime;
+    }
+
+    public String getReadableWeekday() {
+        Resources res = Resources.getSystem();
+        return weekDay.replace("1", res.getString(R.string.Monday))
+                .replace("2", res.getString(R.string.Tuesday))
+                .replace("3", res.getString(R.string.Wednesday))
+                .replace("4", res.getString(R.string.Thursday))
+                .replace("5", res.getString(R.string.Friday))
+                .replace("6", res.getString(R.string.Saturday))
+                .replace("7", res.getString(R.string.Sunday));
+    }
+
+    public String getLockerName() {
+        return lockerName;
+    }
+
+    public void setLockerName(String lockerName) {
+        this.lockerName = lockerName;
     }
 }

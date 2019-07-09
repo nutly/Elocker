@@ -55,7 +55,7 @@ public class LockerListActivity extends AppCompatActivity implements NavigationF
 
     @Override
     public void onNavigationFragmentInteraction(Uri uri) {
-
+        //Interaction with nvationgation fragment
     }
 
     private static class LockerHandler extends Handler {

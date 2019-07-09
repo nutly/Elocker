@@ -14,7 +14,6 @@
     <string name="toggleTimes">toggleTimes</string>
     <string name="lockerDescription">Name</string>
     <string name="network_error">Please check network connectivity</string>
-    <string name="title_activity_settings">Settings</string>
 
     <string-array name="lockerMenu">　
         <item>Detail</item>
@@ -46,7 +45,7 @@
     <string name="end_time">End Time</string>
     <string name="available_day_of_week">Avalible Day</string>
     <string name="every_day">Every Day</string>
-    <string name="monday">Mon</string>
+    <string name="Monday">Mon</string>
     <string name="Tuesday">Tue</string>
     <string name="Wednesday">Wed</string>
     <string name="Thursday">Thu</string>
@@ -55,5 +54,7 @@
     <string name="Sunday">Sun</string>
     <string name="to_acount">acount to authrize to</string>
     <string name="click_to_select">Click to select</string>
+    <string name="authorize_from">Authorize From</string>
+    <string name="detail">Details</string>
 
 </resources>

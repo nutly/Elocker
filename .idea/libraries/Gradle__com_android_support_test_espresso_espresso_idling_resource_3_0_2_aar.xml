@@ -2,6 +2,7 @@
   <library name="Gradle: com.android.support.test.espresso:espresso-idling-resource:3.0.2@aar">
     <CLASSES>
       <root url="jar://D:/codesource/gradle/caches/transforms-1/files-1.1/espresso-idling-resource-3.0.2.aar/4cb7d82a84e26100a8be39ac167d3afa/jars/classes.jar!/" />
+      <root url="file://D:/codesource/gradle/caches/transforms-1/files-1.1/espresso-idling-resource-3.0.2.aar/4cb7d82a84e26100a8be39ac167d3afa/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

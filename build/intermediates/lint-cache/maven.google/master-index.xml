@@ -128,4 +128,5 @@
   <androidx.security/>
   <com.google.android.datatransport/>
   <zipflinger/>
+  <androidx.autofill/>
 </metadata>
