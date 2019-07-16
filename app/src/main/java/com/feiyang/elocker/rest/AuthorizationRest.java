@@ -44,6 +44,14 @@ public class AuthorizationRest extends Thread {
         this.start();
     }
 
+    public void delAuthorizationById(Long id, String serial) {
+        mAuthorization = new Authorization();
+        mAuthorization.setId(id);
+        mAuthorization.setSerial(serial);
+        mTask = Task.DEL_AUTHORIZATION;
+        this.start();
+    }
+
     @Override
     public void run() {
         if (mTask != null) {
@@ -53,6 +61,9 @@ public class AuthorizationRest extends Thread {
                     break;
                 case GET_ALL_AUTHORIZATION:
                     this.getAuthorizationListTask();
+                    break;
+                case DEL_AUTHORIZATION:
+                    this.delAuthorizationByIdTask();
                     break;
                 default:
                     break;
@@ -116,6 +127,27 @@ public class AuthorizationRest extends Thread {
         message.sendToTarget();
     }
 
+    private void delAuthorizationByIdTask() {
+        String sign = MD5Util.md5("/authorization/delete" + this.enc_pass);
+        String url = BASE_REQUEST_URL + "/authorization/delete";
+        JsonObject id = new JsonObject();
+        id.addProperty("id", mAuthorization.getId());
+        id.addProperty("serial", mAuthorization.getSerial());
+        JsonArray ids = new JsonArray();
+        ids.add(id);
+
+        JsonObject params = new JsonObject();
+        params.addProperty("appid", this.appid);
+        params.addProperty("sign", sign);
+        params.add("ids", ids);
+
+        Response response = HttpsUtil.post(url, params);
+        if (response != null) {
+            response.close();
+        }
+
+    }
+
     private LinkedHashMap<String, List<Authorization>> groupResultByLockerName(JsonArray authorizationArray) {
         LinkedHashMap<String, List<Authorization>> authorizations = new LinkedHashMap<String, List<Authorization>>();
 
@@ -149,6 +181,6 @@ public class AuthorizationRest extends Thread {
     }
 
     private enum Task {
-        GET_ALL_AUTHORIZATION, ADD_AUTHORIZATION
+        GET_ALL_AUTHORIZATION, ADD_AUTHORIZATION, DEL_AUTHORIZATION
     }
 }

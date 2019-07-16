@@ -1,7 +1,6 @@
 package com.feiyang.elocker.activity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -14,8 +13,9 @@ import com.feiyang.elocker.fragment.NavigationFragment;
 import com.feiyang.elocker.model.Locker;
 import com.feiyang.elocker.model.OperationLog;
 import com.feiyang.elocker.rest.OperationLogRest;
+import com.feiyang.elocker.util.LoginUtil;
 
-public class UnlockActivity extends AppCompatActivity implements NavigationFragment.OnNavigationFragmentInteractionListener {
+public class UnlockActivity extends AppCompatActivity {
 
     private TextView mLockerDescriptionTv;
     private TextView mLastOpenDateTv;
@@ -27,6 +27,8 @@ public class UnlockActivity extends AppCompatActivity implements NavigationFragm
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        /*判断当前是否已经登录*/
+        LoginUtil.validLogin(this);
         setContentView(R.layout.activity_unlock);
         ImageButton lockerToggleBtn = (ImageButton) findViewById(R.id.locker_toggle_btn);
         mLockerDescriptionTv = findViewById(R.id.locker_description_unlock);
@@ -86,10 +88,5 @@ public class UnlockActivity extends AppCompatActivity implements NavigationFragm
     public boolean onCreateOptionsMenu(Menu menu) {
         //TODO 扫一扫识别二维码
         return true;
-    }
-
-    @Override
-    public void onNavigationFragmentInteraction(Uri uri) {
-        //Interaction with nvationgation fragment
     }
 }

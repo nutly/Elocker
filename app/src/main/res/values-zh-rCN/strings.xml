@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="main_activity_name" tools:ignore="ExtraTranslation">智能锁</string>
+    <string name="app_lable" tools:ignore="ExtraTranslation">智能锁</string>
     <string name="locker_detail_activity_name" tools:ignore="ExtraTranslation">详细信息</string>
     <string name="navigate_unlock">开锁</string>
-    <string name="navigate_keys">钥匙</string>
-    <string name="navigate_authorization">授权</string>
-    <string name="navigate_setting">设置</string>
+    <string name="keys">钥匙</string>
+    <string name="authorization">授权</string>
+    <string name="setting">设置</string>
     <string name="test">测试文本</string>
     <string name="lastOpen">上次开锁：</string>
     <string name="time_picker_activity_name">选择时间</string>
@@ -15,6 +15,11 @@
         <item>删除</item>
         <item>授权</item>
         <item>转移</item>
+    </string-array>
+
+    <string-array name="authorizationMenu">　
+        <item>详情</item>
+        <item>删除</item>
     </string-array>
     <string name="serial">序列号</string>
     <string name="hwType">类型</string>
@@ -54,4 +59,32 @@
     <string name="click_to_select">点击选择</string>
     <string name="authorize_from">来自</string>
     <string name="detail">详情</string>
+    <string name="delete">删除</string>
+    <string name="input_username">请输入用户名</string>
+    <string name="input_passwd">请输入密码</string>
+    <string name="login">登录</string>
+    <string name="register">注册</string>
+    <string name="forget_pass">忘记密码</string>
+    <string name="empty_username">用户名不能为空</string>
+    <string name="empty_passwd">密码不能为空</string>
+    <string name="incorrect_login_info">密码错误或用户名不存在</string>
+    <string name="internal_error">内部错误</string>
+    <string name="login_too_frequently">登录太频繁，请稍后再试</string>
+    <string name="login_now">正在登录</string>
+    <string name="update">更新</string>
+    <string name="feedback">反馈</string>
+    <string name="about">关于</string>
+    <string name="help">帮助</string>
+    <string name="change_passwd">修改密码</string>
+    <string name="log_out">退出登录</string>
+    <string name="submit">提交</string>
+    <string name="old_pass">原密码</string>
+    <string name="new_pass">新密码</string>
+    <string name="confirm_new_pass">确认新密码</string>
+    <string name="input_old_pass">请输入原密码</string>
+    <string name="input_new_password">请输入新密码</string>
+    <string name="input_new_pass_again">请再次输入新密码</string>
+    <string name="old_passwd_wrong">原密码错误</string>
+    <string name="password_mismatch">两次输入的密码不一致</string>
+    <string name="change_passwd_success">密码修改成功</string>
 </resources>

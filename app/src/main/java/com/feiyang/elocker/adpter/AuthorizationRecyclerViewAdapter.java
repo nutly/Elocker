@@ -2,6 +2,8 @@ package com.feiyang.elocker.adpter;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import com.feiyang.elocker.R;
 import com.feiyang.elocker.model.Authorization;
+import com.feiyang.elocker.rest.AuthorizationRest;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -24,6 +27,7 @@ public class AuthorizationRecyclerViewAdapter extends RecyclerView.Adapter<Autho
     private LinkedHashMap<String, List<Authorization>> mAuthorizationsMap;
     /*记录列表是否展开,展开为1，不展开为0, key 为lockerName*/
     private HashMap<String, Boolean> mSpreadMap;
+    /*记录每组授权的表头位置*/
     private LinkedHashMap<Integer, String> mHeaderIndex;
 
     public AuthorizationRecyclerViewAdapter(LinkedHashMap<String, List<Authorization>> authorizationsMap) {
@@ -52,17 +56,32 @@ public class AuthorizationRecyclerViewAdapter extends RecyclerView.Adapter<Autho
     @Override
     public void onBindViewHolder(@NonNull RecycleViewHolder holder, int position) {
         if (holder instanceof ItemViewHolder) {
-            ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
+            final ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
             /*获取Header所在的position*/
-            int headerIndex = this.getHeaderPosition(position);
-            String lockerName = mHeaderIndex.get(headerIndex);
-            List<Authorization> authorizations = mAuthorizationsMap.get(lockerName);
+            final int headerIndex = this.getHeaderPosition(position);
+            final String headerName = mHeaderIndex.get(headerIndex);
+            List<Authorization> authorizations = mAuthorizationsMap.get(headerName);
             int authorizationIndex = position - headerIndex - 1;
-            Authorization authorization = authorizations.get(authorizationIndex);
+            final Authorization authorization = authorizations.get(authorizationIndex);
 
             itemViewHolder.mToAccount.setText(authorization.getToAccount());
             itemViewHolder.mDescription.setText(authorization.getDescription());
-            itemViewHolder.mDetail.setOnClickListener(new OnDetailClickLisener(authorization));
+            itemViewHolder.mMenu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Context context = v.getContext();
+                    AlertDialog.Builder menuBuilder = new AlertDialog.Builder(context);
+                    Resources res = context.getResources();
+                    String[] menus = res.getStringArray(R.array.authorizationMenu);
+                    AlertDialog authorizationMenu = menuBuilder
+                            .setTitle(authorization.getDescription())
+                            .setItems(menus,
+                                    new AuthorizationItemMenuListener(context,
+                                            mAuthorizationsMap, itemViewHolder.getAdapterPosition(), headerIndex, headerName))
+                            .create();
+                    authorizationMenu.show();
+                }
+            });
 
         } else {
             HeaderViewHolder headerViewHolder = (HeaderViewHolder) holder;
@@ -81,26 +100,6 @@ public class AuthorizationRecyclerViewAdapter extends RecyclerView.Adapter<Autho
             lastIndex = index;
         }
         return lastIndex;
-    }
-
-    /*响应“详情”按钮的点击事件*/
-    private class OnDetailClickLisener implements View.OnClickListener {
-
-        private Authorization mAuthorization;
-
-        public OnDetailClickLisener(Authorization authorization) {
-            mAuthorization = authorization;
-        }
-
-        @Override
-        public void onClick(View v) {
-            Context context = v.getContext();
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            AlertDialog authorizationDetail = builder.setTitle(R.string.detail)
-                    .setView(createAuthorizationDetailView(context, mAuthorization))
-                    .create();
-            authorizationDetail.show();
-        }
     }
 
     @Override
@@ -173,48 +172,114 @@ public class AuthorizationRecyclerViewAdapter extends RecyclerView.Adapter<Autho
     public class ItemViewHolder extends RecycleViewHolder {
         public TextView mToAccount;
         public TextView mDescription;
-        public ImageButton mDetail;
+        public ImageButton mMenu;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
             mToAccount = (TextView) itemView.findViewById(R.id.authorization_item_to_account);
             mDescription = (TextView) itemView.findViewById(R.id.authorization_item_description);
-            mDetail = (ImageButton) itemView.findViewById(R.id.authorization_item_detail_btn);
+            mMenu = (ImageButton) itemView.findViewById(R.id.authorization_item_menu_btn);
         }
     }
 
-    private View createAuthorizationDetailView(Context context, Authorization authorization) {
-        View view = View.inflate(context, R.layout.authorization_detail, null);
-        TextView lockerName = view.findViewById(R.id.authorization_detail_locker_name);
-        TextView fromAccount = view.findViewById(R.id.authorization_detail_from_account);
-        TextView toAccount = view.findViewById(R.id.authorization_detail_to_account);
-        TextView serial = view.findViewById(R.id.authorization_detail_serial);
-        TextView startDate = view.findViewById(R.id.authorization_detail_start_date);
-        TextView endDate = view.findViewById(R.id.authorization_detail_end_date);
-        TextView description = view.findViewById(R.id.authorization_detail_descripiton);
-        TextView availableTime = view.findViewById(R.id.authorization_detail_available_time);
-        TextView availableDay = view.findViewById(R.id.authorization_detail_available_day);
+    /*响应菜单点击事件*/
+    private class AuthorizationItemMenuListener implements DialogInterface.OnClickListener {
+        private Context mContext;
+        private LinkedHashMap<String, List<Authorization>> mAuthorizationsMap;
+        /*点击对应项目的位置*/
+        private int mPosition;
+        /*记录对应的分组表头的位置*/
+        private int mHeaderIndex;
+        private String mHeaderName;
 
-        lockerName.setText(authorization.getLockerName());
-        fromAccount.setText(authorization.getFromAccount());
-        toAccount.setText(authorization.getToAccount());
-        serial.setText(authorization.getSerial());
-        startDate.setText(authorization.getStartTime());
-        endDate.setText(authorization.getEndTime());
-        description.setText(authorization.getDescription());
-
-        if (authorization.getDailyStartTime().equals("00:00:00")
-                && authorization.getDailyEndTime().equals("23:59:00")) {
-            availableTime.setText(R.string.whole_day);
-        } else {
-            availableTime.setText(authorization.getDailyStartTime() + " - " + authorization.getDailyEndTime());
+        public AuthorizationItemMenuListener(Context context,
+                                             LinkedHashMap<String, List<Authorization>> authorizationsMap,
+                                             int position, int headerIndex, String headerName) {
+            mContext = context;
+            mPosition = position;
+            mAuthorizationsMap = authorizationsMap;
+            mHeaderIndex = headerIndex;
+            mHeaderName = headerName;
         }
 
-        if (authorization.getWeekDay().equals("1,2,3,4,5,6,7")) {
-            availableDay.setText(R.string.every_day);
-        } else {
-            availableDay.setText(authorization.getReadableWeekday());
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+            int authorizationIndex = mPosition - mHeaderIndex - 1;
+            Authorization authorization = mAuthorizationsMap.get(mHeaderName).get(authorizationIndex);
+            switch (which) {
+                /*详情*/
+                case 0:
+                    AlertDialog authorizationDetail = builder.setTitle(R.string.detail)
+                            .setView(createAuthorizationDetailView(mContext, authorization))
+                            .create();
+                    authorizationDetail.show();
+                    break;
+                /*删除*/
+                case 1:
+                    AuthorizationRest authorizationRest = new AuthorizationRest();
+                    authorizationRest.delAuthorizationById(authorization.getId(), authorization.getSerial());
+                    int itemCount = getItemCount();
+                    mAuthorizationsMap.get(mHeaderName).remove(authorizationIndex);
+                    /*该分组下没有子项目*/
+                    if (mAuthorizationsMap.get(mHeaderName).size() == 0) {
+                        mAuthorizationsMap.remove(mHeaderName);
+                        notifyItemMoved(mPosition - 1, mPosition);
+                        notifyItemRangeChanged(mPosition - 1, itemCount);
+                        //notifyDataSetChanged();
+                    } else {
+                        notifyItemRemoved(mPosition);
+                        notifyItemRangeChanged(mPosition, itemCount);
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
-        return view;
+
+        private View createAuthorizationDetailView(Context context, Authorization authorization) {
+            View view = View.inflate(context, R.layout.authorization_detail, null);
+            TextView lockerName = view.findViewById(R.id.authorization_detail_locker_name);
+            TextView fromAccount = view.findViewById(R.id.authorization_detail_from_account);
+            TextView toAccount = view.findViewById(R.id.authorization_detail_to_account);
+            TextView serial = view.findViewById(R.id.authorization_detail_serial);
+            TextView startDate = view.findViewById(R.id.authorization_detail_start_date);
+            TextView endDate = view.findViewById(R.id.authorization_detail_end_date);
+            TextView description = view.findViewById(R.id.authorization_detail_descripiton);
+            TextView availableTime = view.findViewById(R.id.authorization_detail_available_time);
+            TextView availableDay = view.findViewById(R.id.authorization_detail_available_day);
+
+            lockerName.setText(authorization.getLockerName());
+            fromAccount.setText(authorization.getFromAccount());
+            toAccount.setText(authorization.getToAccount());
+            serial.setText(authorization.getSerial());
+            startDate.setText(authorization.getStartTime());
+            endDate.setText(authorization.getEndTime());
+            description.setText(authorization.getDescription());
+
+            if (authorization.getDailyStartTime().equals("00:00:00")
+                    && authorization.getDailyEndTime().equals("23:59:00")) {
+                availableTime.setText(R.string.whole_day);
+            } else {
+                availableTime.setText(authorization.getDailyStartTime() + " --" + authorization.getDailyEndTime());
+            }
+
+            if (authorization.getWeekDay().equals("1,2,3,4,5,6,7")) {
+                availableDay.setText(R.string.every_day);
+            } else {
+                String weekday = authorization.getWeekDay();
+                Resources res = context.getResources();
+                availableDay.setText(weekday
+                        .replace("1", res.getString(R.string.Monday))
+                        .replace("2", res.getString(R.string.Tuesday))
+                        .replace("3", res.getString(R.string.Wednesday))
+                        .replace("4", res.getString(R.string.Thursday))
+                        .replace("5", res.getString(R.string.Friday))
+                        .replace("6", res.getString(R.string.Saturday))
+                        .replace("7", res.getString(R.string.Sunday)));
+            }
+            return view;
+        }
     }
+
 }

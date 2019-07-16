@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".fragment.FragmentChangePass">
+
+    <ImageView
+        android:id="@+id/ic_old_pass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_passwd_32"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.021"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.392" />
+
+    <ImageView
+        android:id="@+id/ic_new_pass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:contentDescription="@null"
+        android:src="@drawable/change_passwd"
+        app:layout_constraintEnd_toEndOf="@+id/ic_old_pass"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/ic_old_pass"
+        app:layout_constraintTop_toBottomOf="@+id/ic_old_pass" />
+
+    <ImageView
+        android:id="@+id/ic_new_pass_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:contentDescription="@null"
+        android:padding="3dp"
+        android:src="@drawable/change_passwd"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/ic_old_pass"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/ic_old_pass"
+        app:layout_constraintTop_toBottomOf="@+id/ic_old_pass"
+        app:layout_constraintVertical_bias="0.257" />
+
+    <EditText
+        android:id="@+id/fragment_change_pass_old_pass"
+        android:layout_width="218dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:ems="10"
+        android:hint="@string/input_old_pass"
+        android:inputType="textPassword"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/title_old_pass"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.972"
+        app:layout_constraintStart_toEndOf="@+id/ic_old_pass"
+        app:layout_constraintTop_toTopOf="@+id/title_old_pass"
+        app:layout_constraintVertical_bias="0.68" />
+
+    <EditText
+        android:id="@+id/fragment_change_pass_new_pass"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/input_new_password"
+        android:inputType="textPassword"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/title_new_pass"
+        app:layout_constraintEnd_toEndOf="@+id/fragment_change_pass_old_pass"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/fragment_change_pass_old_pass"
+        app:layout_constraintTop_toTopOf="@+id/title_new_pass" />
+
+    <EditText
+        android:id="@+id/fragment_change_pass_new_pass1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/input_new_pass_again"
+        android:inputType="textPassword"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/title_new_pass1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/fragment_change_pass_new_pass"
+        app:layout_constraintTop_toTopOf="@+id/title_new_pass1"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/change_pass_btn"
+        android:layout_width="0dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/submit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.721"
+        tools:backgroundTint="@color/mainBgColor" />
+
+    <TextView
+        android:id="@+id/title_old_pass"
+        android:layout_width="98dp"
+        android:layout_height="21dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:contentDescription="@null"
+        android:text="@string/old_pass"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/ic_old_pass"
+        app:layout_constraintEnd_toEndOf="@+id/fragment_change_pass_old_pass"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/ic_old_pass"
+        app:layout_constraintTop_toTopOf="@+id/ic_old_pass"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/title_new_pass"
+        android:layout_width="0dp"
+        android:layout_height="26dp"
+        android:contentDescription="@null"
+        android:text="@string/new_pass"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/ic_new_pass"
+        app:layout_constraintEnd_toEndOf="@+id/title_old_pass"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/title_old_pass"
+        app:layout_constraintTop_toTopOf="@+id/ic_new_pass"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/title_new_pass1"
+        android:layout_width="118dp"
+        android:layout_height="29dp"
+        android:contentDescription="@null"
+        android:text="@string/confirm_new_pass"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/ic_new_pass_1"
+        app:layout_constraintEnd_toEndOf="@+id/title_new_pass"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/title_new_pass"
+        app:layout_constraintTop_toTopOf="@+id/ic_new_pass_1"
+        app:layout_constraintVertical_bias="1.0" />
+
+</android.support.constraint.ConstraintLayout>

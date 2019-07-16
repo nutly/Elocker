@@ -9,15 +9,15 @@
     <item
         android:id="@+id/navigation_lockers"
         android:icon="@drawable/ic_keys"
-        android:title="@string/navigate_keys" />
+        android:title="@string/keys" />
 
     <item
-        android:id="@+id/navigation_authority"
+        android:id="@+id/navigation_authorization"
         android:icon="@drawable/ic_authority"
-        android:title="@string/navigate_authorization" />
+        android:title="@string/authorization" />
     <item
         android:id="@+id/navigation_setting"
         android:icon="@drawable/ic_settings"
-        android:title="@string/navigate_setting" />
+        android:title="@string/setting" />
 
 </menu>

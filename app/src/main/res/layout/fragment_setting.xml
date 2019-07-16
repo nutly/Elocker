@@ -1,49 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/menus_item"
+    android:id="@+id/fragment_setting"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/mainBgColor"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
+
     <RelativeLayout
+        android:id="@+id/fragment_setting_setting"
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:layout_marginTop="10dp"
         android:background="#ffffff">
 
         <ImageView
-            android:id="@+id/user"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="15dp"
-            app:srcCompat="@drawable/user" />
-
-        <TextView
-            android:id="@+id/locker_description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_toEndOf="@+id/user"
-            android:paddingStart="18dp"
-            android:paddingEnd="20dp"
-            android:text="手机号"
-            android:textColor="@color/textColor"
-            android:textSize="16sp" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:layout_marginTop="10dp"
-        android:background="#ffffff">
-
-        <ImageView
-            android:id="@+id/setting"
+            android:id="@+id/fragment_setting_ic_setting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
+            android:contentDescription="@null"
             android:padding="15dp"
             app:srcCompat="@drawable/setting" />
 
@@ -51,53 +26,56 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_toEndOf="@+id/setting"
+            android:layout_toEndOf="@+id/fragment_setting_ic_setting"
             android:paddingStart="18dp"
             android:paddingTop="10dp"
             android:paddingEnd="20dp"
-            android:text="设置"
+            android:text="@string/setting"
             android:textColor="@color/textColor"
             android:textSize="16sp" />
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:layout_marginTop="1dp"
-        android:background="#ffffff">
-
-        <ImageView
-            android:id="@+id/addteam"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:padding="15dp"
-            app:srcCompat="@drawable/addteam" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_toEndOf="@+id/addteam"
-            android:paddingStart="18dp"
-            android:paddingTop="10dp"
-            android:paddingEnd="20dp"
-            android:text="权限"
-            android:textColor="@color/textColor"
-            android:textSize="16sp" />
-    </RelativeLayout>
-
-    <RelativeLayout
+        android:id="@+id/fragment_setting_change_pass"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_marginTop="10dp"
         android:background="#ffffff">
 
         <ImageView
-            android:id="@+id/reload"
+            android:id="@+id/fragment_setting_ic_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@null"
+            android:padding="15dp"
+            app:srcCompat="@drawable/change_passwd" />
+
+        <TextView
+            android:id="@+id/locker_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_toEndOf="@+id/fragment_setting_ic_user"
+            android:paddingStart="14dp"
+            android:paddingEnd="20dp"
+            android:text="@string/change_passwd"
+            android:textColor="@color/textColor"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/fragment_setting_update"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginTop="10dp"
+        android:background="#ffffff">
+
+        <ImageView
+            android:id="@+id/fragment_seting_ic_update"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
+            android:contentDescription="@null"
             android:padding="15dp"
             app:srcCompat="@drawable/reload" />
 
@@ -105,26 +83,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_toEndOf="@+id/reload"
+            android:layout_toEndOf="@+id/fragment_seting_ic_update"
             android:paddingStart="18dp"
             android:paddingTop="10dp"
             android:paddingEnd="20dp"
-            android:text="更新"
+            android:text="@string/update"
             android:textColor="@color/textColor"
             android:textSize="16sp" />
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/fragment_setting_feedback"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_marginTop="1dp"
         android:background="#ffffff">
 
         <ImageView
-            android:id="@+id/message"
+            android:id="@+id/fragment_setting_ic_feedback"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
+            android:contentDescription="@null"
             android:padding="15dp"
             app:srcCompat="@drawable/message" />
 
@@ -132,26 +112,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_toEndOf="@+id/message"
+            android:layout_toEndOf="@+id/fragment_setting_ic_feedback"
             android:paddingStart="18dp"
             android:paddingTop="10dp"
             android:paddingEnd="20dp"
-            android:text="反馈"
+            android:text="@string/feedback"
             android:textColor="@color/textColor"
             android:textSize="16sp" />
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/fragment_setting_about"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_marginTop="10dp"
         android:background="#ffffff">
 
         <ImageView
-            android:id="@+id/read"
+            android:id="@+id/fragment_setting_ic_read"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
+            android:contentDescription="@null"
             android:padding="15dp"
             app:srcCompat="@drawable/read" />
 
@@ -159,26 +141,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_toEndOf="@+id/read"
+            android:layout_toEndOf="@+id/fragment_setting_ic_read"
             android:paddingStart="18dp"
             android:paddingTop="10dp"
             android:paddingEnd="20dp"
-            android:text="关于"
+            android:text="@string/about"
             android:textColor="@color/textColor"
             android:textSize="16sp" />
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/fragment_setting_help"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_marginTop="1dp"
         android:background="#ffffff">
 
         <ImageView
-            android:id="@+id/question"
+            android:id="@+id/fragment_setting_ic_help"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
+            android:contentDescription="@null"
             android:padding="15dp"
             app:srcCompat="@drawable/question" />
 
@@ -186,12 +170,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_toEndOf="@+id/question"
+            android:layout_toEndOf="@+id/fragment_setting_ic_help"
             android:paddingStart="18dp"
             android:paddingTop="10dp"
             android:paddingEnd="20dp"
-            android:text="帮助"
+            android:text="@string/help"
             android:textColor="@color/textColor"
             android:textSize="16sp" />
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/login_out_btn"
+        android:layout_width="match_parent"
+        android:layout_height="62dp"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="@color/colorLightGray"
+        android:text="@string/log_out" />
+
 </LinearLayout>

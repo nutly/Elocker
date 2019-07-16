@@ -4,7 +4,9 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 import com.feiyang.elocker.R;
@@ -15,12 +17,13 @@ import com.feiyang.elocker.rest.AuthorizationRest;
 import java.util.Calendar;
 import java.util.TreeSet;
 
-public class AuthorizationEditActivity extends AppCompatActivity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
+public class AuthorizationEditActivity extends AppCompatActivity implements View.OnClickListener,
+        CheckBox.OnCheckedChangeListener, RadioGroup.OnCheckedChangeListener {
 
     private Authorization mAuthorization = new Authorization();
     private Locker mLocker;
-    private LinearLayout mStartTimeLayout, mEndTimeLayout, mDayOptionLayout;
-    private TextView mSerial, mLockerName, mStartDate, mEndDate, mStartTime, mEndTime;
+    private LinearLayout mDailyStartTimeLayout, mDailyEndTimeLayout, mDayOptionLayout;
+    private TextView mSerial, mLockerName, mStartTime, mEndTime, mDailyStartTime, mDailyEndTime;
     private EditText mToAccount, mDescription;
     private CheckBox mMonday, mTuesday, mWednesday, mThursday, mFriday, mSaturday, mSunday;
     /*保存选择的星期几集合，例如*/
@@ -32,11 +35,25 @@ public class AuthorizationEditActivity extends AppCompatActivity implements View
         setContentView(R.layout.activity_authorization_edit);
         initView();
 
-        mStartDate.setOnClickListener(this);
-        mEndDate.setOnClickListener(this);
+        /*设置返回按钮*/
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
         mStartTime.setOnClickListener(this);
         mEndTime.setOnClickListener(this);
+        mDailyStartTime.setOnClickListener(this);
+        mDailyEndTime.setOnClickListener(this);
 
+        mMonday.setOnCheckedChangeListener(this);
+        mTuesday.setOnCheckedChangeListener(this);
+        mWednesday.setOnCheckedChangeListener(this);
+        mThursday.setOnCheckedChangeListener(this);
+        mFriday.setOnCheckedChangeListener(this);
+        mSaturday.setOnCheckedChangeListener(this);
+        mSunday.setOnCheckedChangeListener(this);
     }
 
     @Override
@@ -49,16 +66,25 @@ public class AuthorizationEditActivity extends AppCompatActivity implements View
             mSerial.setText(mLocker.getSerial());
             mLockerName.setText(mLocker.getDescription());
         }
-
-        mMonday.setOnClickListener(this);
-        mTuesday.setOnClickListener(this);
-        mWednesday.setOnClickListener(this);
-        mThursday.setOnClickListener(this);
-        mFriday.setOnClickListener(this);
-        mSaturday.setOnClickListener(this);
-        mSunday.setOnClickListener(this);
     }
 
+    /*响应返回键*/
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent intent = new Intent(this, LockerListActivity.class);
+                startActivity(intent);
+                break;
+            default:
+                break;
+        }
+        /*点击事件不再传递*/
+        return true;
+    }
+
+    /*单选框监听*/
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         switch (checkedId) {
@@ -80,6 +106,26 @@ public class AuthorizationEditActivity extends AppCompatActivity implements View
                 mSunday.setChecked(true);
                 mDayOptionLayout.setVisibility(View.VISIBLE);
                 break;
+            /*设置一天具体哪个时间段可以执行*/
+            case R.id.authorization_whole_day:
+                mDailyStartTime.setVisibility(View.GONE);
+                mDailyEndTimeLayout.setVisibility(View.GONE);
+                mStartTime.setText("00:00:00");
+                mEndTime.setText("23:59:00");
+                break;
+            case R.id.authorization_custom_time:
+                mDailyStartTimeLayout.setVisibility(View.VISIBLE);
+                mDailyEndTimeLayout.setVisibility(View.VISIBLE);
+                break;
+            default:
+                break;
+        }
+    }
+
+    /*CheckBox 复选框事件监听*/
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        switch (buttonView.getId()) {
             case R.id.authorization_monday:
                 if (mMonday.isChecked())
                     mWeekDaySet.add(1);
@@ -122,23 +168,12 @@ public class AuthorizationEditActivity extends AppCompatActivity implements View
                 else
                     mWeekDaySet.remove(7);
                 break;
-            /*设置一天具体哪个时间段可以执行*/
-            case R.id.authorization_whole_day:
-                mStartTimeLayout.setVisibility(View.GONE);
-                mEndTimeLayout.setVisibility(View.GONE);
-                mStartTime.setText("00:00:00");
-                mEndTime.setText("23:59:00");
-                break;
-            case R.id.authorization_custom_time:
-                mStartTimeLayout.setVisibility(View.VISIBLE);
-                mEndTimeLayout.setVisibility(View.VISIBLE);
-                break;
             default:
                 break;
         }
     }
 
-    /*处理时间选择*/
+    /*时间选择控件监听*/
     @Override
     public void onClick(View v) {
         Calendar calendar = Calendar.getInstance();
@@ -151,8 +186,10 @@ public class AuthorizationEditActivity extends AppCompatActivity implements View
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear,
                                           int dayOfMonth) {
+                        /*回调返回的monthOfYear比实际值小1*/
+                        monthOfYear++;
                         String startDate = year + "-" + monthOfYear + "-" + dayOfMonth + " 00:00:00";
-                        mStartDate.setText(startDate);
+                        mStartTime.setText(startDate);
                     }
                 }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
                 datePicker.show();
@@ -164,8 +201,9 @@ public class AuthorizationEditActivity extends AppCompatActivity implements View
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear,
                                           int dayOfMonth) {
+                        monthOfYear++;
                         String endDate = year + "-" + monthOfYear + "-" + dayOfMonth + " 23:59:00";
-                        mEndDate.setText(endDate);
+                        mEndTime.setText(endDate);
                     }
                 }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
                 datePicker.show();
@@ -175,7 +213,7 @@ public class AuthorizationEditActivity extends AppCompatActivity implements View
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         String startTime = hourOfDay + ":" + minute + ":00";
-                        mStartTime.setText(startTime);
+                        mDailyStartTime.setText(startTime);
                     }
                 }, 0, 0, true);
                 timePicker.show();
@@ -185,7 +223,7 @@ public class AuthorizationEditActivity extends AppCompatActivity implements View
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         String endTime = hourOfDay + ":" + minute + ":00";
-                        mEndTime.setText(endTime);
+                        mDailyEndTime.setText(endTime);
                     }
                 }, 23, 59, true);
                 timePicker.show();
@@ -198,13 +236,16 @@ public class AuthorizationEditActivity extends AppCompatActivity implements View
                 mAuthorization.setStartTime(mStartTime.getText().toString());
                 mAuthorization.setEndTime(mEndTime.getText().toString());
                 mAuthorization.setDescription(mDescription.getText().toString());
-                String weekDay = mWeekDaySet.toString().replace("[", "").replace("]", "");
-                mAuthorization.setWeekDay(weekDay);
-                mAuthorization.setDailyStartTime(mStartTime.getText().toString());
-                mAuthorization.setDailyEndTime(mEndTime.getText().toString());
+                String weekday = mWeekDaySet.toString().replace("[", "").replace("]", "");
+                mAuthorization.setWeekDay(weekday);
+                mAuthorization.setDailyStartTime(mDailyStartTime.getText().toString());
+                mAuthorization.setDailyEndTime(mDailyEndTime.getText().toString());
 
                 AuthorizationRest authorizationRest = new AuthorizationRest();
                 authorizationRest.addAuthorization(mAuthorization);
+                /*跳转到授权查看界面*/
+                Intent intent = new Intent(this.getApplicationContext(), AuthorizationActivity.class);
+                startActivity(intent);
                 break;
             default:
                 break;
@@ -215,13 +256,13 @@ public class AuthorizationEditActivity extends AppCompatActivity implements View
         mSerial = (TextView) findViewById(R.id.authorization_serial);
         mLockerName = (TextView) findViewById(R.id.authorization_locker_name);
         mToAccount = (EditText) findViewById(R.id.authorization_list_to_account);
-        mStartDate = (TextView) findViewById(R.id.authorization_start_date);
-        mEndDate = (TextView) findViewById(R.id.authorization_end_date);
-        mStartTime = (TextView) findViewById(R.id.authorization_start_time);
-        mEndTime = (TextView) findViewById(R.id.authorization_end_time);
+        mStartTime = (TextView) findViewById(R.id.authorization_start_date);
+        mEndTime = (TextView) findViewById(R.id.authorization_end_date);
+        mDailyStartTime = (TextView) findViewById(R.id.authorization_start_time);
+        mDailyEndTime = (TextView) findViewById(R.id.authorization_end_time);
         mDescription = (EditText) findViewById(R.id.authorization_description);
-        mStartTimeLayout = (LinearLayout) findViewById(R.id.authorization_start_time_layout);
-        mEndTimeLayout = (LinearLayout) findViewById(R.id.authorization_end_time_layout);
+        mDailyStartTimeLayout = (LinearLayout) findViewById(R.id.authorization_start_time_layout);
+        mDailyEndTimeLayout = (LinearLayout) findViewById(R.id.authorization_end_time_layout);
         mDayOptionLayout = (LinearLayout) findViewById(R.id.authrization_weekday_layout);
         Button confirmBtn = (Button) findViewById(R.id.authorization_confirm_btn);
 
@@ -235,11 +276,17 @@ public class AuthorizationEditActivity extends AppCompatActivity implements View
         mSaturday = (CheckBox) findViewById(R.id.authorization_saturday);
         mSunday = (CheckBox) findViewById(R.id.authorization_sunday);
 
+        /*设置默认参数*/
+        mDailyStartTime.setText("00:00:00");
+        mDailyEndTime.setText("23:59:00");
+        for (int i = 1; i < 8; i++) {
+            mWeekDaySet.add(i);
+        }
+
         /*设置一周选择哪些天*/
         dayOption.setOnCheckedChangeListener(this);
         /*设置一天具体的时间范围*/
         timeOption.setOnCheckedChangeListener(this);
         confirmBtn.setOnClickListener(this);
     }
-
 }

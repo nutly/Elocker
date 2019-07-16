@@ -1,6 +1,5 @@
 package com.feiyang.elocker.activity;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -14,6 +13,7 @@ import com.feiyang.elocker.adpter.LockerRecyclerViewAdapter;
 import com.feiyang.elocker.fragment.NavigationFragment;
 import com.feiyang.elocker.model.Locker;
 import com.feiyang.elocker.rest.LockerRest;
+import com.feiyang.elocker.util.LoginUtil;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ import java.util.List;
 
 import static com.feiyang.elocker.Constant.MESSAGE_lOCKER_LIST;
 
-public class LockerListActivity extends AppCompatActivity implements NavigationFragment.OnNavigationFragmentInteractionListener {
+public class LockerListActivity extends AppCompatActivity {
 
     private Handler mHandler;
     private List<Locker> mLockers = new ArrayList<Locker>();
@@ -31,6 +31,9 @@ public class LockerListActivity extends AppCompatActivity implements NavigationF
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        /*判断当前是否已经登录*/
+        LoginUtil.validLogin(this);
 
         setContentView(R.layout.activity_locker_list);
         mHandler = new LockerHandler(this);
@@ -51,11 +54,6 @@ public class LockerListActivity extends AppCompatActivity implements NavigationF
             LockerRest lockerRest = new LockerRest();
             lockerRest.getAllLocker(mHandler);
         }
-    }
-
-    @Override
-    public void onNavigationFragmentInteraction(Uri uri) {
-        //Interaction with nvationgation fragment
     }
 
     private static class LockerHandler extends Handler {

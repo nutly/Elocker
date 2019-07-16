@@ -113,7 +113,7 @@ public class LockerRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
             String[] lockerMenu = res.getStringArray(R.array.lockerMenu);
             // lockerMenu = {"查看", "编辑", "删除", "授权", "转移"};
             AlertDialog.Builder menuBuilder = new AlertDialog.Builder(context);
-            final int position = (int) v.getTag();
+            int position = (int) v.getTag();
             if (mLockers == null || mLockers.get(position) == null) {
                 return;
             }
@@ -164,7 +164,6 @@ public class LockerRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
                                         mLockers.get(mPosition).setDescription(lockerDescription);
                                         LockerRest lockerRest = new LockerRest();
                                         lockerRest.updateLockerDescription(mLockers.get(mPosition));
-
                                         /*刷新页面*/
                                         notifyItemChanged(mPosition);
                                     }
@@ -175,6 +174,11 @@ public class LockerRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
                     break;
                 case 2:
                     /*删除*/
+                    LockerRest lockerRest = new LockerRest();
+                    lockerRest.delLocker(mLockers.get(mPosition).getSerial());
+                    mLockers.remove(mPosition);
+                    notifyItemRemoved(mPosition);
+                    notifyItemRangeChanged(mPosition, getItemCount());
                     break;
                 case 3:
                     /*授权*/

@@ -1,37 +1,24 @@
 <resources>
     <string name="navigate_unlock">Unlock</string>
-    <string name="navigate_keys">Keys</string>
-    <string name="navigate_authorization">Authority</string>
-    <string name="navigate_setting">Setting</string>
+    <string name="keys">Keys</string>
+    <string name="authorization">Authority</string>
+    <string name="setting">Setting</string>
 
     <string name="test">This is a test text</string>
-    <string name="main_activity_name">Elocker</string>
+    <string name="app_lable">Elocker</string>
     <string name="lastOpen">LastOpen:</string>
     <string name="locker_detail_activity_name">Locker Detail</string>
     <string name="time_picker_activity_name">Select Time</string>
-    <string name="serial">serial</string>
+    <string name="serial">Serial</string>
     <string name="hwType">type</string>
     <string name="toggleTimes">toggleTimes</string>
     <string name="lockerDescription">Name</string>
     <string name="network_error">Please check network connectivity</string>
 
-    <string-array name="lockerMenu">　
-        <item>Detail</item>
-        <item>Edit</item>
-        <item>Delete</item>
-        <item>Authorization</item>
-        <item>Transfer</item>
-    </string-array>
-
-    <string-array name="lockerDetailItem">　
-        <item>Serial</item>
-        <item>Type</item>
-        <item>AddTime</item>
-        <item>LastOpenTime</item>
-        <item>toggleTimes</item>
-    </string-array>
     <string name="create_time">Create Time</string>
+
     <string name="phone">Account</string>
+
     <string name="yes">Confirm</string>
     <string name="transfer_to">Transfer To</string>
     <string name="authorize_to">Authorize TO</string>
@@ -56,5 +43,60 @@
     <string name="click_to_select">Click to select</string>
     <string name="authorize_from">Authorize From</string>
     <string name="detail">Details</string>
+    <string name="delete">Delete</string>
+    <!-- Strings related to login -->
+    <string name="input_username">Please input username</string>
+    <string name="input_passwd">Please input password</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="forget_pass">Forget Password</string>
+    <string name="empty_username">Username can not be empty</string>
+    <string name="empty_passwd">Password can not be empty</string>
+    <string name="incorrect_login_info">Password is incorrect or username not exsist</string>
+    <string name="internal_error">Internal Error</string>
+    <string name="login_too_frequently">Username or password wrong for too many times, please login later</string>
+    <string name="login_now">Login .....</string>
+    <string name="update">Update</string>
+    <string name="feedback">Feedback</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="about">About</string>
+    <string name="help">Help</string>
+    <string name="change_passwd">Change password</string>
+    <string name="log_out">Log out</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="submit">Submit</string>
+    <string name="old_pass">Old password</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="new_pass">New password</string>
+    <string name="confirm_new_pass">Confirm password</string>
+    <string name="input_old_pass">Please input old password</string>
+    <string name="input_new_password">Please input new password</string>
+    <string name="input_new_pass_again">Please input new password again</string>
+    <string name="old_passwd_wrong">Old password is wrong</string>
+    <string name="password_mismatch">New password mismatch with confirmed new password</string>
+    <string name="change_passwd_success">Change password successfully</string>
+    <string-array name="lockerMenu">　
+        <item>Detail</item>
+        <item>Edit</item>
+        <item>Delete</item>
+        <item>Authorization</item>
+        <item>Transfer</item>
+    </string-array>
+    <string-array name="authorizationMenu">　
+        <item>Detail</item>
+        <item>Delete</item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string-array name="lockerDetailItem">　
+        <item>Serial</item>
+        <item>Type</item>
+        <item>AddTime</item>
+        <item>LastOpenTime</item>
+        <item>toggleTimes</item>
+    </string-array>
 
 </resources>

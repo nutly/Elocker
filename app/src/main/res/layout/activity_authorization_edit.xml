@@ -15,18 +15,20 @@
 
         <ImageView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:contentDescription="@null"
             android:padding="10dp"
-            app:srcCompat="@drawable/ic_5" />
+            android:tint="@color/colorPrimary"
+            app:srcCompat="@drawable/ic_serial" />
 
         <TextView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="2"
             android:padding="10dp"
             android:text="@string/serial"
+            android:textColor="@color/colorPrimary"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -34,7 +36,7 @@
             android:id="@+id/authorization_serial"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2"
+            android:layout_weight="4"
             android:padding="10dp"
             android:textSize="16sp" />
     </LinearLayout>
@@ -48,17 +50,19 @@
 
         <ImageView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:contentDescription="@null"
             android:padding="10dp"
-            app:srcCompat="@drawable/ic_5" />
+            android:tint="@color/colorPrimary"
+            app:srcCompat="@drawable/ic_name" />
 
         <TextView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="2"
             android:padding="10dp"
+            android:textColor="@color/colorPrimary"
             android:text="@string/lockerDescription"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -67,7 +71,7 @@
             android:id="@+id/authorization_locker_name"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2"
+            android:layout_weight="4"
             android:padding="10dp"
             android:textSize="16sp" />
     </LinearLayout>
@@ -81,17 +85,19 @@
 
         <ImageView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:contentDescription="@null"
             android:padding="10dp"
-            app:srcCompat="@drawable/ic_5" />
+            android:tint="@color/colorPrimary"
+            app:srcCompat="@drawable/ic_authorize_to" />
 
         <TextView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="2"
             android:padding="10dp"
+            android:textColor="@color/colorPrimary"
             android:text="@string/authorize_to"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -100,7 +106,7 @@
             android:id="@+id/authorization_list_to_account"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2"
+            android:layout_weight="4"
             android:hint="@string/to_acount"
             android:inputType="phone"
             android:padding="10dp"
@@ -117,17 +123,19 @@
 
         <ImageView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:contentDescription="@null"
             android:padding="10dp"
-            app:srcCompat="@drawable/ic_5" />
+            android:tint="@color/colorPrimary"
+            app:srcCompat="@drawable/ic_starttime_1" />
 
         <TextView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="2"
             android:padding="10dp"
+            android:textColor="@color/colorPrimary"
             android:text="@string/start_date"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -136,7 +144,7 @@
             android:id="@+id/authorization_start_date"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2"
+            android:layout_weight="4"
             android:hint="@string/click_to_select"
             android:padding="10dp"
             android:textSize="16sp" />
@@ -152,17 +160,19 @@
 
         <ImageView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:contentDescription="@null"
             android:padding="10dp"
-            app:srcCompat="@drawable/ic_5" />
+            android:tint="@color/colorPrimary"
+            app:srcCompat="@drawable/ic_endtime_1" />
 
         <TextView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="2"
             android:padding="10dp"
+            android:textColor="@color/colorPrimary"
             android:text="@string/end_date"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -171,7 +181,7 @@
             android:id="@+id/authorization_end_date"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2"
+            android:layout_weight="4"
             android:hint="@string/click_to_select"
             android:padding="10dp"
             android:textSize="16sp" />
@@ -185,45 +195,51 @@
 
         <ImageView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:contentDescription="@null"
             android:padding="10dp"
-            app:srcCompat="@drawable/ic_5" />
+            android:tint="@color/colorPrimary"
+            app:srcCompat="@drawable/ic_week" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
             android:padding="10dp"
+            android:textColor="@color/colorPrimary"
             android:text="@string/available_day_of_week"
             android:textSize="16sp"
             android:textStyle="bold" />
 
         <RadioGroup
             android:id="@+id/authorization_day_option"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0"
+            android:layout_weight="4"
             android:checkedButton="@+id/authorization_day_option"
             android:orientation="horizontal">
 
             <RadioButton
                 android:id="@+id/authorization_every_day"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0"
+                android:layout_weight="1"
+                android:buttonTint="@color/colorPrimary"
                 android:checked="true"
                 android:text="@string/every_day"
                 android:textAlignment="center"
+                android:textColor="@color/colorPrimary"
                 android:textDirection="firstStrongLtr" />
 
             <RadioButton
                 android:id="@+id/authorization_custom_day"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0"
-                android:text="@string/custom" />
+                android:layout_weight="1"
+                android:buttonTint="@color/colorPrimary"
+                android:text="@string/custom"
+                android:textColor="@color/colorPrimary" />
         </RadioGroup>
     </LinearLayout>
 
@@ -302,45 +318,54 @@
 
         <ImageView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:contentDescription="@null"
-            android:padding="10dp"
-            app:srcCompat="@drawable/ic_5" />
+            android:padding="9dp"
+            android:tint="@color/colorPrimary"
+            app:srcCompat="@drawable/ic_available_time" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:padding="10dp"
+            android:paddingStart="10dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="0dp"
+            android:paddingBottom="10dp"
             android:text="@string/available_time"
             android:textSize="16sp"
+            android:textColor="@color/colorPrimary"
             android:textStyle="bold" />
 
         <RadioGroup
             android:id="@+id/authorization_time_option"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0"
+            android:layout_weight="4"
             android:checkedButton="@+id/authorization_time_option"
             android:orientation="horizontal">
 
             <RadioButton
                 android:id="@+id/authorization_whole_day"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0"
+                android:layout_weight="1"
+                android:buttonTint="@color/colorPrimary"
                 android:checked="true"
                 android:text="@string/whole_day"
                 android:textAlignment="center"
+                android:textColor="@color/colorPrimary"
                 android:textDirection="firstStrongLtr" />
 
             <RadioButton
                 android:id="@+id/authorization_custom_time"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0"
-                android:text="@string/custom" />
+                android:layout_weight="1"
+                android:buttonTint="@color/colorPrimary"
+                android:text="@string/custom"
+                android:textColor="@color/colorPrimary" />
         </RadioGroup>
     </LinearLayout>
 
@@ -355,27 +380,29 @@
 
         <ImageView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:contentDescription="@null"
             android:padding="10dp"
-            app:srcCompat="@drawable/ic_5" />
+            android:tint="@color/colorPrimary"
+            app:srcCompat="@drawable/ic_start_time_2" />
 
         <TextView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="2"
             android:padding="10dp"
             android:text="@string/start_time"
             android:textSize="16sp"
+            android:textColor="@color/colorPrimary"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/authorization_start_time"
             android:layout_width="0dp"
-            android:hint="@string/click_to_select"
             android:layout_height="match_parent"
-            android:layout_weight="2"
+            android:layout_weight="4"
+            android:hint="@string/click_to_select"
             android:padding="10dp"
             android:textSize="16sp" />
 
@@ -392,27 +419,29 @@
 
         <ImageView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:contentDescription="@null"
             android:padding="10dp"
-            app:srcCompat="@drawable/ic_5" />
+            android:tint="@color/colorPrimary"
+            app:srcCompat="@drawable/ic_endtime_2" />
 
         <TextView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="2"
             android:padding="10dp"
             android:text="@string/end_time"
             android:textSize="16sp"
+            android:textColor="@color/colorPrimary"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/authorization_end_time"
             android:layout_width="0dp"
-            android:hint="@string/click_to_select"
             android:layout_height="match_parent"
-            android:layout_weight="2"
+            android:layout_weight="4"
+            android:hint="@string/click_to_select"
             android:padding="10dp"
             android:textSize="16sp" />
 
@@ -427,26 +456,28 @@
 
         <ImageView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:contentDescription="@null"
             android:padding="10dp"
-            app:srcCompat="@drawable/ic_5" />
+            android:tint="@color/colorPrimary"
+            app:srcCompat="@drawable/ic_description" />
 
         <TextView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="2"
             android:padding="10dp"
             android:text="@string/authorization_description"
             android:textSize="16sp"
+            android:textColor="@color/colorPrimary"
             android:textStyle="bold" />
 
         <EditText
             android:id="@+id/authorization_description"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2"
+            android:layout_weight="4"
             android:hint="@string/authorization_description"
             android:inputType="text"
             android:padding="10dp"

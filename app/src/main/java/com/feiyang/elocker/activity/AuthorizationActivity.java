@@ -1,6 +1,5 @@
 package com.feiyang.elocker.activity;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -14,6 +13,7 @@ import com.feiyang.elocker.adpter.AuthorizationRecyclerViewAdapter;
 import com.feiyang.elocker.fragment.NavigationFragment;
 import com.feiyang.elocker.model.Authorization;
 import com.feiyang.elocker.rest.AuthorizationRest;
+import com.feiyang.elocker.util.LoginUtil;
 
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
@@ -22,7 +22,7 @@ import java.util.List;
 
 import static com.feiyang.elocker.Constant.MESSAGE_AUTHORIZATION_LIST;
 
-public class AuthorizationActivity extends AppCompatActivity implements NavigationFragment.OnNavigationFragmentInteractionListener {
+public class AuthorizationActivity extends AppCompatActivity {
 
     private Handler mHandler;
     private LinkedHashMap<String, List<Authorization>> mAuthorizationsMap = new LinkedHashMap<String, List<Authorization>>();
@@ -32,6 +32,9 @@ public class AuthorizationActivity extends AppCompatActivity implements Navigati
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /*判断当前是否已经登录*/
+        LoginUtil.validLogin(this);
+
         setContentView(R.layout.activity_authorization);
         //设置底部导航
         NavigationFragment navigation = NavigationFragment.newInstance(this, R.id.navigation_in_authorization);
@@ -51,11 +54,6 @@ public class AuthorizationActivity extends AppCompatActivity implements Navigati
             AuthorizationRest authorizationRest = new AuthorizationRest();
             authorizationRest.getAllAuthorization(mHandler);
         }
-    }
-
-    @Override
-    public void onNavigationFragmentInteraction(Uri uri) {
-        //Interaction with nvationgation fragment
     }
 
     private static class AuthorizationHandler extends Handler {

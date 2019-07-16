@@ -1,49 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/key_item"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="9dip"
+    android:layout_height="@dimen/list_item_height"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="0dp"
     android:background="@color/colorLightGray">
 
     <Button
         android:id="@+id/locker_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:background="#00e6e6e6" />
+        android:layout_width="44dp"
+        android:layout_height="55dp"
+        android:background="@color/transparent"
+        android:contentDescription="@null"
+        android:gravity="center_horizontal|center_vertical"
+        android:textAlignment="gravity"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <ImageView
         android:id="@+id/locker_ic"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:contentDescription="@string/navigate_keys"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:contentDescription="@string/keys"
         android:padding="10dp"
+        android:tint="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/unlock" />
 
     <TextView
         android:id="@+id/locker_origin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/locker_description"
-        android:layout_toEndOf="@+id/locker_ic"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
         android:paddingStart="15dp"
         android:paddingEnd="2dp"
         android:textColor="#B0B0B0"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/locker_description"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/locker_description"
+        app:layout_constraintTop_toBottomOf="@+id/locker_description"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/locker_description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toStartOf="@+id/locker_button"
-        android:layout_toEndOf="@+id/locker_ic"
+        android:layout_width="0dp"
+        android:layout_height="28dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:paddingStart="15dp"
         android:paddingTop="6dp"
         android:paddingEnd="20dp"
-        android:textColor="@color/textColor"
+        android:textColor="@color/colorPrimary"
         android:textSize="16sp"
-        android:textStyle="bold" />
-</RelativeLayout>
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/locker_origin"
+        app:layout_constraintEnd_toStartOf="@+id/locker_button"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toEndOf="@+id/locker_ic"
+        app:layout_constraintTop_toTopOf="parent" />
+</android.support.constraint.ConstraintLayout>

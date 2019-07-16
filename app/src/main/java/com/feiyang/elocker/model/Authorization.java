@@ -1,8 +1,5 @@
 package com.feiyang.elocker.model;
 
-import android.content.res.Resources;
-import com.feiyang.elocker.R;
-
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -18,7 +15,7 @@ public class Authorization implements Serializable {
     private String startTime;
     private String endTime;
     private String description;
-    private String weekDay;
+    private String weekday;
     private String dailyStartTime;
     private String dailyEndTime;
 
@@ -35,7 +32,7 @@ public class Authorization implements Serializable {
         this.endTime = sdf.format(calendar.getTime());
 
         this.description = "Authorization";
-        this.weekDay = "1,2,3,4,5,6,7";
+        this.weekday = "1,2,3,4,5,6,7";
         this.dailyStartTime = "00:00:00";
         this.dailyEndTime = "23:59:00";
     }
@@ -98,11 +95,11 @@ public class Authorization implements Serializable {
     }
 
     public String getWeekDay() {
-        return weekDay;
+        return weekday;
     }
 
-    public void setWeekDay(String weekDay) {
-        this.weekDay = weekDay;
+    public void setWeekDay(String weekday) {
+        this.weekday = weekday;
     }
 
     public String getDailyStartTime() {
@@ -119,17 +116,6 @@ public class Authorization implements Serializable {
 
     public void setDailyEndTime(String dailyEndTime) {
         this.dailyEndTime = dailyEndTime;
-    }
-
-    public String getReadableWeekday() {
-        Resources res = Resources.getSystem();
-        return weekDay.replace("1", res.getString(R.string.Monday))
-                .replace("2", res.getString(R.string.Tuesday))
-                .replace("3", res.getString(R.string.Wednesday))
-                .replace("4", res.getString(R.string.Thursday))
-                .replace("5", res.getString(R.string.Friday))
-                .replace("6", res.getString(R.string.Saturday))
-                .replace("7", res.getString(R.string.Sunday));
     }
 
     public String getLockerName() {

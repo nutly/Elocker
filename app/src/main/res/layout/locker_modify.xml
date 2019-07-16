@@ -30,6 +30,7 @@
     <TextView
         android:layout_width="@dimen/locker_detail_menu_item_width"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="3dp"
         android:paddingStart="@dimen/locker_detail_menu_item_padding"
         android:paddingEnd="@dimen/none_padding"
         android:text="@string/phone"
@@ -39,11 +40,14 @@
         android:id="@+id/locker_modify_phone_num"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="fill_horizontal" />
+        android:layout_gravity="fill_horizontal"
+        android:layout_marginBottom="3dp" />
 
     <TextView
         android:layout_width="@dimen/locker_detail_menu_item_width"
         android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp"
         android:paddingStart="@dimen/locker_detail_menu_item_padding"
         android:paddingEnd="@dimen/none_padding"
         android:text="@string/serial"
@@ -53,11 +57,15 @@
         android:id="@+id/locker_modify_serial"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="fill_horizontal" />
+        android:layout_gravity="fill_horizontal"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp" />
 
     <TextView
         android:layout_width="@dimen/locker_detail_menu_item_width"
         android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="45dp"
         android:paddingStart="@dimen/locker_detail_menu_item_padding"
         android:paddingEnd="@dimen/none_padding"
         android:text="@string/hwType"
@@ -67,6 +75,8 @@
         android:id="@+id/locker_modify_type"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="fill_horizontal" />
+        android:layout_gravity="fill_horizontal"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="45dp" />
 
 </GridLayout>
