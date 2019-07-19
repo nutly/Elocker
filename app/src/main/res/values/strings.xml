@@ -74,7 +74,7 @@
     <string name="confirm_new_pass">Confirm password</string>
     <string name="input_old_pass">Please input old password</string>
     <string name="input_new_password">Please input new password</string>
-    <string name="input_new_pass_again">Please input new password again</string>
+    <string name="input_new_pass_again">Input new password again</string>
     <string name="old_passwd_wrong">Old password is wrong</string>
     <string name="password_mismatch">New password mismatch with confirmed new password</string>
     <string name="change_passwd_success">Change password successfully</string>
@@ -98,5 +98,13 @@
         <item>LastOpenTime</item>
         <item>toggleTimes</item>
     </string-array>
+    <string name="un_login">Unlogin</string>
+    <string name="last_login">Last Login</string>
+    <string name="login_ip">Login Address</string>
+    <string name="email">Email</string>
+    <string name="ip">IP</string>
+    <string name="lockers">Lockers</string>
+    <string name="unlock">Unlock</string>
+    <string name="cu_account">Current Account</string>
 
 </resources>

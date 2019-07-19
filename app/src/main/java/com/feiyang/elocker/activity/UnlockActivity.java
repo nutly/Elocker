@@ -2,6 +2,7 @@ package com.feiyang.elocker.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.View;
@@ -45,6 +46,8 @@ public class UnlockActivity extends AppCompatActivity {
         //设置底部导航
         NavigationFragment navigation = NavigationFragment.newInstance(this, R.id.navigation_in_unlock_activity);
 
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(R.string.unlock);
     }
 
     @Override

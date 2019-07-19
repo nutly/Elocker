@@ -25,8 +25,8 @@
 
     <ImageView
         android:id="@+id/authorization_ic"
-        android:layout_width="37dp"
-        android:layout_height="32dp"
+        android:layout_width="30dp"
+        android:layout_height="25dp"
         android:layout_marginStart="1dp"
         android:layout_marginEnd="140dp"
         android:contentDescription="@null"

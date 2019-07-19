@@ -24,7 +24,7 @@ import static com.feiyang.elocker.Constant.MESSAGE_CHANGE_PASS_STATUS;
 
 public class FragmentChangePass extends Fragment implements View.OnClickListener {
 
-    private EditText mOldPass, mNewPass, mNewpass1;
+    private EditText mOldPass, mNewPass, mNewpass1, mEmail;
     private ChangePassHandler mHandler;
 
     public FragmentChangePass() {
@@ -35,10 +35,11 @@ public class FragmentChangePass extends Fragment implements View.OnClickListener
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_change_pass, container, false);
-        mOldPass = (EditText) view.findViewById(R.id.fragment_change_pass_old_pass);
-        mNewPass = (EditText) view.findViewById(R.id.fragment_change_pass_new_pass);
-        mNewpass1 = (EditText) view.findViewById(R.id.fragment_change_pass_new_pass1);
+        mOldPass = view.findViewById(R.id.change_pass_old_pass);
+        mNewPass = view.findViewById(R.id.change_pass_new_pass);
+        mNewpass1 = view.findViewById(R.id.change_pass_new_pass1);
         mHandler = new ChangePassHandler(this);
         Button submit_btn = (Button) view.findViewById(R.id.change_pass_btn);
 

@@ -27,11 +27,14 @@ import java.util.List;
 
 public class LockerRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    /*当前用户*/
+    private final String mPhoneNum;
     private final List<Locker> mLockers;
     private final String btnText = ">>";
 
-    public LockerRecyclerViewAdapter(List<Locker> lockers) {
-        mLockers = lockers;
+    public LockerRecyclerViewAdapter(String phoneNum, List<Locker> lockers) {
+        this.mPhoneNum = phoneNum;
+        this.mLockers = lockers;
     }
 
     @Override
@@ -47,13 +50,20 @@ public class LockerRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof LockerViewHolder) {
             final LockerViewHolder lockerViewHolder = (LockerViewHolder) holder;
-            lockerViewHolder.mLocker = mLockers.get(position);
             lockerViewHolder.mDescriptionView.setText(mLockers.get(position).getDescription());
             lockerViewHolder.mPhoneNumView.setText(mLockers.get(position).getPhoneNum());
-            lockerViewHolder.mTextButtonView.setText(this.btnText);
             /*将每个条目的位置为tag记录下来*/
-            lockerViewHolder.mTextButtonView.setTag(position);
-            lockerViewHolder.mTextButtonView.setOnClickListener(new LockerMenu());
+            lockerViewHolder.mPhoneNumView.setTag(position);
+
+            lockerViewHolder.mLocker = mLockers.get(position);
+            if (mLockers.get(position).getPhoneNum().equals(mPhoneNum)) {
+                lockerViewHolder.mTextButtonView.setText(this.btnText);
+                lockerViewHolder.mTextButtonView.setOnClickListener(new LockerMenu());
+            } else {
+                /*对于其它账户授权的锁，禁止进行查看、转移、删除等*/
+                lockerViewHolder.mTextButtonView.setVisibility(View.INVISIBLE);
+            }
+
             lockerViewHolder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -62,7 +72,7 @@ public class LockerRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
                         LockerListActivity lockerListActivity = (LockerListActivity) context;
                         Intent intent = new Intent(context, UnlockActivity.class);
                         Bundle data = new Bundle();
-                        int position = (int) lockerViewHolder.mTextButtonView.getTag();
+                        int position = (int) lockerViewHolder.mPhoneNumView.getTag();
                         data.putSerializable("locker", (Serializable) mLockers.get(position));
                         intent.putExtras(data);
                         lockerListActivity.startActivity(intent);
@@ -90,10 +100,10 @@ public class LockerRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
         public LockerViewHolder(View view) {
             super(view);
             mView = view;
-            mDescriptionView = (TextView) view.findViewById(R.id.locker_description);
-            mPhoneNumView = (TextView) view.findViewById(R.id.locker_origin);
-            mImageView = (ImageView) view.findViewById((R.id.locker_ic));
-            mTextButtonView = (TextView) view.findViewById((R.id.locker_button));
+            mDescriptionView = view.findViewById(R.id.fragment_setting_account);
+            mPhoneNumView = view.findViewById(R.id.locker_origin);
+            mImageView = view.findViewById((R.id.locker_ic));
+            mTextButtonView = view.findViewById((R.id.locker_button));
             /*ImaginViewHelper.setImaginViewColor(mImageView,R.color.colorLightBlue);*/
         }
 
@@ -220,13 +230,13 @@ public class LockerRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
 
         private View createLockerDetailView(Context context, Locker locker) {
             View view = View.inflate(context, R.layout.locker_detail, null);
-            TextView lockerName = (TextView) view.findViewById(R.id.locker_detail_name);
-            TextView phoneNum = (TextView) view.findViewById(R.id.locker_detail_phone_num);
-            TextView lastOpen = (TextView) view.findViewById(R.id.locker_detail_lastopen);
-            TextView toggleTime = (TextView) view.findViewById(R.id.locker_detail_toggletime);
-            TextView createTime = (TextView) view.findViewById(R.id.locker_detail_createtime);
-            TextView serial = (TextView) view.findViewById(R.id.locker_detail_serial);
-            TextView type = (TextView) view.findViewById(R.id.locker_detail_type);
+            TextView lockerName = view.findViewById(R.id.locker_detail_name);
+            TextView phoneNum = view.findViewById(R.id.locker_detail_phone_num);
+            TextView lastOpen = view.findViewById(R.id.locker_detail_lastopen);
+            TextView toggleTime = view.findViewById(R.id.locker_detail_toggletime);
+            TextView createTime = view.findViewById(R.id.locker_detail_createtime);
+            TextView serial = view.findViewById(R.id.locker_detail_serial);
+            TextView type = view.findViewById(R.id.locker_detail_type);
 
             lockerName.setText(locker.getDescription());
             phoneNum.setText(locker.getSerial());
@@ -240,10 +250,10 @@ public class LockerRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
 
         private View createLockerModifyView(Context context, final Locker locker) {
             View view = View.inflate(context, R.layout.locker_modify, null);
-            final EditText lockerName = (EditText) view.findViewById(R.id.locker_modify_name);
-            TextView phoneNum = (TextView) view.findViewById(R.id.locker_modify_phone_num);
-            TextView serial = (TextView) view.findViewById(R.id.locker_modify_serial);
-            TextView type = (TextView) view.findViewById(R.id.locker_modify_type);
+            final EditText lockerName = view.findViewById(R.id.locker_modify_name);
+            TextView phoneNum = view.findViewById(R.id.locker_modify_phone_num);
+            TextView serial = view.findViewById(R.id.locker_modify_serial);
+            TextView type = view.findViewById(R.id.locker_modify_type);
 
             lockerName.setText(locker.getDescription());
             phoneNum.setText(locker.getPhoneNum());
@@ -255,8 +265,8 @@ public class LockerRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
 
         private View createLockerTransferview(Context context, String lockerDescription) {
             View view = View.inflate(context, R.layout.locker_transfer, null);
-            EditText toAccountEditText = (EditText) view.findViewById(R.id.locker_transfer_to_account);
-            TextView lockerName = (TextView) view.findViewById(R.id.locker_transfer_locker_name);
+            EditText toAccountEditText = view.findViewById(R.id.locker_transfer_to_account);
+            TextView lockerName = view.findViewById(R.id.locker_transfer_locker_name);
 
             lockerName.setText(lockerDescription);
             return view;

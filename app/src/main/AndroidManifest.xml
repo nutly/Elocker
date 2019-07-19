@@ -6,34 +6,25 @@
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:icon="@drawable/logo"
+        android:allowClearUserData="true"
+        android:label="@string/app_lable"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".activity.LoginActivity"
             android:label="@string/login"></activity>
-        <activity
-            android:name=".activity.UnlockActivity"
-            android:label="@string/app_lable">
+        <activity android:name=".activity.UnlockActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activity.LockerListActivity"
-            android:label="@string/app_lable"></activity>
-        <activity
-            android:name=".activity.AuthorizationActivity"
-            android:label="@string/app_lable" />
-        <activity
-            android:name=".activity.SettingActivity"
-            android:label="@string/app_lable" />
-        <activity
-            android:name=".activity.AuthorizationEditActivity"
-            android:label="@string/app_lable" />
+        <activity android:name=".activity.LockerListActivity"></activity>
+        <activity android:name=".activity.AuthorizationActivity"></activity>
+        <activity android:name=".activity.SettingActivity"></activity>
+        <activity android:name=".activity.AuthorizationEditActivity"></activity>
     </application>
 
     <uses-permission android:name="android.permission.READ_PROFILE" />

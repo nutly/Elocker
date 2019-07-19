@@ -1,43 +1,19 @@
 package com.feiyang.elocker;
 
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 public class Test {
     public static void main(String[] args) throws IOException {
-        HashMap<String, Integer> map = new HashMap<String, Integer>();
-        for (int i = 1; i < 6; i++)
-            map.put("test" + i, i);
-        for (String key : map.keySet()) {
-            System.out.println(key + "##");
+        String[] menu = {"string1", "string2"};
+        List<String> menuList = new ArrayList<String>();
+        menuList.addAll(Arrays.asList(menu));
+        menuList.remove("string1");
+        for (int i = 0; i < menuList.size(); i++) {
+            System.out.println(menuList.get(i));
         }
     }
-
-    public enum Operation {
-        Open("Open1"), Close("Close1");
-        private String description;
-
-        Operation(String description) {
-
-            this.description = description;
-
-        }
-
-        public static Operation from(String value) {
-            Operation operation;
-            try {
-                operation = Operation.valueOf(value);
-            } catch (Exception e) {
-                operation = Operation.Close;
-            }
-            return operation;
-        }
-
-        @Override
-        public String toString() {
-            return this.description;
-        }
-    }
-
 }

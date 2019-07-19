@@ -1,13 +1,16 @@
 package com.feiyang.elocker.activity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
+import com.feiyang.elocker.Constant;
 import com.feiyang.elocker.R;
 import com.feiyang.elocker.adpter.AuthorizationRecyclerViewAdapter;
 import com.feiyang.elocker.fragment.NavigationFragment;
@@ -28,6 +31,7 @@ public class AuthorizationActivity extends AppCompatActivity {
     private LinkedHashMap<String, List<Authorization>> mAuthorizationsMap = new LinkedHashMap<String, List<Authorization>>();
     private AuthorizationRecyclerViewAdapter mAdapter;
     private RecyclerView mRecycleView;
+    private String mPhoneNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,10 +43,16 @@ public class AuthorizationActivity extends AppCompatActivity {
         //设置底部导航
         NavigationFragment navigation = NavigationFragment.newInstance(this, R.id.navigation_in_authorization);
 
+        /*记录当前用户*/
+        SharedPreferences sp = this.getSharedPreferences(Constant.PROPERTY_FILE_NAME, MODE_PRIVATE);
+        mPhoneNum = sp.getString("phoneNum", "");
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(R.string.authorization);
         mHandler = new AuthorizationHandler(this);
-        mRecycleView = (RecyclerView) findViewById(R.id.authorization_list);
+        mRecycleView = findViewById(R.id.authorization_list);
         mRecycleView.setLayoutManager(new LinearLayoutManager(this.getApplicationContext()));
-        mAdapter = new AuthorizationRecyclerViewAdapter(mAuthorizationsMap);
+        mAdapter = new AuthorizationRecyclerViewAdapter(mPhoneNum, mAuthorizationsMap);
         mRecycleView.setAdapter(mAdapter);
         mRecycleView.addItemDecoration(new DividerItemDecoration(this.getApplicationContext(), DividerItemDecoration.VERTICAL));
     }

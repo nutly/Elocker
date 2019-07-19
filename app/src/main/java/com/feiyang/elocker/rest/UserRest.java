@@ -5,10 +5,13 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import com.feiyang.elocker.Constant;
+import com.feiyang.elocker.model.User;
 import com.feiyang.elocker.util.HttpsUtil;
 import com.feiyang.elocker.util.MD5Util;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import okhttp3.Response;
 
 import static com.feiyang.elocker.Constant.BASE_REQUEST_URL;
@@ -37,6 +40,11 @@ public class UserRest extends Thread {
         this.start();
     }
 
+    public void getUser() {
+        mTask = Task.GET_USER_BY_PHONE;
+        this.start();
+    }
+
     @Override
     public void run() {
         switch (mTask) {
@@ -46,9 +54,48 @@ public class UserRest extends Thread {
             case RESET_PASSWORD:
                 this.resetPasswordTask();
                 break;
+            case GET_USER_BY_PHONE:
+                this.getUserTask();
+                break;
             default:
                 break;
         }
+    }
+
+    private void getUserTask() {
+        String sign = MD5Util.md5("/user/get" + mEncryptPassword);
+        String url = BASE_REQUEST_URL + "/user/get?appid=" + mPhoneNum + "&sign=" + sign;
+        Bundle data = new Bundle();
+        Response response = HttpsUtil.get(url);
+        if (response != null) {
+            if (response.isSuccessful()) {
+                JsonParser jsonParser = new JsonParser();
+                JsonObject responseData = null;
+                try {
+                    User user = new User();
+                    responseData = jsonParser.parse(response.body().string()).getAsJsonObject().get("user").getAsJsonObject();
+                    user.setPhoneNum(this.mPhoneNum);
+                    user.setUserName(responseData.get("userName").getAsString());
+                    user.setCreateTime(responseData.get("createTime").getAsString());
+                    user.setEmail(responseData.get("email").getAsString());
+                    user.setLastLoginIp(responseData.get("lastLoginIp").getAsString());
+                    user.setLastLoginTime(responseData.get("lastLoginTime").getAsString());
+                    data.putSerializable("user", user);
+                    data.putInt("status", 200);
+                } catch (Exception e) {
+                    Log.e("UserRest", "Failed to parse response");
+                    data.putInt("status", -1);
+                }
+            }
+            response.close();
+        } else {
+            data.putInt("status", -1);
+        }
+        Message message = new Message();
+        message.what = Constant.MESSAGE_ACCOUNT;
+        message.setData(data);
+        message.setTarget(mHandler);
+        message.sendToTarget();
     }
 
     private void changePassTask() {
@@ -82,6 +129,6 @@ public class UserRest extends Thread {
     }
 
     private enum Task {
-        CHANGE_PASSWORD, RESET_PASSWORD
+        CHANGE_PASSWORD, RESET_PASSWORD, GET_USER_BY_PHONE
     }
 }

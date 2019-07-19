@@ -38,7 +38,7 @@ public class AuthorizationEditActivity extends AppCompatActivity implements View
         /*设置返回按钮*/
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setHomeButtonEnabled(true);
+            actionBar.setTitle(R.string.authorization);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
@@ -253,28 +253,28 @@ public class AuthorizationEditActivity extends AppCompatActivity implements View
     }
 
     private void initView() {
-        mSerial = (TextView) findViewById(R.id.authorization_serial);
-        mLockerName = (TextView) findViewById(R.id.authorization_locker_name);
-        mToAccount = (EditText) findViewById(R.id.authorization_list_to_account);
-        mStartTime = (TextView) findViewById(R.id.authorization_start_date);
-        mEndTime = (TextView) findViewById(R.id.authorization_end_date);
-        mDailyStartTime = (TextView) findViewById(R.id.authorization_start_time);
-        mDailyEndTime = (TextView) findViewById(R.id.authorization_end_time);
-        mDescription = (EditText) findViewById(R.id.authorization_description);
-        mDailyStartTimeLayout = (LinearLayout) findViewById(R.id.authorization_start_time_layout);
-        mDailyEndTimeLayout = (LinearLayout) findViewById(R.id.authorization_end_time_layout);
-        mDayOptionLayout = (LinearLayout) findViewById(R.id.authrization_weekday_layout);
-        Button confirmBtn = (Button) findViewById(R.id.authorization_confirm_btn);
+        mSerial = findViewById(R.id.authorization_serial);
+        mLockerName = findViewById(R.id.authorization_locker_name);
+        mToAccount = findViewById(R.id.authorization_list_to_account);
+        mStartTime = findViewById(R.id.authorization_start_date);
+        mEndTime = findViewById(R.id.authorization_end_date);
+        mDailyStartTime = findViewById(R.id.authorization_start_time);
+        mDailyEndTime = findViewById(R.id.authorization_end_time);
+        mDescription = findViewById(R.id.authorization_description);
+        mDailyStartTimeLayout = findViewById(R.id.authorization_start_time_layout);
+        mDailyEndTimeLayout = findViewById(R.id.authorization_end_time_layout);
+        mDayOptionLayout = findViewById(R.id.authrization_weekday_layout);
+        Button confirmBtn = findViewById(R.id.authorization_confirm_btn);
 
         RadioGroup timeOption = (RadioGroup) findViewById(R.id.authorization_time_option);
         RadioGroup dayOption = (RadioGroup) findViewById(R.id.authorization_day_option);
-        mMonday = (CheckBox) findViewById(R.id.authorization_monday);
-        mTuesday = (CheckBox) findViewById(R.id.authorization_tuesday);
-        mWednesday = (CheckBox) findViewById(R.id.authorization_wednesday);
-        mThursday = (CheckBox) findViewById(R.id.authorization_thursday);
-        mFriday = (CheckBox) findViewById(R.id.authorization_friday);
-        mSaturday = (CheckBox) findViewById(R.id.authorization_saturday);
-        mSunday = (CheckBox) findViewById(R.id.authorization_sunday);
+        mMonday = findViewById(R.id.authorization_monday);
+        mTuesday = findViewById(R.id.authorization_tuesday);
+        mWednesday = findViewById(R.id.authorization_wednesday);
+        mThursday = findViewById(R.id.authorization_thursday);
+        mFriday = findViewById(R.id.authorization_friday);
+        mSaturday = findViewById(R.id.authorization_saturday);
+        mSunday = findViewById(R.id.authorization_sunday);
 
         /*设置默认参数*/
         mDailyStartTime.setText("00:00:00");

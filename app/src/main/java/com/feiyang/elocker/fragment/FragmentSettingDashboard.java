@@ -24,16 +24,18 @@ public class FragmentSettingDashboard extends Fragment implements View.OnClickLi
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_setting, container, false);
+        RelativeLayout account = view.findViewById(R.id.fragment_setting_account);
         RelativeLayout change_passwd = view.findViewById(R.id.fragment_setting_change_pass);
         RelativeLayout setting = view.findViewById(R.id.fragment_setting_setting);
-        RelativeLayout update = (RelativeLayout) view.findViewById(R.id.fragment_setting_update);
-        RelativeLayout feedback = (RelativeLayout) view.findViewById(R.id.fragment_setting_feedback);
-        RelativeLayout about = (RelativeLayout) view.findViewById(R.id.fragment_setting_about);
-        RelativeLayout help = (RelativeLayout) view.findViewById(R.id.fragment_setting_help);
-        Button loginout_btn = (Button) view.findViewById(R.id.login_out_btn);
+        RelativeLayout update = view.findViewById(R.id.fragment_setting_update);
+        RelativeLayout feedback = view.findViewById(R.id.fragment_setting_feedback);
+        RelativeLayout about = view.findViewById(R.id.fragment_setting_about);
+        RelativeLayout help = view.findViewById(R.id.fragment_setting_help);
+        Button loginout_btn = view.findViewById(R.id.login_out_btn);
         if (this.getContext() instanceof OnSettingDashboadrListener) {
             mListener = (OnSettingDashboadrListener) this.getContext();
         }
+        account.setOnClickListener(this);
         change_passwd.setOnClickListener(this);
         setting.setOnClickListener(this);
         update.setOnClickListener(this);
@@ -43,7 +45,6 @@ public class FragmentSettingDashboard extends Fragment implements View.OnClickLi
         loginout_btn.setOnClickListener(this);
         return view;
     }
-
 
     @Override
     public void onClick(View v) {

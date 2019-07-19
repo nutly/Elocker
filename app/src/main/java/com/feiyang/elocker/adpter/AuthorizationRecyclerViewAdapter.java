@@ -15,25 +15,25 @@ import com.feiyang.elocker.R;
 import com.feiyang.elocker.model.Authorization;
 import com.feiyang.elocker.rest.AuthorizationRest;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.*;
 
 
 public class AuthorizationRecyclerViewAdapter extends RecyclerView.Adapter<AuthorizationRecyclerViewAdapter.RecycleViewHolder> {
 
-    private final static int ITEM_TYPE = 0;
-    private final static int HEADER_TYPE = 1;
+    private final int ITEM_TYPE = 0;
+    private final int HEADER_TYPE = 1;
     private LinkedHashMap<String, List<Authorization>> mAuthorizationsMap;
     /*记录列表是否展开,展开为1，不展开为0, key 为lockerName*/
     private HashMap<String, Boolean> mSpreadMap;
     /*记录每组授权的表头位置*/
     private LinkedHashMap<Integer, String> mHeaderIndex;
+    private String mPhoneNum;
 
-    public AuthorizationRecyclerViewAdapter(LinkedHashMap<String, List<Authorization>> authorizationsMap) {
+    public AuthorizationRecyclerViewAdapter(String phoneNum, LinkedHashMap<String, List<Authorization>> authorizationsMap) {
         mAuthorizationsMap = authorizationsMap;
         mHeaderIndex = new LinkedHashMap<Integer, String>();
         mSpreadMap = new HashMap<String, Boolean>();
+        this.mPhoneNum = phoneNum;
     }
 
     public void initSpreadState() {
@@ -72,12 +72,17 @@ public class AuthorizationRecyclerViewAdapter extends RecyclerView.Adapter<Autho
                     Context context = v.getContext();
                     AlertDialog.Builder menuBuilder = new AlertDialog.Builder(context);
                     Resources res = context.getResources();
-                    String[] menus = res.getStringArray(R.array.authorizationMenu);
+                    List<String> menuList = new ArrayList<String>();
+                    menuList.addAll(Arrays.asList(res.getStringArray(R.array.authorizationMenu)));
+                    /*对于其他账户的授权，禁止删除和修改*/
+                    if (!authorization.getFromAccount().equals(mPhoneNum)) {
+                        menuList.remove(1);
+                    }
+                    AuthorizationItemMenuListener menuListener = new AuthorizationItemMenuListener(context,
+                            mAuthorizationsMap, itemViewHolder.getAdapterPosition(), headerIndex, headerName);
                     AlertDialog authorizationMenu = menuBuilder
                             .setTitle(authorization.getDescription())
-                            .setItems(menus,
-                                    new AuthorizationItemMenuListener(context,
-                                            mAuthorizationsMap, itemViewHolder.getAdapterPosition(), headerIndex, headerName))
+                            .setItems(menuList.toArray(new String[menuList.size()]), menuListener)
                             .create();
                     authorizationMenu.show();
                 }
@@ -176,9 +181,9 @@ public class AuthorizationRecyclerViewAdapter extends RecyclerView.Adapter<Autho
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            mToAccount = (TextView) itemView.findViewById(R.id.authorization_item_to_account);
-            mDescription = (TextView) itemView.findViewById(R.id.authorization_item_description);
-            mMenu = (ImageButton) itemView.findViewById(R.id.authorization_item_menu_btn);
+            mToAccount = itemView.findViewById(R.id.authorization_item_to_account);
+            mDescription = itemView.findViewById(R.id.authorization_item_description);
+            mMenu = itemView.findViewById(R.id.authorization_item_menu_btn);
         }
     }
 

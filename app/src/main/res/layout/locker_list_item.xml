@@ -47,14 +47,14 @@
         android:textColor="#B0B0B0"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/locker_description"
+        app:layout_constraintEnd_toEndOf="@+id/fragment_setting_account"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/locker_description"
-        app:layout_constraintTop_toBottomOf="@+id/locker_description"
+        app:layout_constraintStart_toStartOf="@+id/fragment_setting_account"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_setting_account"
         app:layout_constraintVertical_bias="1.0" />
 
     <TextView
-        android:id="@+id/locker_description"
+        android:id="@+id/fragment_setting_account"
         android:layout_width="0dp"
         android:layout_height="28dp"
         android:layout_marginStart="8dp"

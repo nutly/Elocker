@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -35,6 +36,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mLoginHandler = new LoginHandler(this);
         Button loginBtn = (Button) findViewById(R.id.activity_login_login_btn);
         loginBtn.setOnClickListener(this);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(R.string.login);
     }
 
     @Override
