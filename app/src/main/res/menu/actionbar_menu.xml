@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/scanner"
+        android:contentDescription="@string/add_locker"
+        android:icon="@drawable/ic_scan"
+        android:title="@string/add_locker"
+        app:showAsAction="always"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"></item>
+</menu>

@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 import com.feiyang.elocker.Constant;
@@ -107,6 +108,13 @@ public class SettingActivity extends AppCompatActivity implements FragmentSettin
             backToSettingDashboard();
         }
         return true;
+    }
+
+    /*选项菜单*/
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.actionbar_menu, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     /*返回至设置页面*/

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -14,6 +15,7 @@ import com.feiyang.elocker.fragment.NavigationFragment;
 import com.feiyang.elocker.model.Locker;
 import com.feiyang.elocker.model.OperationLog;
 import com.feiyang.elocker.rest.OperationLogRest;
+import com.feiyang.elocker.scanner.Scanner;
 import com.feiyang.elocker.util.LoginUtil;
 
 public class UnlockActivity extends AppCompatActivity {
@@ -43,8 +45,8 @@ public class UnlockActivity extends AppCompatActivity {
             }
         });
 
-        //设置底部导航
-        NavigationFragment navigation = NavigationFragment.newInstance(this, R.id.navigation_in_unlock_activity);
+        //设置顶部ActionBar系统栏和底部导航栏
+        NavigationFragment.newInstance(this, R.id.navigation_in_unlock_activity);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(R.string.unlock);
@@ -63,9 +65,24 @@ public class UnlockActivity extends AppCompatActivity {
         }
     }
 
+    /*创建选项菜单*/
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.actionbar_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    /*响应选项菜单*/
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.scanner) {
+            Scanner.startScan(this);
+        }
+        return true;
+    }
+
     private void openLocker() {
         if (mLocker != null) {
-            Toast.makeText(this, "正在开锁……", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.open_locker_now, Toast.LENGTH_SHORT).show();
 
             /*上传日志*/
             OperationLog operationLog = new OperationLog();
@@ -81,15 +98,7 @@ public class UnlockActivity extends AppCompatActivity {
             mLastOpenDateTv.setText(operationLog.getsTime());
             mToggleTimesTv.setText(String.valueOf(mLocker.getToggleTimes()));
         } else {
-            Toast.makeText(this, "请至\"钥匙\"页面选择一把锁", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.selec_locker, Toast.LENGTH_SHORT).show();
         }
-    }
-
-
-    /*选项菜单*/
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        //TODO 扫一扫识别二维码
-        return true;
     }
 }

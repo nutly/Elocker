@@ -18,7 +18,7 @@
             android:paddingStart="10dp"
             android:paddingEnd="0dp"
             android:text="@string/old_pass"
-            android:textAlignment="viewStart"
+            android:textAlignment="gravity"
             android:textSize="14sp"
             android:textStyle="bold"
             android:typeface="normal"></TextView>
@@ -49,7 +49,7 @@
             android:paddingStart="10dp"
             android:paddingEnd="0dp"
             android:text="@string/new_pass"
-            android:textAlignment="viewStart"
+            android:textAlignment="gravity"
             android:textStyle="bold"
             android:typeface="normal"></TextView>
 
@@ -79,7 +79,7 @@
             android:paddingStart="10dp"
             android:paddingEnd="0dp"
             android:text="@string/confirm_new_pass"
-            android:textAlignment="viewStart"
+            android:textAlignment="gravity"
             android:textStyle="bold"
             android:typeface="normal" />
 

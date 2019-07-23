@@ -95,4 +95,8 @@
     <string name="lockers">锁列表</string>
     <string name="unlock">开锁</string>
     <string name="cu_account">当前账户</string>
+    <string name="add_locker">添加锁</string>
+    <string name="selec_locker">请现在锁列表界面选择一个对象</string>
+    <string name="open_locker_now">正在开锁……</string>
+    <string name="scanner_tip">将二维码放在扫描框类</string>
 </resources>

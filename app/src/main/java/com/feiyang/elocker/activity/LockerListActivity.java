@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
 import android.widget.Toast;
 import com.feiyang.elocker.Constant;
 import com.feiyang.elocker.R;
@@ -63,6 +64,13 @@ public class LockerListActivity extends AppCompatActivity {
             LockerRest lockerRest = new LockerRest();
             lockerRest.getAllLocker(mHandler);
         }
+    }
+
+    /*选项菜单*/
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.actionbar_menu, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     private static class LockerHandler extends Handler {

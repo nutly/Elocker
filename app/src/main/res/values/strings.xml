@@ -78,6 +78,19 @@
     <string name="old_passwd_wrong">Old password is wrong</string>
     <string name="password_mismatch">New password mismatch with confirmed new password</string>
     <string name="change_passwd_success">Change password successfully</string>
+    <string name="un_login">Unlogin</string>
+    <string name="last_login">Last Login</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="login_ip">Login Address</string>
+    <string name="email">Email</string>
+    <string name="ip">IP</string>
+    <string name="lockers">Lockers</string>
+    <string name="unlock">Unlock</string>
+    <string name="cu_account">Current Account</string>
+    <string name="add_locker">Add Locker</string>
+    <string name="selec_locker">Please select a locker under \"locker\" page</string>
+    <string name="open_locker_now">Open Locker now ......</string>
     <string-array name="lockerMenu">　
         <item>Detail</item>
         <item>Edit</item>
@@ -89,8 +102,6 @@
         <item>Detail</item>
         <item>Delete</item>
     </string-array>
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string-array name="lockerDetailItem">　
         <item>Serial</item>
         <item>Type</item>
@@ -98,13 +109,6 @@
         <item>LastOpenTime</item>
         <item>toggleTimes</item>
     </string-array>
-    <string name="un_login">Unlogin</string>
-    <string name="last_login">Last Login</string>
-    <string name="login_ip">Login Address</string>
-    <string name="email">Email</string>
-    <string name="ip">IP</string>
-    <string name="lockers">Lockers</string>
-    <string name="unlock">Unlock</string>
-    <string name="cu_account">Current Account</string>
+    <string name="scanner_tip">Place QR code into the frame</string>
 
 </resources>
