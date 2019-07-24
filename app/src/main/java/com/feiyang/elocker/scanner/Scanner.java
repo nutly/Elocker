@@ -1,34 +1,59 @@
 package com.feiyang.elocker.scanner;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
+import com.feiyang.elocker.Constant;
 import com.feiyang.elocker.R;
+import com.feiyang.elocker.rest.LockerRest;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.journeyapps.barcodescanner.CaptureManager;
 import com.journeyapps.barcodescanner.DecoratedBarcodeView;
+import com.journeyapps.barcodescanner.camera.CameraSettings;
+
+import java.lang.ref.WeakReference;
 
 public class Scanner extends AppCompatActivity implements DecoratedBarcodeView.TorchListener {
     private boolean isLightOn = false;
-    ImageButton mSwithLight;
-    DecoratedBarcodeView mDBV;
-    private CaptureManager captureManager;
+    private ImageButton mSwithLight;
+    private DecoratedBarcodeView mDBV;
+    private CaptureManager mCaptureManager;
 
     public static void startScan(AppCompatActivity activity) {
-        IntentIntegrator mIntegrator = new IntentIntegrator(activity);
-        mIntegrator.setCaptureActivity(Scanner.class);
-        mIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE);
-        mIntegrator.setOrientationLocked(false);
-        mIntegrator.setCameraId(0);
-        mIntegrator.setBeepEnabled(true);
-        mIntegrator.initiateScan();
+        IntentIntegrator integrator = new IntentIntegrator(activity);
+        integrator.setCaptureActivity(Scanner.class);
+        integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE);
+        integrator.setOrientationLocked(false);
+        integrator.setCameraId(0);
+        integrator.setBeepEnabled(true);
+        integrator.initiateScan();
+    }
+
+    public static void handleResult(Context context, int requestCode, int resultCode, Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        Toast.makeText(context, "Result: " + result.getContents(), Toast.LENGTH_LONG).show();
+        if (result != null) {
+            if (result.getContents() == null) {
+                Toast.makeText(context, R.string.failed_to_recognize, Toast.LENGTH_LONG).show();
+            } else {
+                String serial = result.getContents();
+                if (serial != null) {
+                    String defaultLockerName = context.getResources().getString(R.string.default_locker);
+                    LockerRest lockerRest = new LockerRest(context);
+                    lockerRest.addLocker(new ScannerHandler(context), serial, defaultLockerName);
+                }
+            }
+        }
     }
 
     @Override
@@ -42,10 +67,16 @@ public class Scanner extends AppCompatActivity implements DecoratedBarcodeView.T
         if (!hasFlash()) {
             mSwithLight.setVisibility(View.GONE);
         }
-        //初始化捕获
-        captureManager = new CaptureManager(this, mDBV);
-        captureManager.initializeFromIntent(getIntent(), savedInstanceState);
-        captureManager.decode();
+
+        //初始化
+        mCaptureManager = new CaptureManager(this, mDBV);
+        mCaptureManager.initializeFromIntent(getIntent(), savedInstanceState);
+        mCaptureManager.decode();
+
+        /*设置相机参数*/
+        CameraSettings cameraSettings = mDBV.getBarcodeView().getCameraSettings();
+        cameraSettings.setAutoFocusEnabled(true);
+        cameraSettings.setFocusMode(CameraSettings.FocusMode.CONTINUOUS);
 
         mSwithLight.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,41 +91,27 @@ public class Scanner extends AppCompatActivity implements DecoratedBarcodeView.T
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if (result != null) {
-            if (result.getContents() == null) {
-                Toast.makeText(this, "Failed to recognize", Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
-            }
-        } else {
-            super.onActivityResult(requestCode, resultCode, data);
-        }
-    }
-
-    @Override
     protected void onResume() {
         super.onResume();
-        captureManager.onResume();
+        mCaptureManager.onResume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        captureManager.onPause();
+        mCaptureManager.onPause();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        captureManager.onDestroy();
+        mCaptureManager.onDestroy();
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
         super.onSaveInstanceState(outState, outPersistentState);
-        captureManager.onSaveInstanceState(outState);
+        mCaptureManager.onSaveInstanceState(outState);
     }
 
     @Override
@@ -115,5 +132,39 @@ public class Scanner extends AppCompatActivity implements DecoratedBarcodeView.T
     // 判断是否有闪光灯功能
     private boolean hasFlash() {
         return getApplicationContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
+    }
+
+    private static class ScannerHandler extends Handler {
+        private final WeakReference<Context> mContext;
+
+        public ScannerHandler(Context context) {
+            this.mContext = new WeakReference<Context>(context);
+        }
+
+        @Override
+        public void handleMessage(Message message) {
+            if (message.what == Constant.MESSAGE_ADD_LOCKER_STATUS) {
+                Context context = mContext.get();
+                switch (message.getData().getInt("status")) {
+                    case 200:
+                        Toast.makeText(context, R.string.add_locker_success, Toast.LENGTH_SHORT).show();
+                        break;
+                    case 603:
+                        Toast.makeText(context, R.string.unknow_serial, Toast.LENGTH_LONG).show();
+                        break;
+                    case 604:
+                        Toast.makeText(context, R.string.duplicate_serial, Toast.LENGTH_LONG).show();
+                        break;
+                    case 500:
+                        Toast.makeText(context, R.string.internal_error, Toast.LENGTH_LONG).show();
+                        break;
+                    case -1:
+                        Toast.makeText(context, R.string.network_error, Toast.LENGTH_LONG).show();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
     }
 }

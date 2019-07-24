@@ -222,7 +222,7 @@ public class AuthorizationRecyclerViewAdapter extends RecyclerView.Adapter<Autho
                     break;
                 /*删除*/
                 case 1:
-                    AuthorizationRest authorizationRest = new AuthorizationRest();
+                    AuthorizationRest authorizationRest = new AuthorizationRest(mContext);
                     authorizationRest.delAuthorizationById(authorization.getId(), authorization.getSerial());
                     int itemCount = getItemCount();
                     mAuthorizationsMap.get(mHeaderName).remove(authorizationIndex);

@@ -99,4 +99,9 @@
     <string name="selec_locker">请现在锁列表界面选择一个对象</string>
     <string name="open_locker_now">正在开锁……</string>
     <string name="scanner_tip">将二维码放在扫描框类</string>
+    <string name="add_locker_success">添加成功</string>
+    <string name="unknow_serial">序列号不存在</string>
+    <string name="failed_to_recognize">识别二维码失败</string>
+    <string name="default_locker">新增锁</string>
+    <string name="duplicate_serial">该锁已经关联至其它账户</string>
 </resources>

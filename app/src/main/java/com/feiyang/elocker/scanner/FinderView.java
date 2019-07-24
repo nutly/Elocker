@@ -62,9 +62,9 @@ public class FinderView extends ViewfinderView {
             paint.setAlpha(CURRENT_POINT_OPACITY);
             canvas.drawBitmap(resultBitmap, null, frame, paint);
         } else {
-            int middle = frame.height() / 2 + frame.top;
             laserLinePosition = laserLinePosition > frame.height() ? 0 : laserLinePosition + 5;
             linearGradient = new LinearGradient(frame.left + 1, frame.top + laserLinePosition, frame.right - 1, frame.top + 10 + laserLinePosition, colors, position, Shader.TileMode.CLAMP);
+            paint.setColor(getResources().getColor(R.color.zxing_laser_color, null));
             canvas.drawRect(frame.left + 1, frame.top + laserLinePosition, frame.right - 1, frame.top + 10 + laserLinePosition, paint);
             paint.setShader(null);
 
@@ -96,7 +96,7 @@ public class FinderView extends ViewfinderView {
                     canvas.drawCircle(frameLeft + (int) (point.getX() * scaleX), frameTop + (int) (point.getY() * scaleY), radius, paint);
                 }
             }
-            postInvalidateDelayed(32, frame.left, frame.top, frame.right, frame.bottom);
+            postInvalidateDelayed(16, frame.left, frame.top, frame.right, frame.bottom);
         }
     }
 }

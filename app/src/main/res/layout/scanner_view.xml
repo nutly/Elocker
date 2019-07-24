@@ -40,17 +40,8 @@
         android:paddingEnd="50dp">
 
         <ImageButton
-            android:id="@+id/scanner_camera"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="@color/transparent"
-            android:contentDescription="@null"
-            app:srcCompat="@drawable/ic_camera" />
-
-        <ImageButton
             android:id="@+id/scanner_torch"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:backgroundTint="@color/transparent"

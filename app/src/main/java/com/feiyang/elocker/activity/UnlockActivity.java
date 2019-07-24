@@ -23,7 +23,7 @@ public class UnlockActivity extends AppCompatActivity {
     private TextView mLockerDescriptionTv;
     private TextView mLastOpenDateTv;
     private TextView mToggleTimesTv;
-    private Locker mLocker;
+    private static Locker mLocker;
 
     /*生成首页*/
     @Override
@@ -59,6 +59,8 @@ public class UnlockActivity extends AppCompatActivity {
         Bundle data = intent.getExtras();
         if (data != null && data.containsKey("locker")) {
             mLocker = (Locker) data.getSerializable("locker");
+        }
+        if (mLocker != null) {
             mLockerDescriptionTv.setText(mLocker.getDescription());
             mLastOpenDateTv.setText(mLocker.getLastOpenTime());
             mToggleTimesTv.setText(String.valueOf(mLocker.getToggleTimes()));
@@ -73,11 +75,17 @@ public class UnlockActivity extends AppCompatActivity {
     }
 
     /*响应选项菜单*/
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.scanner) {
             Scanner.startScan(this);
         }
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Scanner.handleResult(this, requestCode, resultCode, data);
     }
 
     private void openLocker() {
@@ -91,7 +99,7 @@ public class UnlockActivity extends AppCompatActivity {
             operationLog.setOperation(OperationLog.Operation.Open);
             operationLog.setDescription("Open Locker");
 
-            OperationLogRest operationLogRest = new OperationLogRest(operationLog);
+            OperationLogRest operationLogRest = new OperationLogRest(this, operationLog);
             operationLogRest.addOperationLog();
 
             mLocker.setToggleTimes(mLocker.getToggleTimes() + 1);

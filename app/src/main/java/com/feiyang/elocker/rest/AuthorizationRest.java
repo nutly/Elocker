@@ -1,9 +1,12 @@
 package com.feiyang.elocker.rest;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import com.feiyang.elocker.Constant;
 import com.feiyang.elocker.model.Authorization;
 import com.feiyang.elocker.util.HttpsUtil;
 import com.feiyang.elocker.util.MD5Util;
@@ -21,15 +24,16 @@ import static com.feiyang.elocker.Constant.BASE_REQUEST_URL;
 import static com.feiyang.elocker.Constant.MESSAGE_AUTHORIZATION_LIST;
 
 public class AuthorizationRest extends Thread {
-    private String appid;
-    private String enc_pass;
+    private String mPhoneNum;
+    private String mPassword;
     private Handler mHandler;
     private Authorization mAuthorization;
     private Task mTask;
 
-    public AuthorizationRest() {
-        this.appid = "15851841387";
-        this.enc_pass = MD5Util.md5(this.appid + MD5Util.md5("12345"));
+    public AuthorizationRest(Context context) {
+        SharedPreferences sp = context.getSharedPreferences(Constant.PROPERTY_FILE_NAME, Context.MODE_PRIVATE);
+        this.mPhoneNum = sp.getString("phoneNum", "");
+        this.mPassword = sp.getString("password", "");
     }
 
     public void addAuthorization(Authorization authorization) {
@@ -73,10 +77,10 @@ public class AuthorizationRest extends Thread {
 
     private void addAuthorizationTask() {
         String url = BASE_REQUEST_URL + "/authorization/add";
-        String sign = MD5Util.md5("/authorization/add" + this.enc_pass);
+        String sign = MD5Util.md5("/authorization/add" + this.mPassword);
 
         JsonObject params = new JsonObject();
-        params.addProperty("appid", this.appid);
+        params.addProperty("appid", this.mPhoneNum);
         params.addProperty("sign", sign);
         params.addProperty("serial", mAuthorization.getSerial());
         params.addProperty("toAccount", mAuthorization.getToAccount());
@@ -93,8 +97,8 @@ public class AuthorizationRest extends Thread {
     }
 
     private void getAuthorizationListTask() {
-        String sign = MD5Util.md5("/authorization/get" + this.enc_pass);
-        String url = BASE_REQUEST_URL + "/authorization/get?appid=" + this.appid + "&sign=" + sign;
+        String sign = MD5Util.md5("/authorization/get" + this.mPassword);
+        String url = BASE_REQUEST_URL + "/authorization/get?appid=" + this.mPhoneNum + "&sign=" + sign;
 
         Bundle data = new Bundle();
         LinkedHashMap<String, List<Authorization>> authorizationsMap = new LinkedHashMap<String, List<Authorization>>();
@@ -128,7 +132,7 @@ public class AuthorizationRest extends Thread {
     }
 
     private void delAuthorizationByIdTask() {
-        String sign = MD5Util.md5("/authorization/delete" + this.enc_pass);
+        String sign = MD5Util.md5("/authorization/delete" + this.mPassword);
         String url = BASE_REQUEST_URL + "/authorization/delete";
         JsonObject id = new JsonObject();
         id.addProperty("id", mAuthorization.getId());
@@ -137,7 +141,7 @@ public class AuthorizationRest extends Thread {
         ids.add(id);
 
         JsonObject params = new JsonObject();
-        params.addProperty("appid", this.appid);
+        params.addProperty("appid", this.mPhoneNum);
         params.addProperty("sign", sign);
         params.add("ids", ids);
 

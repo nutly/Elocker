@@ -241,7 +241,7 @@ public class AuthorizationEditActivity extends AppCompatActivity implements View
                 mAuthorization.setDailyStartTime(mDailyStartTime.getText().toString());
                 mAuthorization.setDailyEndTime(mDailyEndTime.getText().toString());
 
-                AuthorizationRest authorizationRest = new AuthorizationRest();
+                AuthorizationRest authorizationRest = new AuthorizationRest(this);
                 authorizationRest.addAuthorization(mAuthorization);
                 /*跳转到授权查看界面*/
                 Intent intent = new Intent(this.getApplicationContext(), AuthorizationActivity.class);

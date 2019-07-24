@@ -22,8 +22,7 @@
         </activity>
         <activity
             android:name=".scanner.Scanner"
-            android:screenOrientation="portrait"
-            tools:replace="screenOrientation" />
+            android:screenOrientation="portrait" />
         <activity android:name=".activity.LockerListActivity" />
         <activity android:name=".activity.AuthorizationActivity" />
         <activity android:name=".activity.SettingActivity" />

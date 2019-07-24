@@ -110,5 +110,10 @@
         <item>toggleTimes</item>
     </string-array>
     <string name="scanner_tip">Place QR code into the frame</string>
+    <string name="add_locker_success">Add Locker Successfully</string>
+    <string name="unknow_serial">Unkown serial</string>
+    <string name="failed_to_recognize">Failed to recognize QR code</string>
+    <string name="default_locker">New Locker</string>
+    <string name="duplicate_serial">The locker is attached to another account already</string>
 
 </resources>

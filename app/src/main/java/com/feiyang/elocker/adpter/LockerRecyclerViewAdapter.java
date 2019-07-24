@@ -52,16 +52,16 @@ public class LockerRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
             final LockerViewHolder lockerViewHolder = (LockerViewHolder) holder;
             lockerViewHolder.mDescriptionView.setText(mLockers.get(position).getDescription());
             lockerViewHolder.mPhoneNumView.setText(mLockers.get(position).getPhoneNum());
+            /*将每个条目的位置为tag记录下来*/
+            lockerViewHolder.mTextButtonView.setTag(position);
 
             lockerViewHolder.mLocker = mLockers.get(position);
             if (mLockers.get(position).getPhoneNum().equals(mPhoneNum)) {
                 lockerViewHolder.mTextButtonView.setText(this.btnText);
-                /*将每个条目的位置为tag记录下来*/
-                lockerViewHolder.mTextButtonView.setTag(position);
                 lockerViewHolder.mTextButtonView.setOnClickListener(new LockerMenu());
             } else {
                 /*对于其它账户授权的锁，禁止进行查看、转移、删除等*/
-                lockerViewHolder.mTextButtonView.setVisibility(View.INVISIBLE);
+                lockerViewHolder.mTextButtonView.setVisibility(View.GONE);
             }
 
             lockerViewHolder.mView.setOnClickListener(new View.OnClickListener() {
@@ -72,7 +72,7 @@ public class LockerRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
                         LockerListActivity lockerListActivity = (LockerListActivity) context;
                         Intent intent = new Intent(context, UnlockActivity.class);
                         Bundle data = new Bundle();
-                        int position = (int) lockerViewHolder.mPhoneNumView.getTag();
+                        int position = (int) lockerViewHolder.mTextButtonView.getTag();
                         data.putSerializable("locker", (Serializable) mLockers.get(position));
                         intent.putExtras(data);
                         lockerListActivity.startActivity(intent);
@@ -172,7 +172,7 @@ public class LockerRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
                                     String lockerDescription = lockerName.getText().toString();
                                     if (lockerDescription != null && !lockerDescription.equals("")) {
                                         mLockers.get(mPosition).setDescription(lockerDescription);
-                                        LockerRest lockerRest = new LockerRest();
+                                        LockerRest lockerRest = new LockerRest(context);
                                         lockerRest.updateLockerDescription(mLockers.get(mPosition));
                                         /*刷新页面*/
                                         notifyItemChanged(mPosition);
@@ -184,7 +184,7 @@ public class LockerRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
                     break;
                 case 2:
                     /*删除*/
-                    LockerRest lockerRest = new LockerRest();
+                    LockerRest lockerRest = new LockerRest(context);
                     lockerRest.delLocker(mLockers.get(mPosition).getSerial());
                     mLockers.remove(mPosition);
                     notifyItemRemoved(mPosition);
@@ -212,7 +212,7 @@ public class LockerRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
                                             lockerTransferview.findViewById(R.id.locker_transfer_to_account);
                                     String toAccount = toAccountEditText.getText().toString();
                                     if (toAccount != null) {
-                                        LockerRest lockerRest = new LockerRest();
+                                        LockerRest lockerRest = new LockerRest(context);
                                         lockerRest.transferLocker(
                                                 mLockers.get(mPosition).getPhoneNum(),
                                                 mLockers.get(mPosition).getSerial(),

@@ -1,5 +1,6 @@
 package com.feiyang.elocker.activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,6 +11,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 import com.feiyang.elocker.Constant;
 import com.feiyang.elocker.R;
@@ -17,6 +19,7 @@ import com.feiyang.elocker.adpter.LockerRecyclerViewAdapter;
 import com.feiyang.elocker.fragment.NavigationFragment;
 import com.feiyang.elocker.model.Locker;
 import com.feiyang.elocker.rest.LockerRest;
+import com.feiyang.elocker.scanner.Scanner;
 import com.feiyang.elocker.util.LoginUtil;
 
 import java.lang.ref.WeakReference;
@@ -61,7 +64,7 @@ public class LockerListActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         if (mHandler != null) {
-            LockerRest lockerRest = new LockerRest();
+            LockerRest lockerRest = new LockerRest(this);
             lockerRest.getAllLocker(mHandler);
         }
     }
@@ -71,6 +74,20 @@ public class LockerListActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.actionbar_menu, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    /*响应选项菜单*/
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.scanner) {
+            Scanner.startScan(this);
+        }
+        return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Scanner.handleResult(this, requestCode, resultCode, data);
     }
 
     private static class LockerHandler extends Handler {

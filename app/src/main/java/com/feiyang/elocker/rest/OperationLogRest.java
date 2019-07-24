@@ -1,5 +1,8 @@
 package com.feiyang.elocker.rest;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import com.feiyang.elocker.Constant;
 import com.feiyang.elocker.model.OperationLog;
 import com.feiyang.elocker.util.HttpsUtil;
 import com.feiyang.elocker.util.MD5Util;
@@ -10,15 +13,15 @@ import static com.feiyang.elocker.Constant.BASE_REQUEST_URL;
 
 public class OperationLogRest extends Thread {
 
-    private String appid;
-    private String enc_pass;
+    private String mPhoneNum;
+    private String mPassword;
     private OperationLog mOperationLog;
 
-    public OperationLogRest(OperationLog operationLog) {
+    public OperationLogRest(Context context, OperationLog operationLog) {
         super();
-        //TODO 更换成直接从配置文件获取当前登录的用户名和加密后的密码
-        this.appid = "15851841387";
-        this.enc_pass = MD5Util.md5(this.appid + MD5Util.md5("12345"));
+        SharedPreferences sp = context.getSharedPreferences(Constant.PROPERTY_FILE_NAME, Context.MODE_PRIVATE);
+        this.mPhoneNum = sp.getString("phoneNum", "");
+        this.mPassword = sp.getString("password", "");
         this.mOperationLog = operationLog;
     }
 
@@ -28,10 +31,10 @@ public class OperationLogRest extends Thread {
 
     @Override
     public void run() {
-        String sign = MD5Util.md5("/log/add" + this.enc_pass);
+        String sign = MD5Util.md5("/log/add" + this.mPassword);
         String url = BASE_REQUEST_URL + "/log/add";
         JsonObject body = new JsonObject();
-        body.addProperty("appid", mOperationLog.getPhoneNum());
+        body.addProperty("appid", mPhoneNum);
         body.addProperty("sign", sign);
         body.addProperty("serial", mOperationLog.getSerial());
         body.addProperty("operation", mOperationLog.getOperation().toString());

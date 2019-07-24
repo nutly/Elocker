@@ -1,9 +1,12 @@
 package com.feiyang.elocker.rest;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import com.feiyang.elocker.Constant;
 import com.feiyang.elocker.model.Locker;
 import com.feiyang.elocker.util.HttpsUtil;
 import com.feiyang.elocker.util.MD5Util;
@@ -22,19 +25,19 @@ import static com.feiyang.elocker.Constant.MESSAGE_lOCKER_LIST;
 
 public class LockerRest extends Thread {
 
-    private String enc_pass;
-    private String appid;
+    private String mPassword;
+    private String mPhoneNum;
     private Handler mHandler;
     private Locker mLocker;
     private Task mTask;
     private String toAccount;
 
-    public LockerRest() {
+    public LockerRest(Context context) {
         super();
         this.mLocker = new Locker();
-        //TODO 更换成直接从配置文件获取当前登录的用户名和加密后的密码
-        this.appid = "15851841387";
-        this.enc_pass = MD5Util.md5(this.appid + MD5Util.md5("12345"));
+        SharedPreferences sp = context.getSharedPreferences(Constant.PROPERTY_FILE_NAME, Context.MODE_PRIVATE);
+        this.mPhoneNum = sp.getString("phoneNum", "");
+        this.mPassword = sp.getString("password", "");
     }
 
     public void getAllLocker(Handler handler) {
@@ -65,6 +68,14 @@ public class LockerRest extends Thread {
         this.start();
     }
 
+    public void addLocker(Handler handler, String serial, String description) {
+        mLocker.setSerial(serial);
+        mLocker.setDescription(description);
+        mHandler = handler;
+        mTask = Task.ADD_LOCKER;
+        this.start();
+    }
+
     public void delLocker(String serial) {
         mLocker.setSerial(serial);
         mTask = Task.DELETE_LOCKER;
@@ -82,6 +93,9 @@ public class LockerRest extends Thread {
                 case GET_LOCKER_BY_SERIAL:
                     getLockerTask();
                     break;
+                case ADD_LOCKER:
+                    addLockerTask();
+                    break;
                 case MODIFY_LOCKER_DESCRIPTION:
                     modifyLockerDescriptionTask();
                     break;
@@ -98,8 +112,8 @@ public class LockerRest extends Thread {
     }
 
     private void getLockerTask() {
-        String sign = MD5Util.md5("/locker/get" + this.enc_pass);
-        String url = BASE_REQUEST_URL + "/locker/get?appid=" + this.appid + "&sign=" + sign;
+        String sign = MD5Util.md5("/locker/get" + this.mPassword);
+        String url = BASE_REQUEST_URL + "/locker/get?appid=" + this.mPhoneNum + "&sign=" + sign;
         if (mLocker.getSerial() != null && !mLocker.getSerial().equals("")) {
             url = url + "&serial=" + mLocker.getSerial();
         }
@@ -147,14 +161,14 @@ public class LockerRest extends Thread {
     }
 
     private void modifyLockerDescriptionTask() {
-        String sign = MD5Util.md5("/locker/update" + this.enc_pass);
+        String sign = MD5Util.md5("/locker/update" + this.mPassword);
         String url = BASE_REQUEST_URL + "/locker/update";
 
         String serial = mLocker.getSerial();
         String description = mLocker.getDescription();
         if (serial != null && description != null) {
             JsonObject params = new JsonObject();
-            params.addProperty("appid", this.appid);
+            params.addProperty("appid", this.mPhoneNum);
             params.addProperty("sign", sign);
             params.addProperty("serial", serial);
             params.addProperty("description", description);
@@ -166,12 +180,12 @@ public class LockerRest extends Thread {
     }
 
     private void transferLockerTask() {
-        String sign = MD5Util.md5("/locker/transfer" + this.enc_pass);
+        String sign = MD5Util.md5("/locker/transfer" + this.mPassword);
         String url = BASE_REQUEST_URL + "/locker/transfer";
 
         if (mLocker.getSerial() != null && mLocker.getPhoneNum() != null && toAccount != null) {
             JsonObject params = new JsonObject();
-            params.addProperty("appid", this.appid);
+            params.addProperty("appid", this.mPhoneNum);
             params.addProperty("sign", sign);
             params.addProperty("serial", mLocker.getSerial());
             params.addProperty("toAccount", toAccount);
@@ -182,14 +196,40 @@ public class LockerRest extends Thread {
         }
     }
 
+    private void addLockerTask() {
+        String sign = MD5Util.md5("/locker/add" + this.mPassword);
+        String url = BASE_REQUEST_URL + "/locker/add";
+        if (mLocker.getSerial() != null) {
+            JsonObject params = new JsonObject();
+            params.addProperty("appid", mPhoneNum);
+            params.addProperty("sign", sign);
+            params.addProperty("serial", mLocker.getSerial());
+            params.addProperty("description", mLocker.getDescription());
+
+            Response response = HttpsUtil.post(url, params);
+            Bundle data = new Bundle();
+            if (response != null) {
+                data.putInt("status", response.code());
+                response.close();
+            } else {
+                data.putInt("status", -1);
+            }
+            Message message = new Message();
+            message.what = Constant.MESSAGE_ADD_LOCKER_STATUS;
+            message.setData(data);
+            message.setTarget(mHandler);
+            message.sendToTarget();
+        }
+    }
+
     private void deleteLockerTask() {
-        String sign = MD5Util.md5("/locker/delete" + this.enc_pass);
+        String sign = MD5Util.md5("/locker/delete" + this.mPassword);
         String url = BASE_REQUEST_URL + "/locker/delete";
 
         String serial = mLocker.getSerial();
         if (serial != null) {
             JsonObject params = new JsonObject();
-            params.addProperty("appid", this.appid);
+            params.addProperty("appid", this.mPhoneNum);
             params.addProperty("sign", sign);
             JsonArray serials = new JsonArray();
             serials.add(mLocker.getSerial());
@@ -203,6 +243,7 @@ public class LockerRest extends Thread {
     }
 
     private enum Task {
-        GET_ALL_lOCKER, GET_LOCKER_BY_SERIAL, MODIFY_LOCKER_DESCRIPTION, TRANSFER_LOCKER, DELETE_LOCKER
+        GET_ALL_lOCKER, GET_LOCKER_BY_SERIAL, MODIFY_LOCKER_DESCRIPTION,
+        TRANSFER_LOCKER, DELETE_LOCKER, ADD_LOCKER
     }
 }
