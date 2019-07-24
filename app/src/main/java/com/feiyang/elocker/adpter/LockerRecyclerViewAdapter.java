@@ -239,7 +239,7 @@ public class LockerRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
             TextView type = view.findViewById(R.id.locker_detail_type);
 
             lockerName.setText(locker.getDescription());
-            phoneNum.setText(locker.getSerial());
+            phoneNum.setText(locker.getPhoneNum());
             lastOpen.setText(locker.getLastOpenTime());
             toggleTime.setText(String.valueOf(locker.getToggleTimes()));
             createTime.setText(locker.getCreateTime());

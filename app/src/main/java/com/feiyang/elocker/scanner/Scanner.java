@@ -41,7 +41,6 @@ public class Scanner extends AppCompatActivity implements DecoratedBarcodeView.T
 
     public static void handleResult(Context context, int requestCode, int resultCode, Intent data) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        Toast.makeText(context, "Result: " + result.getContents(), Toast.LENGTH_LONG).show();
         if (result != null) {
             if (result.getContents() == null) {
                 Toast.makeText(context, R.string.failed_to_recognize, Toast.LENGTH_LONG).show();
