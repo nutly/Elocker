@@ -2,6 +2,7 @@
 <resources>
     <color name="colorPrimary">#1B82D2</color><!--蓝色-->
     <color name="colorLightGray">#FFFFFE</color><!--灰白色-->
+    <color name="colorGray">#DBDBD3</color><!--灰色-->
     <color name="white">#FFFFFF</color><!--白色-->
     <color name="colorLightBlue">#2196F3</color><!--蓝色-->
     <color name="mainBgColor">#F7F7F7</color><!--浅灰色 主屏背景色-->

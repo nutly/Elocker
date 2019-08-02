@@ -6,7 +6,6 @@
     <string name="keys">钥匙</string>
     <string name="authorization">授权</string>
     <string name="setting">设置</string>
-    <string name="test">测试文本</string>
     <string name="lastOpen">上次开锁：</string>
     <string name="time_picker_activity_name">选择时间</string>
     <string-array name="lockerMenu">　
@@ -70,7 +69,6 @@
     <string name="incorrect_login_info">密码错误或用户名不存在</string>
     <string name="internal_error">内部错误</string>
     <string name="login_too_frequently">登录太频繁，请稍后再试</string>
-    <string name="login_now">正在登录</string>
     <string name="update">更新</string>
     <string name="feedback">反馈</string>
     <string name="about">关于</string>
@@ -80,7 +78,7 @@
     <string name="submit">提交</string>
     <string name="old_pass">原密码</string>
     <string name="new_pass">新密码</string>
-    <string name="confirm_new_pass">确认新密码</string>
+    <string name="confirm_pass">确认密码</string>
     <string name="input_old_pass">请输入原密码</string>
     <string name="input_new_password">请输入新密码</string>
     <string name="input_new_pass_again">请再次输入新密码</string>
@@ -104,4 +102,18 @@
     <string name="failed_to_recognize">识别二维码失败</string>
     <string name="default_locker">新增锁</string>
     <string name="duplicate_serial">该锁已经关联至其它账户</string>
+    <string name="mobile">手机号</string>
+    <string name="require_tag">*</string>
+    <string name="input_mobile">请输入手机号</string>
+    <string name="password">密码</string>
+    <string name="input_pass_again">请再次输入密码</string>
+    <string name="verification_code">验证码</string>
+    <string name="input_code">输入验证码</string>
+    <string name="get_code">获取验证码</string>
+    <string name="nickname">昵称</string>
+    <string name="input_nick_name">请输入昵称</string>
+    <string name="invalid_phone_num">手机号格式有误，请重新输入</string>
+    <string name="get_register_code_success">验证码发送成功，请注意查收</string>
+    <string name="get_register_code_timer">秒后重新获取</string>
+    <string name="reget_register_code">重新获取</string>
 </resources>

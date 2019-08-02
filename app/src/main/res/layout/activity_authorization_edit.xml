@@ -250,63 +250,84 @@
         android:layout_margin="0.2dip"
         android:background="@color/colorLightGray"
         android:orientation="horizontal"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <CheckBox
             android:id="@+id/authorization_monday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0"
+            android:layout_weight="1"
             android:checked="true"
-            android:text="@string/Monday" />
+            android:text="@string/Monday"
+            android:textColor="@color/textColor"
+            android:textSize="14sp"
+            android:theme="@style/WeekCheckBox" />
 
         <CheckBox
             android:id="@+id/authorization_tuesday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0"
+            android:layout_weight="1"
             android:checked="true"
-            android:text="@string/Tuesday" />
+            android:text="@string/Tuesday"
+            android:textColor="@color/textColor"
+            android:textSize="14sp"
+            android:theme="@style/WeekCheckBox" />
 
         <CheckBox
             android:id="@+id/authorization_wednesday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0"
+            android:layout_weight="1"
             android:checked="true"
-            android:text="@string/Wednesday" />
+            android:text="@string/Wednesday"
+            android:textColor="@color/textColor"
+            android:textSize="14sp"
+            android:theme="@style/WeekCheckBox" />
 
         <CheckBox
             android:id="@+id/authorization_thursday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0"
+            android:layout_weight="1"
             android:checked="true"
-            android:text="@string/Thursday" />
+            android:text="@string/Thursday"
+            android:textColor="@color/textColor"
+            android:textSize="14sp"
+            android:theme="@style/WeekCheckBox" />
 
         <CheckBox
             android:id="@+id/authorization_friday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0"
+            android:layout_weight="1"
             android:checked="true"
-            android:text="@string/Friday" />
+            android:text="@string/Friday"
+            android:textColor="@color/textColor"
+            android:textSize="14sp"
+            android:theme="@style/WeekCheckBox" />
 
         <CheckBox
             android:id="@+id/authorization_saturday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0"
+            android:layout_weight="1"
             android:checked="true"
-            android:text="@string/Saturday" />
+            android:text="@string/Saturday"
+            android:textColor="@color/textColor"
+            android:textSize="14sp"
+            android:theme="@style/WeekCheckBox" />
 
         <CheckBox
             android:id="@+id/authorization_sunday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0"
+            android:layout_weight="1"
             android:checked="true"
-            android:text="@string/Sunday" />
+            android:text="@string/Sunday"
+            android:textColor="@color/textColor"
+            android:textSize="14sp"
+            android:theme="@style/WeekCheckBox" />
     </LinearLayout>
 
     <LinearLayout
@@ -393,8 +414,8 @@
             android:layout_weight="2"
             android:padding="10dp"
             android:text="@string/start_time"
-            android:textSize="16sp"
             android:textColor="@color/colorPrimary"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView
@@ -432,8 +453,8 @@
             android:layout_weight="2"
             android:padding="10dp"
             android:text="@string/end_time"
-            android:textSize="16sp"
             android:textColor="@color/colorPrimary"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView

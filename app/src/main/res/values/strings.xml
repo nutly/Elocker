@@ -4,7 +4,6 @@
     <string name="authorization">Authority</string>
     <string name="setting">Setting</string>
 
-    <string name="test">This is a test text</string>
     <string name="app_lable">Elocker</string>
     <string name="lastOpen">LastOpen:</string>
     <string name="locker_detail_activity_name">Locker Detail</string>
@@ -55,7 +54,6 @@
     <string name="incorrect_login_info">Password is incorrect or username not exsist</string>
     <string name="internal_error">Internal Error</string>
     <string name="login_too_frequently">Username or password wrong for too many times, please login later</string>
-    <string name="login_now">Login .....</string>
     <string name="update">Update</string>
     <string name="feedback">Feedback</string>
 
@@ -71,7 +69,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="new_pass">New password</string>
-    <string name="confirm_new_pass">Confirm password</string>
+    <string name="confirm_pass">Confirm pass</string>
     <string name="input_old_pass">Please input old password</string>
     <string name="input_new_password">Please input new password</string>
     <string name="input_new_pass_again">Input new password again</string>
@@ -91,6 +89,12 @@
     <string name="add_locker">Add Locker</string>
     <string name="selec_locker">Please select a locker under \"locker\" page</string>
     <string name="open_locker_now">Open Locker now ......</string>
+    <string name="scanner_tip">Place QR code into the frame</string>
+    <string name="add_locker_success">Add Locker Successfully</string>
+    <string name="unknow_serial">Unkown serial</string>
+    <string name="failed_to_recognize">Failed to recognize QR code</string>
+    <string name="default_locker">New Locker</string>
+    <string name="duplicate_serial">The locker is attached to another account already</string>
     <string-array name="lockerMenu">　
         <item>Detail</item>
         <item>Edit</item>
@@ -109,11 +113,19 @@
         <item>LastOpenTime</item>
         <item>toggleTimes</item>
     </string-array>
-    <string name="scanner_tip">Place QR code into the frame</string>
-    <string name="add_locker_success">Add Locker Successfully</string>
-    <string name="unknow_serial">Unkown serial</string>
-    <string name="failed_to_recognize">Failed to recognize QR code</string>
-    <string name="default_locker">New Locker</string>
-    <string name="duplicate_serial">The locker is attached to another account already</string>
+    <string name="mobile">Mobile</string>
+    <string name="require_tag">*</string>
+    <string name="input_mobile">Please input mobilephone number</string>
+    <string name="password">Password</string>
+    <string name="input_pass_again">Please input password again</string>
+    <string name="verification_code">Code</string>
+    <string name="input_code">Input code here</string>
+    <string name="get_code">Click to get code</string>
+    <string name="nickname">Nickname</string>
+    <string name="input_nick_name">Please input nick name here</string>
+    <string name="invalid_phone_num">Invalid phone number，please check again</string>
+    <string name="get_register_code_success">Get register code successfully, please take notice of short message later</string>
+    <string name="get_register_code_timer">" S later re-get code"</string>
+    <string name="reget_register_code">Re-get code</string>
 
 </resources>

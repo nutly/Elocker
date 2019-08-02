@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.feiyang.elocker.R;
 import com.feiyang.elocker.rest.LoginRest;
@@ -30,15 +31,33 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        mUserName = (EditText) findViewById(R.id.activity_login_user_name);
-        mPassword = (EditText) findViewById(R.id.activity_login_passwd);
-        mLoginHandler = new LoginHandler(this);
-        Button loginBtn = (Button) findViewById(R.id.activity_login_login_btn);
-        loginBtn.setOnClickListener(this);
-
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(R.string.login);
+
+        mUserName = findViewById(R.id.activity_login_user_name);
+        mPassword = findViewById(R.id.activity_login_passwd);
+        mLoginHandler = new LoginHandler(this);
+        Button loginBtn = findViewById(R.id.activity_login_login_btn);
+        loginBtn.setOnClickListener(this);
+
+        /*跳转到注册页面*/
+        TextView registerTv = findViewById(R.id.activity_login_register);
+        registerTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        /*跳转到重置密码页面*/
+        TextView forgetPassTv = findViewById(R.id.activity_login_forget_pass);
+        forgetPassTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(v.getContext(), "Reset Password", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override
@@ -58,7 +77,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         LoginRest loginRest = new LoginRest(mLoginHandler);
         loginRest.login(mPhoneNum, mEncryptPassword);
-        Toast.makeText(this, R.string.login_now, Toast.LENGTH_SHORT).show();
     }
 
     private static class LoginHandler extends Handler {

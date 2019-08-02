@@ -13,6 +13,7 @@ import com.feiyang.elocker.R;
 import com.feiyang.elocker.model.Authorization;
 import com.feiyang.elocker.model.Locker;
 import com.feiyang.elocker.rest.AuthorizationRest;
+import com.feiyang.elocker.scanner.Scanner;
 
 import java.util.Calendar;
 import java.util.TreeSet;
@@ -77,6 +78,9 @@ public class AuthorizationEditActivity extends AppCompatActivity implements View
                 Intent intent = new Intent(this, LockerListActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.scanner:
+                Scanner.startScan(this);
+                break;
             default:
                 break;
         }
@@ -108,7 +112,7 @@ public class AuthorizationEditActivity extends AppCompatActivity implements View
                 break;
             /*设置一天具体哪个时间段可以执行*/
             case R.id.authorization_whole_day:
-                mDailyStartTime.setVisibility(View.GONE);
+                mDailyStartTimeLayout.setVisibility(View.GONE);
                 mDailyEndTimeLayout.setVisibility(View.GONE);
                 mStartTime.setText("00:00:00");
                 mEndTime.setText("23:59:00");

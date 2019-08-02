@@ -17,6 +17,7 @@ import com.feiyang.elocker.fragment.FragmentAccount;
 import com.feiyang.elocker.fragment.FragmentChangePass;
 import com.feiyang.elocker.fragment.FragmentSettingDashboard;
 import com.feiyang.elocker.fragment.NavigationFragment;
+import com.feiyang.elocker.scanner.Scanner;
 import com.feiyang.elocker.util.LoginUtil;
 
 import java.util.HashMap;
@@ -106,6 +107,8 @@ public class SettingActivity extends AppCompatActivity implements FragmentSettin
         super.onOptionsItemSelected(item);
         if (item.getItemId() == android.R.id.home) {
             backToSettingDashboard();
+        } else if (item.getItemId() == R.id.scanner) {
+            Scanner.startScan(this);
         }
         return true;
     }

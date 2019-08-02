@@ -25,6 +25,8 @@ public class UserRest extends Thread {
     private String mNewPassword;
     private Handler mHandler;
     private Task mTask;
+    //手机号码，用于获取验证码
+    private String mMobile;
 
     public UserRest(Context context, Handler handler) {
         mHandler = handler;
@@ -45,18 +47,23 @@ public class UserRest extends Thread {
         this.start();
     }
 
+    public void getRegisterCode(String mobile) {
+        mMobile = mobile;
+        mTask = Task.GET_REGISTER_CODE;
+        this.start();
+    }
+
     @Override
     public void run() {
         switch (mTask) {
             case CHANGE_PASSWORD:
                 this.changePassTask();
                 break;
-            case RESET_PASSWORD:
-                this.resetPasswordTask();
-                break;
             case GET_USER_BY_PHONE:
                 this.getUserTask();
                 break;
+            case GET_REGISTER_CODE:
+                this.getRegisterCodeTask();
             default:
                 break;
         }
@@ -124,11 +131,33 @@ public class UserRest extends Thread {
         message.sendToTarget();
     }
 
-    private void resetPasswordTask() {
+    private void getRegisterCodeTask() {
+        Message message = new Message();
+        Bundle data = new Bundle();
+        if (this.mMobile == null || this.mMobile.equals("")
+                || this.mMobile.length() < 6 || this.mHandler == null) {
+            data.putInt("status", -1);
+        } else {
+            String url = BASE_REQUEST_URL + "/user/fetchCodeForRegister";
+            JsonObject params = new JsonObject();
+            params.addProperty("appid", this.mMobile);
+            Response response = HttpsUtil.post(url, params);
+            if (response != null) {
+                data.putInt("status", response.code());
+                response.close();
+            }
+        }
+        message.what = Constant.MESSAGE_GET_REGISTER_CODE_STATUS;
+        message.setTarget(mHandler);
+        message.setData(data);
+        message.sendToTarget();
+    }
+
+    private void addUserTask() {
 
     }
 
     private enum Task {
-        CHANGE_PASSWORD, RESET_PASSWORD, GET_USER_BY_PHONE
+        CHANGE_PASSWORD, GET_USER_BY_PHONE, GET_REGISTER_CODE
     }
 }
