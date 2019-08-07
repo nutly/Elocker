@@ -1,6 +1,7 @@
 package com.feiyang.elocker.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -11,17 +12,20 @@ import android.widget.EditText;
 import android.widget.Toast;
 import com.feiyang.elocker.Constant;
 import com.feiyang.elocker.R;
+import com.feiyang.elocker.model.User;
 import com.feiyang.elocker.rest.UserRest;
+import com.feiyang.elocker.util.MD5Util;
 import com.feiyang.elocker.util.TimerUtil;
 
 import java.lang.ref.WeakReference;
 
-public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
+public class RegisterActivity extends AppCompatActivity implements View.OnClickListener,
+        View.OnFocusChangeListener {
 
     private EditText mPhoneNum, mPassword1, mPassword2, mCode, mNickName, mEmail;
     private Button mGetCodeBtn, mSubmitBtn;
     private RegisterHandler mHandler;
-    private TimerUtil timerUtil;
+    private TimerUtil mTimerUtil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,25 +43,85 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         mGetCodeBtn.setOnClickListener(this);
         mSubmitBtn.setOnClickListener(this);
+        mPhoneNum.setOnFocusChangeListener(this);
+        mPassword1.setOnFocusChangeListener(this);
+        mPassword2.setOnFocusChangeListener(this);
+        mCode.setOnFocusChangeListener(this);
     }
 
     @Override
     public void onClick(View v) {
         Context context = v.getContext();
+        String phoneNum = mPhoneNum.getText().toString();
+        UserRest userRest = new UserRest(context, mHandler);
         switch (v.getId()) {
             case R.id.activity_register_get_code:
-                String phoneNum = mPhoneNum.getText().toString();
-                UserRest userRest = new UserRest(context, mHandler);
+                if (phoneNum == null || phoneNum.equals("")
+                        || phoneNum.length() < 6 || this.mHandler == null) {
+                    mPhoneNum.setBackground(getDrawable(R.drawable.inputbox_red));
+                    Toast.makeText(context, R.string.phone_num_format_error, Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 userRest.getRegisterCode(phoneNum);
-
                 mGetCodeBtn.setClickable(false);
-                mGetCodeBtn.setBackgroundColor(getResources().getColor(R.color.colorGray, null));
-                TimerUtil timerUtil = new TimerUtil(mGetCodeBtn, 120, 1);
-                timerUtil.start();
+                mGetCodeBtn.setBackgroundColor(getColor(R.color.colorGray));
+                mTimerUtil = new TimerUtil(mGetCodeBtn, 30, 1);
+                mTimerUtil.start();
                 break;
             case R.id.activity_register_submit:
-                String code = mCode.getText().toString();
+                if (isInputValid()) {
+                    User user = new User();
+                    user.setPhoneNum(phoneNum);
+                    String orgin_pass = mPassword1.getText().toString().trim();
+                    user.setPassword(MD5Util.md5(phoneNum + MD5Util.md5(orgin_pass)));
+                    user.setEmail(mEmail.getText().toString().trim());
+                    user.setUserName(mNickName.getText().toString().trim());
+                    userRest.addUser(user, mCode.getText().toString());
+                }
+                break;
             default:
+                break;
+        }
+    }
+
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        if (hasFocus)
+            return;
+        EditText editText = findViewById(v.getId());
+        String value = editText.getText().toString() != null ?
+                editText.getText().toString() : "";
+        Context context = v.getContext();
+        switch (v.getId()) {
+            case R.id.activity_register_phone_num:
+                if (value.length() < 6 || value.length() > 15) {
+                    editText.setBackground(getDrawable(R.drawable.inputbox_red));
+                    Toast.makeText(context, R.string.phone_num_format_error, Toast.LENGTH_SHORT).show();
+                } else
+                    editText.setBackground(getDrawable(R.drawable.inputbox_white));
+                break;
+            case R.id.activity_register_pass1:
+                if (value.trim().length() <= 6) {
+                    editText.setBackground(getDrawable(R.drawable.inputbox_red));
+                    Toast.makeText(context, R.string.password_format_error, Toast.LENGTH_SHORT).show();
+                } else
+                    editText.setBackground(getDrawable(R.drawable.inputbox_white));
+                break;
+            case R.id.activity_register_pass2:
+                String pass1 = mPassword1.getText().toString() != null ?
+                        mPassword1.getText().toString() : "";
+                if (!value.trim().equals(pass1)) {
+                    editText.setBackground(getDrawable(R.drawable.inputbox_red));
+                    Toast.makeText(context, R.string.password_mismatch, Toast.LENGTH_SHORT).show();
+                } else
+                    editText.setBackground(getDrawable(R.drawable.inputbox_white));
+                break;
+            case R.id.activity_register_code:
+                if (value.length() != 6) {
+                    Toast.makeText(context, R.string.code_length_error, Toast.LENGTH_SHORT).show();
+                    editText.setBackground(getDrawable(R.drawable.inputbox_red));
+                } else
+                    editText.setBackground(getDrawable(R.drawable.inputbox_white));
                 break;
         }
     }
@@ -71,20 +135,76 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         @Override
         public void handleMessage(Message message) {
+            Context context = mRegisterActivity.get().getApplicationContext();
             if (message.what == Constant.MESSAGE_GET_REGISTER_CODE_STATUS) {
-                Context context = mRegisterActivity.get().getApplicationContext();
                 switch (message.getData().getInt("status")) {
                     case 200:
                         Toast.makeText(context, R.string.get_register_code_success, Toast.LENGTH_LONG).show();
                         break;
                     case 610:
+                        Toast.makeText(context, R.string.get_verification_code_failed, Toast.LENGTH_LONG).show();
+                        break;
                     case -1:
-                        Toast.makeText(context, R.string.invalid_phone_num, Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, R.string.network_error, Toast.LENGTH_LONG).show();
+                        mRegisterActivity.get().mTimerUtil.cancel();
+                        mRegisterActivity.get().mTimerUtil.onFinish();
+                        break;
+                    default:
+                        break;
+                }
+            } else if (message.what == Constant.MESSAGE_USER_REGISTER_STATUS) {
+                switch (message.getData().getInt("status")) {
+                    case 200:
+                        Toast.makeText(context, R.string.register_success, Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(context, LoginActivity.class);
+                        context.startActivity(intent);
+                        break;
+                    case 609:
+                        Toast.makeText(context, R.string.incorrect_verification_code, Toast.LENGTH_LONG).show();
+                        break;
+                    case 612:
+                        Toast.makeText(context, R.string.user_duplicate, Toast.LENGTH_LONG).show();
+                        break;
+                    case 500:
+                        Toast.makeText(context, R.string.internal_error, Toast.LENGTH_LONG).show();
                         break;
                     default:
                         break;
                 }
             }
         }
+    }
+
+    private boolean isInputValid() {
+        if (mPhoneNum.getText().toString() == null ||
+                mPhoneNum.getText().toString().length() <= 6 ||
+                mPhoneNum.getText().toString().length() > 15) {
+            mPhoneNum.setBackground(getDrawable(R.drawable.inputbox_red));
+            Toast.makeText(mPhoneNum.getContext(), R.string.phone_num_format_error, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (mPassword1.getText().toString() == null || mPassword1.getText().toString().length() <= 6) {
+            mPassword1.setBackground(getDrawable(R.drawable.inputbox_red));
+            Toast.makeText(mPassword1.getContext(), R.string.password_format_error, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (!mPassword2.getText().toString().trim().equals(mPassword1.getText().toString().trim())) {
+            mPassword2.setBackground(getDrawable(R.drawable.inputbox_red));
+            Toast.makeText(mPassword2.getContext(), R.string.password_mismatch, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (mCode.getText().toString().length() != 6) {
+            Toast.makeText(mCode.getContext(), R.string.code_length_error, Toast.LENGTH_SHORT).show();
+            mCode.setBackground(getDrawable(R.drawable.inputbox_red));
+            return false;
+        }
+        try {
+            Integer.parseInt(mCode.getText().toString());
+        } catch (Exception e) {
+            Toast.makeText(mCode.getContext(), R.string.code_format_error, Toast.LENGTH_SHORT).show();
+            mCode.setBackground(getDrawable(R.drawable.inputbox_red));
+            return false;
+        }
+        return true;
     }
 }

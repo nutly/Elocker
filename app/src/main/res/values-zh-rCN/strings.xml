@@ -116,4 +116,12 @@
     <string name="get_register_code_success">验证码发送成功，请注意查收</string>
     <string name="get_register_code_timer">秒后重新获取</string>
     <string name="reget_register_code">重新获取</string>
+    <string name="incorrect_verification_code">验证码不正确</string>
+    <string name="register_success">注册成功</string>
+    <string name="phone_num_format_error">电话号码格式有误</string>
+    <string name="password_format_error">密码长度应大于6个字符</string>
+    <string name="code_length_error">验证码长度为6个字符</string>
+    <string name="code_format_error">验证码全部为数字</string>
+    <string name="get_verification_code_failed">获取验证码失败，请检查手机号码是否正确</string>
+    <string name="user_duplicate">该手机号已经注册，请直接登录</string>
 </resources>

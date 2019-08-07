@@ -25,8 +25,9 @@ public class UserRest extends Thread {
     private String mNewPassword;
     private Handler mHandler;
     private Task mTask;
-    //手机号码，用于获取验证码
-    private String mMobile;
+    private User mUser;
+    /*验证码,用于新增用户时使用*/
+    private String mCode;
 
     public UserRest(Context context, Handler handler) {
         mHandler = handler;
@@ -47,9 +48,17 @@ public class UserRest extends Thread {
         this.start();
     }
 
-    public void getRegisterCode(String mobile) {
-        mMobile = mobile;
+    public void getRegisterCode(String phoneNum) {
+        mUser = new User();
+        mUser.setPhoneNum(phoneNum);
         mTask = Task.GET_REGISTER_CODE;
+        this.start();
+    }
+
+    public void addUser(User user, String code) {
+        mUser = user;
+        mCode = code;
+        mTask = Task.ADD_USER;
         this.start();
     }
 
@@ -64,6 +73,10 @@ public class UserRest extends Thread {
                 break;
             case GET_REGISTER_CODE:
                 this.getRegisterCodeTask();
+                break;
+            case ADD_USER:
+                this.addUserTask();
+                break;
             default:
                 break;
         }
@@ -134,18 +147,16 @@ public class UserRest extends Thread {
     private void getRegisterCodeTask() {
         Message message = new Message();
         Bundle data = new Bundle();
-        if (this.mMobile == null || this.mMobile.equals("")
-                || this.mMobile.length() < 6 || this.mHandler == null) {
-            data.putInt("status", -1);
+
+        String url = BASE_REQUEST_URL + "/user/fetchCodeForRegister";
+        JsonObject params = new JsonObject();
+        params.addProperty("appid", mUser.getPhoneNum());
+        Response response = HttpsUtil.post(url, params);
+        if (response != null) {
+            data.putInt("status", response.code());
+            response.close();
         } else {
-            String url = BASE_REQUEST_URL + "/user/fetchCodeForRegister";
-            JsonObject params = new JsonObject();
-            params.addProperty("appid", this.mMobile);
-            Response response = HttpsUtil.post(url, params);
-            if (response != null) {
-                data.putInt("status", response.code());
-                response.close();
-            }
+            data.putInt("status", -1);
         }
         message.what = Constant.MESSAGE_GET_REGISTER_CODE_STATUS;
         message.setTarget(mHandler);
@@ -154,10 +165,30 @@ public class UserRest extends Thread {
     }
 
     private void addUserTask() {
+        String url = BASE_REQUEST_URL + "/user/add";
+        JsonObject params = new JsonObject();
+        params.addProperty("phoneNum", mUser.getPhoneNum());
+        params.addProperty("userName", mUser.getUserName());
+        params.addProperty("password", mUser.getPassword());
+        params.addProperty("email", mUser.getEmail());
+        params.addProperty("code", mCode);
 
+        Message message = new Message();
+        Bundle data = new Bundle();
+        Response response = HttpsUtil.post(url, params);
+        if (response != null) {
+            data.putInt("status", response.code());
+            response.close();
+        } else {
+            data.putInt("status", -1);
+        }
+        message.what = Constant.MESSAGE_USER_REGISTER_STATUS;
+        message.setData(data);
+        message.setTarget(mHandler);
+        message.sendToTarget();
     }
 
     private enum Task {
-        CHANGE_PASSWORD, GET_USER_BY_PHONE, GET_REGISTER_CODE
+        CHANGE_PASSWORD, GET_USER_BY_PHONE, GET_REGISTER_CODE, ADD_USER
     }
 }

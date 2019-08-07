@@ -127,5 +127,13 @@
     <string name="get_register_code_success">Get register code successfully, please take notice of short message later</string>
     <string name="get_register_code_timer">" S later re-get code"</string>
     <string name="reget_register_code">Re-get code</string>
+    <string name="incorrect_verification_code">Verification code is incorrect</string>
+    <string name="register_success">Register new user successfully</string>
+    <string name="phone_num_format_error">Incorrect phone number format</string>
+    <string name="password_format_error">Password should contains at least 6 characters</string>
+    <string name="code_length_error">Verification code length should be 6</string>
+    <string name="code_format_error">Verification code consists of numbers</string>
+    <string name="get_verification_code_failed">Failed to get verfication code , please check phone number</string>
+    <string name="user_duplicate">The mobile has already registered, please login directly</string>
 
 </resources>

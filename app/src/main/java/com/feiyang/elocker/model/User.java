@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class User implements Serializable {
     private String phoneNum;
     private String userName;
+    private String password;
     private String createTime;
     private String lastLoginTime;
     private String lastLoginIp;
@@ -60,5 +61,13 @@ public class User implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

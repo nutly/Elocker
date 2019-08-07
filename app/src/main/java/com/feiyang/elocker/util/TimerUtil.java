@@ -1,6 +1,5 @@
 package com.feiyang.elocker.util;
 
-import android.content.res.Resources;
 import android.os.CountDownTimer;
 import android.widget.Button;
 import com.feiyang.elocker.R;
@@ -29,6 +28,6 @@ public class TimerUtil extends CountDownTimer {
     public void onFinish() {
         mBtn.setText(R.string.reget_register_code);
         mBtn.setClickable(true);
-        mBtn.setBackgroundColor(Resources.getSystem().getColor(R.color.transparent, null));
+        mBtn.setBackgroundColor(mBtn.getContext().getColor(R.color.colorLightGray));
     }
 }
