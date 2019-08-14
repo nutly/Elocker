@@ -8,7 +8,7 @@
     <TextView
         android:id="@+id/titl_old_pass"
         android:layout_width="122dp"
-        android:layout_height="@dimen/register_view_row_height"
+        android:layout_height="@dimen/row_height"
         android:gravity="center_horizontal|center_vertical"
         android:text="@string/old_pass"
         android:textAlignment="gravity"
@@ -40,7 +40,7 @@
     <TextView
         android:id="@+id/title_new_pass1"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/register_view_row_height"
+        android:layout_height="@dimen/row_height"
         android:layout_marginTop="10dp"
         android:contentDescription="@null"
         android:gravity="center_horizontal|center_vertical"
@@ -70,7 +70,7 @@
     <TextView
         android:id="@+id/title_confirm_pass"
         android:layout_width="0dp"
-        android:layout_height="@dimen/register_view_row_height"
+        android:layout_height="@dimen/row_height"
         android:layout_marginTop="10dp"
         android:contentDescription="@null"
         android:gravity="center_horizontal|center_vertical"

@@ -61,7 +61,7 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/fragment_setting_setting"
+        android:id="@+id/fragment_setting_change_phonenum"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:background="#ffffff">
@@ -73,7 +73,7 @@
             android:layout_alignParentStart="true"
             android:contentDescription="@null"
             android:padding="15dp"
-            app:srcCompat="@drawable/setting" />
+            app:srcCompat="@drawable/mobile" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -83,7 +83,7 @@
             android:paddingStart="18dp"
             android:paddingTop="10dp"
             android:paddingEnd="20dp"
-            android:text="@string/setting"
+            android:text="@string/change_moblie"
             android:textColor="@color/textColor"
             android:textSize="16sp" />
     </RelativeLayout>

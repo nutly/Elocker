@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.ForgetPassActivity">
+
+    <TextView
+        android:id="@+id/title_mobile"
+        android:layout_width="94dp"
+        android:layout_height="@dimen/row_height"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="@string/mobile"
+        android:textAlignment="gravity"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.026"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.175" />
+
+    <EditText
+        android:id="@+id/forget_pass_phone_num"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/inputbox_white"
+        android:ems="10"
+        android:hint="@string/input_mobile"
+        android:inputType="phone"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/title_mobile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/title_mobile"
+        app:layout_constraintTop_toTopOf="@+id/title_mobile"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/get_code_title"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/row_height"
+        android:layout_marginTop="16dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="@string/verification_code"
+        android:textAlignment="gravity"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/title_mobile"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/title_mobile"
+        app:layout_constraintTop_toBottomOf="@+id/title_mobile" />
+
+    <EditText
+        android:id="@+id/forget_pass_code"
+        android:layout_width="134dp"
+        android:layout_height="0dp"
+        android:background="@drawable/inputbox_white"
+        android:ems="10"
+        android:hint="@string/input_code"
+        android:inputType="number"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/get_code_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/forget_pass_phone_num"
+        app:layout_constraintTop_toTopOf="@+id/get_code_title"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/forget_pass_get_code"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="24dp"
+        android:background="@color/colorLightGray"
+        android:text="@string/get_code"
+        android:textAllCaps="false"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/get_code_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/forget_pass_code"
+        app:layout_constraintTop_toTopOf="@+id/get_code_title" />
+
+    <TextView
+        android:id="@+id/password1_title"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/row_height"
+        android:layout_marginTop="16dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="@string/new_pass"
+        android:textAlignment="gravity"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/title_mobile"
+        app:layout_constraintStart_toStartOf="@+id/title_mobile"
+        app:layout_constraintTop_toBottomOf="@+id/get_code_title" />
+
+    <EditText
+        android:id="@+id/forget_pass_password1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/inputbox_white"
+        android:ems="10"
+        android:hint="@string/input_new_password"
+        android:inputType="textPassword"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/password1_title"
+        app:layout_constraintEnd_toEndOf="@+id/forget_pass_phone_num"
+        app:layout_constraintStart_toStartOf="@+id/forget_pass_phone_num"
+        app:layout_constraintTop_toTopOf="@+id/password1_title" />
+
+    <TextView
+        android:id="@+id/confirm_pass_title"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/row_height"
+        android:layout_marginTop="16dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="@string/confirm_pass"
+        android:textAlignment="gravity"
+        app:layout_constraintEnd_toEndOf="@+id/title_mobile"
+        app:layout_constraintStart_toStartOf="@+id/title_mobile"
+        app:layout_constraintTop_toBottomOf="@+id/password1_title" />
+
+    <EditText
+        android:id="@+id/forget_pass_password2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/inputbox_white"
+        android:ems="10"
+        android:hint="@string/input_new_pass_again"
+        android:inputType="textPassword"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/confirm_pass_title"
+        app:layout_constraintEnd_toEndOf="@+id/forget_pass_phone_num"
+        app:layout_constraintStart_toStartOf="@+id/forget_pass_phone_num"
+        app:layout_constraintTop_toTopOf="@+id/confirm_pass_title" />
+
+    <Button
+        android:id="@+id/forget_pass_submit_btn"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/row_height"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="8dp"
+        android:background="@color/colorLightGray"
+        android:text="@string/submit"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/forget_pass_password2" />
+</android.support.constraint.ConstraintLayout>

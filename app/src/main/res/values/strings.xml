@@ -95,24 +95,6 @@
     <string name="failed_to_recognize">Failed to recognize QR code</string>
     <string name="default_locker">New Locker</string>
     <string name="duplicate_serial">The locker is attached to another account already</string>
-    <string-array name="lockerMenu">　
-        <item>Detail</item>
-        <item>Edit</item>
-        <item>Delete</item>
-        <item>Authorization</item>
-        <item>Transfer</item>
-    </string-array>
-    <string-array name="authorizationMenu">　
-        <item>Detail</item>
-        <item>Delete</item>
-    </string-array>
-    <string-array name="lockerDetailItem">　
-        <item>Serial</item>
-        <item>Type</item>
-        <item>AddTime</item>
-        <item>LastOpenTime</item>
-        <item>toggleTimes</item>
-    </string-array>
     <string name="mobile">Mobile</string>
     <string name="require_tag">*</string>
     <string name="input_mobile">Please input mobilephone number</string>
@@ -135,5 +117,35 @@
     <string name="code_format_error">Verification code consists of numbers</string>
     <string name="get_verification_code_failed">Failed to get verfication code , please check phone number</string>
     <string name="user_duplicate">The mobile has already registered, please login directly</string>
+    <string name="reset_pass">Reset Password</string>
+    <string name="reset_pass_success">Reset password successfully</string>
+    <string name="user_not_exsist">The mobile has not registered</string>
+    <string name="change_moblie">Change Mobile</string>
+    <string name="new_mobile">New Mobile</string>
+    <string name="input_new_mobile">Please input new mobile</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string-array name="lockerMenu">　
+        <item>Detail</item>
+        <item>Edit</item>
+        <item>Delete</item>
+        <item>Authorization</item>
+        <item>Transfer</item>
+    </string-array>
+    <string-array name="authorizationMenu">　
+        <item>Detail</item>
+        <item>Delete</item>
+    </string-array>
+    <string-array name="lockerDetailItem">　
+        <item>Serial</item>
+        <item>Type</item>
+        <item>AddTime</item>
+        <item>LastOpenTime</item>
+        <item>toggleTimes</item>
+    </string-array>
+    <string name="last_day">Last Day</string>
+    <string name="last_week">Last Week</string>
+    <string name="last_month">Last Month</string>
+    <string name="log">Log</string>
 
 </resources>

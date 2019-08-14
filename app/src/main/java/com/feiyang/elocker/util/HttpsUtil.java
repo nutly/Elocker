@@ -8,6 +8,7 @@ import javax.net.ssl.*;
 import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 public class HttpsUtil {
@@ -15,13 +16,19 @@ public class HttpsUtil {
     private static OkHttpClient okHttpClient;
 
     public static Response get(final String url) {
+        return get(url, new HashMap<String, String>());
+    }
+
+    public static Response get(final String url, HashMap<String, String> headers) {
         Response response = null;
-        Request request = new Request.Builder()
-                .url(url)
+        Request.Builder builder = new Request.Builder().url(url)
                 .get()
-                .header("content-type", "application/json;charset:utf-8")
-                .header("user-agent", "android")
-                .build();
+                .header("Content-Type", "application/json;charset:utf-8");
+        if (headers.size() > 0) {
+            for (String name : headers.keySet())
+                builder.header(name, headers.get(name));
+        }
+        Request request = builder.build();
         /*初始化okhttpclient，确保只有一个okhttpclient实例*/
         HttpsUtil.buildOKHttpClient();
         if (HttpsUtil.okHttpClient != null) {
@@ -36,19 +43,20 @@ public class HttpsUtil {
         return response;
     }
 
-    /*
-     * @param url   请求URL
-     * @param params JSON格式参数
-     * @return okhttp3.Response 响应
-     */
     public static Response post(String url, JsonObject params) {
+        return post(url, params, new HashMap<String, String>());
+    }
+
+    public static Response post(String url, JsonObject params, HashMap<String, String> headers) {
         Response response = null;
         MediaType mediaType = MediaType.parse("application/json;charset=utf-8");
         RequestBody requestBody = RequestBody.create(mediaType, params.toString());
-        Request request = new Request.Builder()
-                .url(url)
-                .post(requestBody)
-                .build();
+        Request.Builder builder = new Request.Builder().url(url).post(requestBody);
+        if (headers.size() > 0) {
+            for (String name : headers.keySet())
+                builder.header(name, headers.get(name));
+        }
+        Request request = builder.build();
         HttpsUtil.buildOKHttpClient();
         if (HttpsUtil.okHttpClient != null) {
             Call call = HttpsUtil.okHttpClient.newCall(request);

@@ -13,19 +13,22 @@ public class LoginUtil {
         if (sharedPreferences == null) {
             sharedPreferences = context.getSharedPreferences(Constant.PROPERTY_FILE_NAME, Context.MODE_PRIVATE);
         }
-        if (!sharedPreferences.contains("phoneNum") || !sharedPreferences.contains("password")) {
+        if (!sharedPreferences.contains("phoneNum") ||
+                !sharedPreferences.contains("password") ||
+                !sharedPreferences.contains("apiKey")) {
             Intent intent = new Intent(context, LoginActivity.class);
             context.startActivity(intent);
         }
     }
 
-    public static void saveLoginInfo(Context context, String phoneNum, String password) {
+    public static void saveLoginInfo(Context context, String phoneNum, String password, String apiKey) {
         if (sharedPreferences == null) {
             sharedPreferences = context.getSharedPreferences(Constant.PROPERTY_FILE_NAME, Context.MODE_PRIVATE);
         }
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("phoneNum", phoneNum);
         editor.putString("password", password);
+        editor.putString("apiKey", apiKey);
         editor.commit();
     }
 

@@ -9,7 +9,7 @@
     <TextView
         android:id="@+id/register_title_phone_num"
         android:layout_width="0dp"
-        android:layout_height="@dimen/register_view_row_height"
+        android:layout_height="@dimen/row_height"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="300dp"
@@ -64,7 +64,7 @@
     <TextView
         android:id="@+id/register_title_pass1"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/register_view_row_height"
+        android:layout_height="@dimen/row_height"
         android:layout_marginTop="10dp"
         android:gravity="center_vertical|center_horizontal"
         android:text="@string/password"
@@ -107,7 +107,7 @@
     <TextView
         android:id="@+id/register_title_confirm_pass"
         android:layout_width="0dp"
-        android:layout_height="@dimen/register_view_row_height"
+        android:layout_height="@dimen/row_height"
         android:layout_marginTop="10dp"
         android:gravity="center_vertical|center_horizontal"
         android:text="@string/confirm_pass"
@@ -149,7 +149,7 @@
     <TextView
         android:id="@+id/register_title_code"
         android:layout_width="0dp"
-        android:layout_height="@dimen/register_view_row_height"
+        android:layout_height="@dimen/row_height"
         android:layout_marginTop="10dp"
         android:gravity="center_horizontal|center_vertical"
         android:text="@string/verification_code"
@@ -204,7 +204,7 @@
     <TextView
         android:id="@+id/register_title_nickname"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/register_view_row_height"
+        android:layout_height="@dimen/row_height"
         android:layout_marginTop="10dp"
         android:gravity="center_horizontal|center_vertical"
         android:text="@string/nickname"
@@ -231,7 +231,7 @@
     <TextView
         android:id="@+id/register_title_email"
         android:layout_width="0dp"
-        android:layout_height="@dimen/register_view_row_height"
+        android:layout_height="@dimen/row_height"
         android:layout_marginTop="10dp"
         android:gravity="center_horizontal|center_vertical"
         android:paddingStart="5dp"

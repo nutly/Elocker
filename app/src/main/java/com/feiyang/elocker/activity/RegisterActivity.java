@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,6 +33,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        /*设置返回按钮*/
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle(R.string.register);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
         mHandler = new RegisterHandler(this);
         mPhoneNum = findViewById(R.id.activity_register_phone_num);
         mPassword1 = findViewById(R.id.activity_register_pass1);
@@ -57,15 +67,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         switch (v.getId()) {
             case R.id.activity_register_get_code:
                 if (phoneNum == null || phoneNum.equals("")
-                        || phoneNum.length() < 6 || this.mHandler == null) {
+                        || phoneNum.length() < Constant.MIN_PHONE_NUM_LENGTH || this.mHandler == null) {
                     mPhoneNum.setBackground(getDrawable(R.drawable.inputbox_red));
                     Toast.makeText(context, R.string.phone_num_format_error, Toast.LENGTH_SHORT).show();
                     return;
                 }
-                userRest.getRegisterCode(phoneNum);
+                userRest.getCode(phoneNum);
                 mGetCodeBtn.setClickable(false);
                 mGetCodeBtn.setBackgroundColor(getColor(R.color.colorGray));
-                mTimerUtil = new TimerUtil(mGetCodeBtn, 30, 1);
+                mTimerUtil = new TimerUtil(mGetCodeBtn, 120, 1);
                 mTimerUtil.start();
                 break;
             case R.id.activity_register_submit:
@@ -94,14 +104,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         Context context = v.getContext();
         switch (v.getId()) {
             case R.id.activity_register_phone_num:
-                if (value.length() < 6 || value.length() > 15) {
+                if (value.length() < Constant.MIN_PHONE_NUM_LENGTH
+                        || value.length() > Constant.MAX_PHONE_NUM_LENGTH) {
                     editText.setBackground(getDrawable(R.drawable.inputbox_red));
                     Toast.makeText(context, R.string.phone_num_format_error, Toast.LENGTH_SHORT).show();
                 } else
                     editText.setBackground(getDrawable(R.drawable.inputbox_white));
                 break;
             case R.id.activity_register_pass1:
-                if (value.trim().length() <= 6) {
+                if (value.trim().length() <= Constant.MIN_PASSWORD_LENGTH) {
                     editText.setBackground(getDrawable(R.drawable.inputbox_red));
                     Toast.makeText(context, R.string.password_format_error, Toast.LENGTH_SHORT).show();
                 } else
@@ -117,7 +128,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     editText.setBackground(getDrawable(R.drawable.inputbox_white));
                 break;
             case R.id.activity_register_code:
-                if (value.length() != 6) {
+                if (value.length() != Constant.VERIFICATION_CODE_LENGTH) {
                     Toast.makeText(context, R.string.code_length_error, Toast.LENGTH_SHORT).show();
                     editText.setBackground(getDrawable(R.drawable.inputbox_red));
                 } else
@@ -177,8 +188,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     private boolean isInputValid() {
         if (mPhoneNum.getText().toString() == null ||
-                mPhoneNum.getText().toString().length() <= 6 ||
-                mPhoneNum.getText().toString().length() > 15) {
+                mPhoneNum.getText().toString().length() <= Constant.MIN_PHONE_NUM_LENGTH ||
+                mPhoneNum.getText().toString().length() > Constant.MAX_PHONE_NUM_LENGTH) {
             mPhoneNum.setBackground(getDrawable(R.drawable.inputbox_red));
             Toast.makeText(mPhoneNum.getContext(), R.string.phone_num_format_error, Toast.LENGTH_SHORT).show();
             return false;
@@ -193,7 +204,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             Toast.makeText(mPassword2.getContext(), R.string.password_mismatch, Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (mCode.getText().toString().length() != 6) {
+        if (mCode.getText().toString().length() != Constant.VERIFICATION_CODE_LENGTH) {
             Toast.makeText(mCode.getContext(), R.string.code_length_error, Toast.LENGTH_SHORT).show();
             mCode.setBackground(getDrawable(R.drawable.inputbox_red));
             return false;
@@ -204,6 +215,17 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             Toast.makeText(mCode.getContext(), R.string.code_format_error, Toast.LENGTH_SHORT).show();
             mCode.setBackground(getDrawable(R.drawable.inputbox_red));
             return false;
+        }
+        return true;
+    }
+
+    /*响应返回按钮*/
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            this.onDestroy();
         }
         return true;
     }

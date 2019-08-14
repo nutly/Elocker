@@ -13,10 +13,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 import com.feiyang.elocker.Constant;
 import com.feiyang.elocker.R;
-import com.feiyang.elocker.fragment.FragmentAccount;
-import com.feiyang.elocker.fragment.FragmentChangePass;
-import com.feiyang.elocker.fragment.FragmentSettingDashboard;
-import com.feiyang.elocker.fragment.NavigationFragment;
+import com.feiyang.elocker.fragment.*;
 import com.feiyang.elocker.scanner.Scanner;
 import com.feiyang.elocker.util.LoginUtil;
 
@@ -41,6 +38,7 @@ public class SettingActivity extends AppCompatActivity implements FragmentSettin
         mFragments.put("dashboard", new FragmentSettingDashboard());
         mFragments.put("change_pass", new FragmentChangePass());
         mFragments.put("account", new FragmentAccount());
+        mFragments.put("change_phonenum", new FragmentChangePhoneNum());
 
 
         //设置底部导航
@@ -72,8 +70,11 @@ public class SettingActivity extends AppCompatActivity implements FragmentSettin
                 mActionBar.setTitle(R.string.change_passwd);
                 mActionBar.setDisplayHomeAsUpEnabled(true);
                 break;
-            case R.id.fragment_setting_setting:
-                Toast.makeText(this, R.string.setting, Toast.LENGTH_LONG).show();
+            case R.id.fragment_setting_change_phonenum:
+                transaction.replace(R.id.setting_container, mFragments.get("change_phonenum"));
+                transaction.commit();
+                mActionBar.setTitle(R.string.change_moblie);
+                mActionBar.setDisplayHomeAsUpEnabled(true);
                 break;
             case R.id.fragment_setting_update:
                 Toast.makeText(this, R.string.update, Toast.LENGTH_LONG).show();

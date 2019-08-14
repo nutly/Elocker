@@ -14,6 +14,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import okhttp3.Response;
 
+import java.util.HashMap;
+
 import static com.feiyang.elocker.Constant.BASE_REQUEST_URL;
 import static com.feiyang.elocker.Constant.MESSAGE_CHANGE_PASS_STATUS;
 
@@ -26,14 +28,16 @@ public class UserRest extends Thread {
     private Handler mHandler;
     private Task mTask;
     private User mUser;
-    /*验证码,用于新增用户时使用*/
+    /*验证码*/
     private String mCode;
+    private String mApiKey;
 
     public UserRest(Context context, Handler handler) {
         mHandler = handler;
         SharedPreferences sharedPreferences = context.getSharedPreferences(Constant.PROPERTY_FILE_NAME, Context.MODE_PRIVATE);
         mPhoneNum = sharedPreferences.getString("phoneNum", "");
         mEncryptPassword = sharedPreferences.getString("password", "");
+        mApiKey = sharedPreferences.getString("apiKey", "");
     }
 
     public void changePassword(String oldPassword, String newPassword) {
@@ -48,7 +52,7 @@ public class UserRest extends Thread {
         this.start();
     }
 
-    public void getRegisterCode(String phoneNum) {
+    public void getCode(String phoneNum) {
         mUser = new User();
         mUser.setPhoneNum(phoneNum);
         mTask = Task.GET_REGISTER_CODE;
@@ -62,6 +66,14 @@ public class UserRest extends Thread {
         this.start();
     }
 
+    public void resetPassword(String phoneNum, String password, String code) {
+        this.mPhoneNum = phoneNum;
+        this.mEncryptPassword = password;
+        this.mCode = code;
+        this.mTask = Task.RESET_PASSWORD;
+        this.start();
+    }
+
     @Override
     public void run() {
         switch (mTask) {
@@ -72,10 +84,13 @@ public class UserRest extends Thread {
                 this.getUserTask();
                 break;
             case GET_REGISTER_CODE:
-                this.getRegisterCodeTask();
+                this.getCodeTask();
                 break;
             case ADD_USER:
                 this.addUserTask();
+                break;
+            case RESET_PASSWORD:
+                this.resetPasswordTask();
                 break;
             default:
                 break;
@@ -83,17 +98,22 @@ public class UserRest extends Thread {
     }
 
     private void getUserTask() {
-        String sign = MD5Util.md5("/user/get" + mEncryptPassword);
-        String url = BASE_REQUEST_URL + "/user/get?appid=" + mPhoneNum + "&sign=" + sign;
+        String token = MD5Util.md5("/user/get" +
+                MD5Util.md5(mEncryptPassword + this.mApiKey));
+        String url = BASE_REQUEST_URL + "/user/get";
         Bundle data = new Bundle();
-        Response response = HttpsUtil.get(url);
+
+        HashMap<String, String> headers = new HashMap<>();
+        headers.put(Constant.APPID, this.mPhoneNum);
+        headers.put(Constant.APIKEY, this.mApiKey);
+        headers.put(Constant.TOKEN, token);
+        Response response = HttpsUtil.get(url, headers);
         if (response != null) {
             if (response.isSuccessful()) {
                 JsonParser jsonParser = new JsonParser();
-                JsonObject responseData = null;
                 try {
                     User user = new User();
-                    responseData = jsonParser.parse(response.body().string()).getAsJsonObject().get("user").getAsJsonObject();
+                    JsonObject responseData = jsonParser.parse(response.body().string()).getAsJsonObject().get("user").getAsJsonObject();
                     user.setPhoneNum(this.mPhoneNum);
                     user.setUserName(responseData.get("userName").getAsString());
                     user.setCreateTime(responseData.get("createTime").getAsString());
@@ -101,7 +121,7 @@ public class UserRest extends Thread {
                     user.setLastLoginIp(responseData.get("lastLoginIp").getAsString());
                     user.setLastLoginTime(responseData.get("lastLoginTime").getAsString());
                     data.putSerializable("user", user);
-                    data.putInt("status", 200);
+                    data.putInt("status", response.code());
                 } catch (Exception e) {
                     Log.e("UserRest", "Failed to parse response");
                     data.putInt("status", -1);
@@ -120,11 +140,15 @@ public class UserRest extends Thread {
 
     private void changePassTask() {
         String url = BASE_REQUEST_URL + "/user/changePassword";
-        String sign = MD5Util.md5("/user/changePassword" + mEncryptPassword);
+        String token = MD5Util.md5("/user/changePassword" +
+                MD5Util.md5(mEncryptPassword + this.mApiKey));
+
+        HashMap<String, String> headers = new HashMap<>();
+        headers.put(Constant.APPID, this.mPhoneNum);
+        headers.put(Constant.APIKEY, this.mApiKey);
+        headers.put(Constant.TOKEN, token);
 
         JsonObject params = new JsonObject();
-        params.addProperty("appid", mPhoneNum);
-        params.addProperty("sign", sign);
         params.addProperty("oldpass", mOldPassword);
         params.addProperty("newpass", mNewPassword);
         Bundle data = new Bundle();
@@ -144,13 +168,13 @@ public class UserRest extends Thread {
         message.sendToTarget();
     }
 
-    private void getRegisterCodeTask() {
+    private void getCodeTask() {
         Message message = new Message();
         Bundle data = new Bundle();
 
-        String url = BASE_REQUEST_URL + "/user/fetchCodeForRegister";
+        String url = BASE_REQUEST_URL + "/user/getCode";
         JsonObject params = new JsonObject();
-        params.addProperty("appid", mUser.getPhoneNum());
+        params.addProperty("phoneNum", mUser.getPhoneNum());
         Response response = HttpsUtil.post(url, params);
         if (response != null) {
             data.putInt("status", response.code());
@@ -166,6 +190,7 @@ public class UserRest extends Thread {
 
     private void addUserTask() {
         String url = BASE_REQUEST_URL + "/user/add";
+
         JsonObject params = new JsonObject();
         params.addProperty("phoneNum", mUser.getPhoneNum());
         params.addProperty("userName", mUser.getUserName());
@@ -188,7 +213,29 @@ public class UserRest extends Thread {
         message.sendToTarget();
     }
 
+    private void resetPasswordTask() {
+        String url = BASE_REQUEST_URL + "/user/resetPassword";
+        JsonObject params = new JsonObject();
+        params.addProperty("phoneNum", mPhoneNum);
+        params.addProperty("password", mEncryptPassword);
+        params.addProperty("code", mCode);
+
+        Response response = HttpsUtil.post(url, params);
+        Bundle data = new Bundle();
+        Message message = new Message();
+        if (response != null) {
+            data.putInt("status", response.code());
+            response.close();
+        } else {
+            data.putInt("status", -1);
+        }
+        message.what = Constant.MESSAGE_RESET_PASS_STATUS;
+        message.setData(data);
+        message.setTarget(mHandler);
+        message.sendToTarget();
+    }
+
     private enum Task {
-        CHANGE_PASSWORD, GET_USER_BY_PHONE, GET_REGISTER_CODE, ADD_USER
+        CHANGE_PASSWORD, RESET_PASSWORD, GET_USER_BY_PHONE, GET_REGISTER_CODE, ADD_USER
     }
 }

@@ -17,6 +17,7 @@ import com.feiyang.elocker.Constant;
 import com.feiyang.elocker.R;
 import com.feiyang.elocker.activity.SettingActivity;
 import com.feiyang.elocker.rest.UserRest;
+import com.feiyang.elocker.util.LoginUtil;
 
 import java.lang.ref.WeakReference;
 
@@ -36,6 +37,9 @@ public class FragmentChangePass extends Fragment implements View.OnClickListener
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        /*判断当前是否已经登录*/
+        LoginUtil.validLogin(this.getContext());
+
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_change_pass, container, false);
         mOldPass = view.findViewById(R.id.change_pass_old_pass);

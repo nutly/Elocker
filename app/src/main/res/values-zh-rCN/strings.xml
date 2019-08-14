@@ -124,4 +124,14 @@
     <string name="code_format_error">验证码全部为数字</string>
     <string name="get_verification_code_failed">获取验证码失败，请检查手机号码是否正确</string>
     <string name="user_duplicate">该手机号已经注册，请直接登录</string>
+    <string name="reset_pass">重置密码</string>
+    <string name="reset_pass_success">重置密码成功</string>
+    <string name="user_not_exsist">该用户尚未注册</string>
+    <string name="change_moblie">绑定新手机号</string>
+    <string name="new_mobile">新手机号</string>
+    <string name="input_new_mobile">请输入新手机号</string>
+    <string name="last_day">最近一天</string>
+    <string name="last_week">最近一周</string>
+    <string name="last_month">最近一月</string>
+    <string name="log">日志</string>
 </resources>

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import com.feiyang.elocker.R;
+import com.feiyang.elocker.util.LoginUtil;
 
 
 public class FragmentSettingDashboard extends Fragment implements View.OnClickListener {
@@ -23,10 +24,13 @@ public class FragmentSettingDashboard extends Fragment implements View.OnClickLi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        /*判断当前是否已经登录*/
+        LoginUtil.validLogin(this.getContext());
+
         View view = inflater.inflate(R.layout.fragment_setting, container, false);
         RelativeLayout account = view.findViewById(R.id.fragment_setting_account);
         RelativeLayout change_passwd = view.findViewById(R.id.fragment_setting_change_pass);
-        RelativeLayout setting = view.findViewById(R.id.fragment_setting_setting);
+        RelativeLayout setting = view.findViewById(R.id.fragment_setting_change_phonenum);
         RelativeLayout update = view.findViewById(R.id.fragment_setting_update);
         RelativeLayout feedback = view.findViewById(R.id.fragment_setting_feedback);
         RelativeLayout about = view.findViewById(R.id.fragment_setting_about);

@@ -18,6 +18,7 @@ import okhttp3.Response;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static com.feiyang.elocker.Constant.BASE_REQUEST_URL;
@@ -31,6 +32,7 @@ public class LockerRest extends Thread {
     private Locker mLocker;
     private Task mTask;
     private String toAccount;
+    private String mApiKey;
 
     public LockerRest(Context context) {
         super();
@@ -38,6 +40,7 @@ public class LockerRest extends Thread {
         SharedPreferences sp = context.getSharedPreferences(Constant.PROPERTY_FILE_NAME, Context.MODE_PRIVATE);
         this.mPhoneNum = sp.getString("phoneNum", "");
         this.mPassword = sp.getString("password", "");
+        this.mApiKey = sp.getString("apiKey", "");
     }
 
     public void getAllLocker(Handler handler) {
@@ -112,17 +115,21 @@ public class LockerRest extends Thread {
     }
 
     private void getLockerTask() {
-        String sign = MD5Util.md5("/locker/get" + this.mPassword);
-        String url = BASE_REQUEST_URL + "/locker/get?appid=" + this.mPhoneNum + "&sign=" + sign;
+        String token = MD5Util.md5("/locker/get" +
+                MD5Util.md5(this.mPassword + mApiKey));
+        String url = BASE_REQUEST_URL + "/locker/get";
         if (mLocker.getSerial() != null && !mLocker.getSerial().equals("")) {
-            url = url + "&serial=" + mLocker.getSerial();
+            url = url + "?serial=" + mLocker.getSerial();
         }
 
         List<Locker> lockers = new ArrayList<Locker>();
         Message message = new Message();
         Bundle data = new Bundle();
-
-        Response response = HttpsUtil.get(url);
+        HashMap<String, String> headers = new HashMap<>();
+        headers.put(Constant.APPID, this.mPhoneNum);
+        headers.put(Constant.TOKEN, token);
+        headers.put(Constant.APIKEY, this.mApiKey);
+        Response response = HttpsUtil.get(url, headers);
         if (response != null) {
             if (response.isSuccessful()) {
                 JsonParser jsonParser = new JsonParser();
@@ -161,18 +168,22 @@ public class LockerRest extends Thread {
     }
 
     private void modifyLockerDescriptionTask() {
-        String sign = MD5Util.md5("/locker/update" + this.mPassword);
+        String token = MD5Util.md5("/locker/update" +
+                MD5Util.md5(this.mPassword + this.mApiKey));
         String url = BASE_REQUEST_URL + "/locker/update";
 
         String serial = mLocker.getSerial();
         String description = mLocker.getDescription();
+
         if (serial != null && description != null) {
+            HashMap<String, String> headers = new HashMap<>();
+            headers.put(Constant.APPID, this.mPhoneNum);
+            headers.put(Constant.APIKEY, this.mApiKey);
+            headers.put(Constant.TOKEN, token);
             JsonObject params = new JsonObject();
-            params.addProperty("appid", this.mPhoneNum);
-            params.addProperty("sign", sign);
             params.addProperty("serial", serial);
             params.addProperty("description", description);
-            Response response = HttpsUtil.post(url, params);
+            Response response = HttpsUtil.post(url, params, headers);
             if (response != null) {
                 response.close();
             }
@@ -180,16 +191,19 @@ public class LockerRest extends Thread {
     }
 
     private void transferLockerTask() {
-        String sign = MD5Util.md5("/locker/transfer" + this.mPassword);
+        String token = MD5Util.md5("/locker/transfer" +
+                MD5Util.md5(this.mPassword + mApiKey));
         String url = BASE_REQUEST_URL + "/locker/transfer";
 
         if (mLocker.getSerial() != null && mLocker.getPhoneNum() != null && toAccount != null) {
+            HashMap<String, String> headers = new HashMap<>();
+            headers.put(Constant.APPID, this.mPhoneNum);
+            headers.put(Constant.APIKEY, this.mApiKey);
+            headers.put(Constant.TOKEN, token);
             JsonObject params = new JsonObject();
-            params.addProperty("appid", this.mPhoneNum);
-            params.addProperty("sign", sign);
             params.addProperty("serial", mLocker.getSerial());
             params.addProperty("toAccount", toAccount);
-            Response response = HttpsUtil.post(url, params);
+            Response response = HttpsUtil.post(url, params, headers);
             if (response != null) {
                 response.close();
             }
@@ -197,16 +211,19 @@ public class LockerRest extends Thread {
     }
 
     private void addLockerTask() {
-        String sign = MD5Util.md5("/locker/add" + this.mPassword);
+        String token = MD5Util.md5("/locker/add" +
+                MD5Util.md5(this.mPassword + mApiKey));
         String url = BASE_REQUEST_URL + "/locker/add";
         if (mLocker.getSerial() != null) {
+            HashMap<String, String> headers = new HashMap<>();
+            headers.put(Constant.APPID, this.mPhoneNum);
+            headers.put(Constant.APIKEY, this.mApiKey);
+            headers.put(Constant.TOKEN, token);
             JsonObject params = new JsonObject();
-            params.addProperty("appid", mPhoneNum);
-            params.addProperty("sign", sign);
             params.addProperty("serial", mLocker.getSerial());
             params.addProperty("description", mLocker.getDescription());
 
-            Response response = HttpsUtil.post(url, params);
+            Response response = HttpsUtil.post(url, params, headers);
             Bundle data = new Bundle();
             if (response != null) {
                 data.putInt("status", response.code());
@@ -223,19 +240,22 @@ public class LockerRest extends Thread {
     }
 
     private void deleteLockerTask() {
-        String sign = MD5Util.md5("/locker/delete" + this.mPassword);
+        String token = MD5Util.md5("/locker/delete" +
+                MD5Util.md5(this.mPassword + this.mApiKey));
         String url = BASE_REQUEST_URL + "/locker/delete";
 
         String serial = mLocker.getSerial();
         if (serial != null) {
+            HashMap<String, String> headers = new HashMap<>();
+            headers.put(Constant.APPID, this.mPhoneNum);
+            headers.put(Constant.APIKEY, this.mApiKey);
+            headers.put(Constant.TOKEN, token);
             JsonObject params = new JsonObject();
-            params.addProperty("appid", this.mPhoneNum);
-            params.addProperty("sign", sign);
             JsonArray serials = new JsonArray();
             serials.add(mLocker.getSerial());
             params.add("lockerSerials", serials);
 
-            Response response = HttpsUtil.post(url, params);
+            Response response = HttpsUtil.post(url, params, headers);
             if (response != null) {
                 response.close();
             }

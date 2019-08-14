@@ -57,7 +57,7 @@ public class LockerListActivity extends AppCompatActivity {
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this.getApplicationContext(), DividerItemDecoration.VERTICAL));
 
         //设置底部导航
-        NavigationFragment navigation = NavigationFragment.newInstance(this, R.id.navigation_in_locker_list);
+        NavigationFragment.newInstance(this, R.id.navigation_in_locker_list);
     }
 
     @Override

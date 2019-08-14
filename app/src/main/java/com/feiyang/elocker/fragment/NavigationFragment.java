@@ -16,10 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import com.feiyang.elocker.R;
-import com.feiyang.elocker.activity.AuthorizationActivity;
-import com.feiyang.elocker.activity.LockerListActivity;
-import com.feiyang.elocker.activity.SettingActivity;
-import com.feiyang.elocker.activity.UnlockActivity;
+import com.feiyang.elocker.activity.*;
 import com.feiyang.elocker.util.BottomNavigationViewHelper;
 
 
@@ -46,6 +43,9 @@ public class NavigationFragment extends Fragment {
                     break;
                 case R.id.navigation_setting:
                     intent = new Intent(context, SettingActivity.class);
+                    break;
+                case R.id.navigation_log:
+                    intent = new Intent(context, LogActivity.class);
                     break;
                 default:
                     return false;
@@ -113,6 +113,8 @@ public class NavigationFragment extends Fragment {
             mNavigation.setSelectedItemId(R.id.navigation_authorization);
         } else if (activity instanceof SettingActivity) {
             mNavigation.setSelectedItemId(R.id.navigation_setting);
+        } else if (activity instanceof LogActivity) {
+            mNavigation.setSelectedItemId(R.id.navigation_log);
         }
     }
 }

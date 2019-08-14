@@ -16,6 +16,10 @@
         android:icon="@drawable/ic_authority"
         android:title="@string/authorization" />
     <item
+        android:id="@+id/navigation_log"
+        android:icon="@drawable/log"
+        android:title="@string/log" />
+    <item
         android:id="@+id/navigation_setting"
         android:icon="@drawable/ic_settings"
         android:title="@string/setting" />

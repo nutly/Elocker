@@ -14,6 +14,7 @@ import com.feiyang.elocker.model.Authorization;
 import com.feiyang.elocker.model.Locker;
 import com.feiyang.elocker.rest.AuthorizationRest;
 import com.feiyang.elocker.scanner.Scanner;
+import com.feiyang.elocker.util.LoginUtil;
 
 import java.util.Calendar;
 import java.util.TreeSet;
@@ -33,6 +34,10 @@ public class AuthorizationEditActivity extends AppCompatActivity implements View
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        /*判断当前是否已经登录*/
+        LoginUtil.validLogin(this);
+
         setContentView(R.layout.activity_authorization_edit);
         initView();
 

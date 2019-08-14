@@ -29,6 +29,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ActionBar actionBar = getSupportActionBar();
@@ -55,7 +56,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         forgetPassTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "Reset Password", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(v.getContext(), ForgetPassActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -96,8 +98,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 switch (status) {
                     /*登录成功*/
                     case 200:
+                        String apiKey = data.getString("apiKey");
+                        LoginUtil.saveLoginInfo(context, loginActivity.mPhoneNum, loginActivity.mEncryptPassword, apiKey);
                         Intent intent = new Intent(context, UnlockActivity.class);
-                        LoginUtil.saveLoginInfo(context, loginActivity.mPhoneNum, loginActivity.mEncryptPassword);
                         loginActivity.startActivity(intent);
                         loginActivity.finish();
                         break;

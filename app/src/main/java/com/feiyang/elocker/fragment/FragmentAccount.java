@@ -13,6 +13,7 @@ import com.feiyang.elocker.Constant;
 import com.feiyang.elocker.R;
 import com.feiyang.elocker.model.User;
 import com.feiyang.elocker.rest.UserRest;
+import com.feiyang.elocker.util.LoginUtil;
 
 import java.lang.ref.WeakReference;
 
@@ -28,6 +29,9 @@ public class FragmentAccount extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        /*判断当前是否已经登录*/
+        LoginUtil.validLogin(this.getContext());
+
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_account, container, false);
         mPhoneNum = view.findViewById(R.id.fragment_account_phone);

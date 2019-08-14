@@ -17,15 +17,16 @@ import okhttp3.Response;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import static com.feiyang.elocker.Constant.BASE_REQUEST_URL;
-import static com.feiyang.elocker.Constant.MESSAGE_AUTHORIZATION_LIST;
+import static com.feiyang.elocker.Constant.*;
 
 public class AuthorizationRest extends Thread {
     private String mPhoneNum;
     private String mPassword;
+    private String mApiKey;
     private Handler mHandler;
     private Authorization mAuthorization;
     private Task mTask;
@@ -34,6 +35,7 @@ public class AuthorizationRest extends Thread {
         SharedPreferences sp = context.getSharedPreferences(Constant.PROPERTY_FILE_NAME, Context.MODE_PRIVATE);
         this.mPhoneNum = sp.getString("phoneNum", "");
         this.mPassword = sp.getString("password", "");
+        this.mApiKey = sp.getString("apiKey", "");
     }
 
     public void addAuthorization(Authorization authorization) {
@@ -77,11 +79,15 @@ public class AuthorizationRest extends Thread {
 
     private void addAuthorizationTask() {
         String url = BASE_REQUEST_URL + "/authorization/add";
-        String sign = MD5Util.md5("/authorization/add" + this.mPassword);
+        String token = MD5Util.md5("/authorization/add" +
+                MD5Util.md5(this.mPassword + this.mApiKey));
+
+        HashMap<String, String> headers = new HashMap<String, String>();
+        headers.put(APPID, this.mPhoneNum);
+        headers.put(Constant.TOKEN, token);
+        headers.put(Constant.APIKEY, this.mApiKey);
 
         JsonObject params = new JsonObject();
-        params.addProperty("appid", this.mPhoneNum);
-        params.addProperty("sign", sign);
         params.addProperty("serial", mAuthorization.getSerial());
         params.addProperty("toAccount", mAuthorization.getToAccount());
         params.addProperty("startTime", mAuthorization.getStartTime());
@@ -90,23 +96,28 @@ public class AuthorizationRest extends Thread {
         params.addProperty("weekday", mAuthorization.getWeekDay());
         params.addProperty("dailyStartTime", mAuthorization.getDailyStartTime());
         params.addProperty("dailyEndTime", mAuthorization.getDailyEndTime());
-        Response response = HttpsUtil.post(url, params);
+        Response response = HttpsUtil.post(url, params, headers);
         if (response != null) {
             response.close();
         }
     }
 
     private void getAuthorizationListTask() {
-        String sign = MD5Util.md5("/authorization/get" + this.mPassword);
-        String url = BASE_REQUEST_URL + "/authorization/get?appid=" + this.mPhoneNum + "&sign=" + sign;
+        String token = MD5Util.md5("/authorization/get" +
+                MD5Util.md5(this.mPassword + this.mApiKey));
+        String url = BASE_REQUEST_URL + "/authorization/get";
 
         Bundle data = new Bundle();
         LinkedHashMap<String, List<Authorization>> authorizationsMap = new LinkedHashMap<String, List<Authorization>>();
-        Response response = HttpsUtil.get(url);
+        HashMap<String, String> headers = new HashMap<>();
+        headers.put(APPID, this.mPhoneNum);
+        headers.put(TOKEN, token);
+        headers.put(APIKEY, this.mApiKey);
+        Response response = HttpsUtil.get(url, headers);
         if (response != null) {
             if (response.isSuccessful()) {
                 JsonParser jsonParser = new JsonParser();
-                JsonObject responseData = new JsonObject();
+                JsonObject responseData;
                 try {
                     responseData = jsonParser.parse(response.body().string()).getAsJsonObject();
                     JsonArray authorizationArray = responseData.getAsJsonArray("authorizationList");
@@ -132,24 +143,26 @@ public class AuthorizationRest extends Thread {
     }
 
     private void delAuthorizationByIdTask() {
-        String sign = MD5Util.md5("/authorization/delete" + this.mPassword);
+        String token = MD5Util.md5("/authorization/delete" +
+                MD5Util.md5(this.mPassword + this.mApiKey));
+
         String url = BASE_REQUEST_URL + "/authorization/delete";
         JsonObject id = new JsonObject();
         id.addProperty("id", mAuthorization.getId());
         id.addProperty("serial", mAuthorization.getSerial());
         JsonArray ids = new JsonArray();
         ids.add(id);
-
+        HashMap<String, String> headers = new HashMap<>();
+        headers.put(APPID, this.mPhoneNum);
+        headers.put(TOKEN, token);
+        headers.put(APIKEY, mApiKey);
         JsonObject params = new JsonObject();
-        params.addProperty("appid", this.mPhoneNum);
-        params.addProperty("sign", sign);
         params.add("ids", ids);
 
-        Response response = HttpsUtil.post(url, params);
+        Response response = HttpsUtil.post(url, params, headers);
         if (response != null) {
             response.close();
         }
-
     }
 
     private LinkedHashMap<String, List<Authorization>> groupResultByLockerName(JsonArray authorizationArray) {
