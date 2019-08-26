@@ -2,8 +2,8 @@ package com.feiyang.elocker;
 
 public class Constant {
     public final static String CURRENT_RELEASE = "1.1";
-    //public final static String BASE_REQUEST_URL = "https://180.166.27.198";
-    public final static String BASE_REQUEST_URL = "https://10.61.2.177";
+    public final static String BASE_REQUEST_URL = "https://180.166.27.198";
+    //public final static String BASE_REQUEST_URL = "https://10.61.2.177";
     //public final static String BASE_REQUEST_URL = "https://10.0.10.100";
 
     /*消息类型（Message.what）*/
@@ -17,6 +17,7 @@ public class Constant {
     public final static int MESSAGE_USER_REGISTER_STATUS = 7;
     public final static int MESSAGE_RESET_PASS_STATUS = 8;
     public final static int MESSAGE_GET_RESET_PASS_CODE_STATUS = 9;
+    public final static int MESSAGE_GET_LOG = 10;
 
     public final static String DATE_PATTERN = "yyyy-MM-dd HH:mm:ss";
     public final static String PROPERTY_FILE_NAME = "userinfo";
@@ -31,4 +32,10 @@ public class Constant {
     public final static int MAX_PHONE_NUM_LENGTH = 15;
     public final static int VERIFICATION_CODE_LENGTH = 6;
     public final static int MIN_PASSWORD_LENGTH = 6;
+
+    /*每次加载的log条目数量*/
+    public final static int LOG_PAGE_SIZE = 6;
+
+    /*登录信息有效天数，超过该日期将重新登录*/
+    public final static int LOGIN_EXPIRED_DAYS = 15;
 }

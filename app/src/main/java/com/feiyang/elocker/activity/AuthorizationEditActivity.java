@@ -187,7 +187,7 @@ public class AuthorizationEditActivity extends AppCompatActivity implements View
     public void onClick(View v) {
         Calendar calendar = Calendar.getInstance();
         DatePickerDialog datePicker;
-        final TimePickerDialog timePicker;
+        TimePickerDialog timePicker;
         switch (v.getId()) {
             case R.id.authorization_start_date:
                 datePicker = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
@@ -269,7 +269,7 @@ public class AuthorizationEditActivity extends AppCompatActivity implements View
         mEndTime = findViewById(R.id.authorization_end_date);
         mDailyStartTime = findViewById(R.id.authorization_start_time);
         mDailyEndTime = findViewById(R.id.authorization_end_time);
-        mDescription = findViewById(R.id.authorization_description);
+        mDescription = findViewById(R.id.description);
         mDailyStartTimeLayout = findViewById(R.id.authorization_start_time_layout);
         mDailyEndTimeLayout = findViewById(R.id.authorization_end_time_layout);
         mDayOptionLayout = findViewById(R.id.authrization_weekday_layout);

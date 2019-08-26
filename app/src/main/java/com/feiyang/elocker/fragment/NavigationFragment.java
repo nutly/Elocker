@@ -83,7 +83,7 @@ public class NavigationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_navigation, container, false);
-        mNavigation = (BottomNavigationView) view.findViewById(R.id.navigation);
+        mNavigation = view.findViewById(R.id.navigation);
         // 取消菜单切换动画
         BottomNavigationViewHelper.disableShiftMode(mNavigation);
         //设置选中

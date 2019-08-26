@@ -29,7 +29,7 @@
             android:paddingStart="14dp"
             android:paddingEnd="20dp"
             android:text="@string/phone"
-            android:textColor="@color/textColor"
+            android:textColor="@color/black"
             android:textSize="16sp" />
     </RelativeLayout>
 
@@ -56,7 +56,7 @@
             android:paddingStart="14dp"
             android:paddingEnd="20dp"
             android:text="@string/change_passwd"
-            android:textColor="@color/textColor"
+            android:textColor="@color/black"
             android:textSize="16sp" />
     </RelativeLayout>
 
@@ -84,7 +84,7 @@
             android:paddingTop="10dp"
             android:paddingEnd="20dp"
             android:text="@string/change_moblie"
-            android:textColor="@color/textColor"
+            android:textColor="@color/black"
             android:textSize="16sp" />
     </RelativeLayout>
 
@@ -113,7 +113,7 @@
             android:paddingTop="10dp"
             android:paddingEnd="20dp"
             android:text="@string/update"
-            android:textColor="@color/textColor"
+            android:textColor="@color/black"
             android:textSize="16sp" />
     </RelativeLayout>
 
@@ -142,7 +142,7 @@
             android:paddingTop="10dp"
             android:paddingEnd="20dp"
             android:text="@string/feedback"
-            android:textColor="@color/textColor"
+            android:textColor="@color/black"
             android:textSize="16sp" />
     </RelativeLayout>
 
@@ -171,7 +171,7 @@
             android:paddingTop="10dp"
             android:paddingEnd="20dp"
             android:text="@string/about"
-            android:textColor="@color/textColor"
+            android:textColor="@color/black"
             android:textSize="16sp" />
     </RelativeLayout>
 
@@ -200,7 +200,7 @@
             android:paddingTop="10dp"
             android:paddingEnd="20dp"
             android:text="@string/help"
-            android:textColor="@color/textColor"
+            android:textColor="@color/black"
             android:textSize="16sp" />
     </RelativeLayout>
 

@@ -121,11 +121,13 @@ public class UserRest extends Thread {
                     user.setLastLoginIp(responseData.get("lastLoginIp").getAsString());
                     user.setLastLoginTime(responseData.get("lastLoginTime").getAsString());
                     data.putSerializable("user", user);
-                    data.putInt("status", response.code());
+                    data.putInt("status", 200);
                 } catch (Exception e) {
                     Log.e("UserRest", "Failed to parse response");
                     data.putInt("status", -1);
                 }
+            } else {
+                data.putInt("status", response.code());
             }
             response.close();
         } else {

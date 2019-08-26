@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.feiyang.elocker.R;
 import com.feiyang.elocker.activity.AuthorizationEditActivity;
 import com.feiyang.elocker.activity.LockerListActivity;
+import com.feiyang.elocker.activity.LogActivity;
 import com.feiyang.elocker.activity.UnlockActivity;
 import com.feiyang.elocker.model.Locker;
 import com.feiyang.elocker.rest.LockerRest;
@@ -148,27 +149,26 @@ public class LockerRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
         @Override
         public void onClick(DialogInterface dialog, int which) {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            Intent intent;
             switch (which) {
                 case 0:
                     /*查看*/
-                    AlertDialog lockerDetail = builder
-                            .setTitle(mLockers.get(mPosition).getDescription())
+                    builder.setTitle(mLockers.get(mPosition).getDescription())
                             .setView(createLockerDetailView(context, mLockers.get(mPosition)))
-                            .create();
-                    lockerDetail.show();
+                            .create()
+                            .show();
                     //设置弹出框大小
                     //dialog.getWindow().setLayout(DensityUtil.dip2px(context,300), LinearLayout.LayoutParams.WRAP_CONTENT);
                     break;
                 case 1:
                     /*编辑*/
                     final View lockerModifyView = this.createLockerModifyView(context, mLockers.get(mPosition));
-                    AlertDialog lockerModify = builder
-                            .setTitle(mLockers.get(mPosition).getDescription())
+                    builder.setTitle(mLockers.get(mPosition).getDescription())
                             .setView(lockerModifyView)
                             .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    EditText lockerName = (EditText) lockerModifyView.findViewById(R.id.locker_modify_name);
+                                    EditText lockerName = lockerModifyView.findViewById(R.id.locker_modify_name);
                                     String lockerDescription = lockerName.getText().toString();
                                     if (lockerDescription != null && !lockerDescription.equals("")) {
                                         mLockers.get(mPosition).setDescription(lockerDescription);
@@ -179,8 +179,8 @@ public class LockerRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
                                     }
                                 }
                             })
-                            .create();
-                    lockerModify.show();
+                            .create()
+                            .show();
                     break;
                 case 2:
                     /*删除*/
@@ -192,7 +192,7 @@ public class LockerRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
                     break;
                 case 3:
                     /*授权*/
-                    Intent intent = new Intent(context, AuthorizationEditActivity.class);
+                    intent = new Intent(context, AuthorizationEditActivity.class);
                     Bundle data = new Bundle();
                     data.putSerializable("locker", mLockers.get(mPosition));
                     intent.putExtras(data);
@@ -202,8 +202,7 @@ public class LockerRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
                     /*转移*/
                     final String lockerDescription = mLockers.get(mPosition).getDescription();
                     final View lockerTransferview = createLockerTransferview(context, lockerDescription);
-                    AlertDialog lockerTransfer = builder
-                            .setTitle(lockerDescription)
+                    builder.setTitle(lockerDescription)
                             .setView(lockerTransferview)
                             .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                                 @Override
@@ -219,11 +218,19 @@ public class LockerRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
                                                 toAccount
                                         );
                                     }
-
                                 }
                             })
-                            .create();
-                    lockerTransfer.show();
+                            .create()
+                            .show();
+                    break;
+                /*查看日志*/
+                case 5:
+                    String serial = mLockers.get(mPosition).getSerial();
+                    intent = new Intent(context, LogActivity.class);
+                    intent.putExtra("serial", serial);
+                    context.startActivity(intent);
+                    break;
+                default:
                     break;
             }
         }

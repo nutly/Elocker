@@ -102,12 +102,28 @@ public class LockerListActivity extends AppCompatActivity {
             LockerListActivity lockerListActivity = this.mLockerListActivity.get();
             if (message.what == MESSAGE_lOCKER_LIST) {
                 Bundle data = message.getData();
-                if (data.containsKey("error")) {
-                    Toast.makeText(lockerListActivity.getApplicationContext(), R.string.network_error, Toast.LENGTH_LONG).show();
-                } else {
-                    lockerListActivity.mLockers.clear();
-                    lockerListActivity.mLockers.addAll((List) data.getSerializable("lockerList"));
-                    lockerListActivity.mViewAdapter.notifyDataSetChanged();
+                switch (data.getInt("status")) {
+                    case 200:
+                        lockerListActivity.mLockers.clear();
+                        lockerListActivity.mLockers.addAll((List) data.getSerializable("lockerList"));
+                        lockerListActivity.mViewAdapter.notifyDataSetChanged();
+                        break;
+                    case 401:
+                        LoginUtil.returnToLogin(lockerListActivity.getApplicationContext());
+                        break;
+                    case 404:
+                        Toast.makeText(lockerListActivity.getApplicationContext(), R.string.network_error, Toast.LENGTH_LONG).show();
+                        break;
+                    case 614:
+                        Toast.makeText(lockerListActivity.getApplicationContext(), R.string.multi_login, Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(lockerListActivity.getApplicationContext(), LoginActivity.class);
+                        lockerListActivity.startActivity(intent);
+                        break;
+                    case -1:
+                        Toast.makeText(lockerListActivity.getApplicationContext(), R.string.internal_error, Toast.LENGTH_LONG).show();
+                        break;
+                    default:
+                        break;
                 }
             }
         }

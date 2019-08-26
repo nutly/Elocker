@@ -6,7 +6,7 @@
     <color name="white">#FFFFFF</color><!--白色-->
     <color name="colorLightBlue">#2196F3</color><!--蓝色-->
     <color name="mainBgColor">#F7F7F7</color><!--浅灰色 主屏背景色-->
-    <color name="textColor">#212121</color><!--黑色 字体-->
+    <color name="black">#212121</color><!--黑色 字体-->
     <color name="transparent">#00000000</color>
     <color name="zxing_scanner_corner_color">#82F302</color>
     <color name="zxing_laser_color">#82F302</color>

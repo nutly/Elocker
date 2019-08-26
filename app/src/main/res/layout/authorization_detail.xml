@@ -126,7 +126,7 @@
         android:layout_marginBottom="45dp"
         android:paddingStart="@dimen/locker_detail_menu_item_padding"
         android:paddingEnd="@dimen/none_padding"
-        android:text="@string/authorization_description"
+        android:text="@string/description"
         android:textStyle="bold" />
 
     <TextView

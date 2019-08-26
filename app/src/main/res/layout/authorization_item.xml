@@ -78,7 +78,7 @@
         android:layout_width="0dp"
         android:layout_height="18dp"
         android:layout_marginStart="20dp"
-        android:text="@string/authorization_description"
+        android:text="@string/description"
         android:textColor="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/authorization_ic"

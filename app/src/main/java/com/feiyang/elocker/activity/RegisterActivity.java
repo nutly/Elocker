@@ -87,6 +87,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     user.setEmail(mEmail.getText().toString().trim());
                     user.setUserName(mNickName.getText().toString().trim());
                     userRest.addUser(user, mCode.getText().toString());
+
                 }
                 break;
             default:
@@ -225,7 +226,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         if (item.getItemId() == android.R.id.home) {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
-            this.onDestroy();
         }
         return true;
     }

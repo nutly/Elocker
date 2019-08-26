@@ -39,6 +39,7 @@ public class SettingActivity extends AppCompatActivity implements FragmentSettin
         mFragments.put("change_pass", new FragmentChangePass());
         mFragments.put("account", new FragmentAccount());
         mFragments.put("change_phonenum", new FragmentChangePhoneNum());
+        mFragments.put("help", new FragmentHelp());
 
 
         //设置底部导航
@@ -86,7 +87,10 @@ public class SettingActivity extends AppCompatActivity implements FragmentSettin
                 Toast.makeText(this, R.string.about, Toast.LENGTH_LONG).show();
                 break;
             case R.id.fragment_setting_help:
-                Toast.makeText(this, R.string.help, Toast.LENGTH_LONG).show();
+                transaction.replace(R.id.setting_container, mFragments.get("help"));
+                transaction.commit();
+                mActionBar.setTitle(R.string.help);
+                mActionBar.setDisplayHomeAsUpEnabled(true);
                 break;
             case R.id.login_out_btn:
                 SharedPreferences sp = this.getSharedPreferences(Constant.PROPERTY_FILE_NAME, MODE_PRIVATE);

@@ -42,8 +42,8 @@ public class LoginRest extends Thread {
     public void run() {
         String url = BASE_REQUEST_URL + "/login/login";
         HashMap<String, String> headers = new HashMap<>();
-        String userAgent = Build.VERSION.RELEASE + "#" + Build.VERSION.BASE_OS +
-                "#" + Build.MODEL + "#" + Build.BRAND + "#" + Locale.getDefault().getLanguage();
+        String userAgent = "Android " + Build.VERSION.RELEASE +
+                "," + Build.BRAND + "," + Build.MODEL + "," + Locale.getDefault().getLanguage();
         headers.put(Constant.USERAGENT, userAgent);
         headers.put(Constant.APPVERSION, Constant.CURRENT_RELEASE);
         JsonObject params = new JsonObject();

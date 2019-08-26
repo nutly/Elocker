@@ -122,16 +122,17 @@ public class AuthorizationRest extends Thread {
                     responseData = jsonParser.parse(response.body().string()).getAsJsonObject();
                     JsonArray authorizationArray = responseData.getAsJsonArray("authorizationList");
                     authorizationsMap = this.groupResultByLockerName(authorizationArray);
+                    data.putInt("status", 200);
                 } catch (Exception e) {
                     Log.e("AuthorizationRest", "Failed to parse authorization list from response");
-                    data.putInt("error", -1);
+                    data.putInt("status", -1);
                 }
             } else {
-                data.putInt("error", -1);
+                data.putInt("status", response.code());
             }
             response.close();
         } else {
-            data.putInt("error", -1);
+            data.putInt("error", 404);
         }
 
         data.putSerializable("authorizationList", (Serializable) authorizationsMap);

@@ -1,6 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="110dp">
+
+    <TextView
+        android:id="@+id/log_item_time"
+        android:layout_width="93dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="2019-08-16 00:00:00"
+        android:textAlignment="gravity"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.051"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.557" />
+
+    <TextView
+        android:id="@+id/title_serial"
+        android:layout_width="78dp"
+        android:layout_height="@dimen/log_item_height"
+        android:layout_marginStart="16dp"
+        android:text="@string/serial"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/log_item_time"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.035" />
+
+    <TextView
+        android:id="@+id/title_phone_num"
+        android:layout_width="78dp"
+        android:layout_height="@dimen/log_item_height"
+        android:layout_marginTop="8dp"
+        android:text="@string/phone"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/title_serial"
+        app:layout_constraintStart_toStartOf="@+id/title_serial"
+        app:layout_constraintTop_toBottomOf="@+id/title_serial" />
+
+    <TextView
+        android:id="@+id/title_operation"
+        android:layout_width="78dp"
+        android:layout_height="@dimen/log_item_height"
+        android:layout_marginTop="8dp"
+        android:text="@string/operation"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/title_serial"
+        app:layout_constraintStart_toStartOf="@+id/title_serial"
+        app:layout_constraintTop_toBottomOf="@+id/title_phone_num" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/log_item_height"
+        android:layout_marginTop="8dp"
+        android:text="@string/description"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/title_serial"
+        app:layout_constraintStart_toStartOf="@+id/title_serial"
+        app:layout_constraintTop_toBottomOf="@+id/title_operation" />
+
+    <TextView
+        android:id="@+id/log_item_serial"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/title_serial"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/title_serial"
+        app:layout_constraintTop_toTopOf="@+id/title_serial" />
+
+    <TextView
+        android:id="@+id/log_item_phone_num"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/title_phone_num"
+        app:layout_constraintEnd_toEndOf="@+id/log_item_serial"
+        app:layout_constraintStart_toStartOf="@+id/log_item_serial"
+        app:layout_constraintTop_toTopOf="@+id/title_phone_num" />
+
+    <TextView
+        android:id="@+id/log_item_operation"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/title_operation"
+        app:layout_constraintEnd_toEndOf="@+id/log_item_serial"
+        app:layout_constraintStart_toStartOf="@+id/log_item_serial"
+        app:layout_constraintTop_toTopOf="@+id/title_operation" />
+
+    <TextView
+        android:id="@+id/log_item_description"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView4"
+        app:layout_constraintEnd_toEndOf="@+id/log_item_serial"
+        app:layout_constraintStart_toStartOf="@+id/log_item_serial"
+        app:layout_constraintTop_toTopOf="@+id/textView4" />
 
 </android.support.constraint.ConstraintLayout>

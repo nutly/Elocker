@@ -14,7 +14,7 @@ import com.feiyang.elocker.R;
 import com.feiyang.elocker.fragment.NavigationFragment;
 import com.feiyang.elocker.model.Locker;
 import com.feiyang.elocker.model.OperationLog;
-import com.feiyang.elocker.rest.OperationLogRest;
+import com.feiyang.elocker.rest.LogRest;
 import com.feiyang.elocker.scanner.Scanner;
 import com.feiyang.elocker.util.LoginUtil;
 
@@ -93,17 +93,17 @@ public class UnlockActivity extends AppCompatActivity {
             Toast.makeText(this, R.string.open_locker_now, Toast.LENGTH_SHORT).show();
 
             /*上传日志*/
-            OperationLog operationLog = new OperationLog();
-            operationLog.setSerial(mLocker.getSerial());
-            operationLog.setPhoneNum(mLocker.getPhoneNum());
-            operationLog.setOperation(OperationLog.Operation.Open);
-            operationLog.setDescription("Open Locker");
+            OperationLog log = new OperationLog();
+            log.setSerial(mLocker.getSerial());
+            log.setPhoneNum(mLocker.getPhoneNum());
+            log.setOperation(OperationLog.Operation.Open);
+            log.setDescription(getResources().getString(R.string.log_open_locker));
 
-            OperationLogRest operationLogRest = new OperationLogRest(this, operationLog);
-            operationLogRest.addOperationLog();
+            LogRest logRest = new LogRest(this);
+            logRest.addLog(log);
 
             mLocker.setToggleTimes(mLocker.getToggleTimes() + 1);
-            mLastOpenDateTv.setText(operationLog.getsTime());
+            mLastOpenDateTv.setText(log.getsTime());
             mToggleTimesTv.setText(String.valueOf(mLocker.getToggleTimes()));
         } else {
             Toast.makeText(this, R.string.selec_locker, Toast.LENGTH_SHORT).show();

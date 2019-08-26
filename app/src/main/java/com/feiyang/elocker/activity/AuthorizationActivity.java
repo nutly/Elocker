@@ -1,5 +1,6 @@
 package com.feiyang.elocker.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -100,17 +101,34 @@ public class AuthorizationActivity extends AppCompatActivity {
 
         @Override
         public void handleMessage(Message message) {
+            Bundle data = message.getData();
             AuthorizationActivity authorizationActivity = this.mAuthorizationActivity.get();
+            Context context = authorizationActivity.getApplicationContext();
             if (message.what == MESSAGE_AUTHORIZATION_LIST) {
-                Bundle data = message.getData();
-                if (data.containsKey("error")) {
-                    Toast.makeText(authorizationActivity.getApplicationContext(), R.string.network_error, Toast.LENGTH_LONG).show();
-                } else {
-                    authorizationActivity.mAuthorizationsMap.clear();
-                    authorizationActivity.mAuthorizationsMap.putAll(
-                            (HashMap<String, List<Authorization>>) data.getSerializable("authorizationList"));
-                    authorizationActivity.mAdapter.notifyDataSetChanged();
-                    authorizationActivity.mAdapter.initSpreadState();
+                switch (data.getInt("status")) {
+                    case 200:
+                        authorizationActivity.mAuthorizationsMap.clear();
+                        authorizationActivity.mAuthorizationsMap.putAll(
+                                (HashMap<String, List<Authorization>>) data.getSerializable("authorizationList"));
+                        authorizationActivity.mAdapter.notifyDataSetChanged();
+                        authorizationActivity.mAdapter.initSpreadState();
+                        break;
+                    case 401:
+                        LoginUtil.returnToLogin(context);
+                        break;
+                    case 404:
+                        Toast.makeText(context, R.string.network_error, Toast.LENGTH_LONG).show();
+                        break;
+                    case 614:
+                        Toast.makeText(context, R.string.multi_login, Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(context, LoginActivity.class);
+                        authorizationActivity.startActivity(intent);
+                        break;
+                    case -1:
+                        Toast.makeText(context, R.string.internal_error, Toast.LENGTH_LONG).show();
+                        break;
+                    default:
+                        break;
                 }
             }
         }

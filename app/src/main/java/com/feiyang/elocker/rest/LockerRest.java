@@ -149,16 +149,17 @@ public class LockerRest extends Thread {
                         locker.setToggleTimes(lockerObject.get("toggleTimes").getAsInt());
                         lockers.add(locker);
                     }
+                    data.putInt("status", 200);
                 } catch (IOException e) {
                     Log.e("LockerRest", "Failed to parse https response data");
-                    data.putInt("error", -1);
+                    data.putInt("status", -1);
                 }
             } else {
-                data.putInt("error", -1);
+                data.putInt("status", response.code());
             }
             response.close();
         } else {
-            data.putInt("error", -1);
+            data.putInt("error", 404);
         }
         data.putSerializable("lockerList", (Serializable) lockers);
         message.what = MESSAGE_lOCKER_LIST;

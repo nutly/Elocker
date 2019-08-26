@@ -8,4 +8,5 @@
     <dimen name="list_item_height">45dp</dimen>
     <dimen name="none_padding">0dp</dimen>
     <dimen name="row_height">38dp</dimen>
+    <dimen name="log_item_height">20dp</dimen>
 </resources>

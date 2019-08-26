@@ -48,6 +48,10 @@ public class OperationLog {
         return sTime;
     }
 
+    public void setsTime(String sTime) {
+        this.sTime = sTime;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -59,14 +63,19 @@ public class OperationLog {
     public enum Operation {
         Open("Open"),
         Lock("Lock"),
-        Add_Locker("Add_Locker"),
-        Delete_Locker("Delete_Locker"),
         Modify_Locker("Modify_Locker"),
+        Delete_Locker("Delete_Locker"),
+        Add_Locker("Add_Locker"),
+        Transfer_Locker("Transfer_Locker"),
         Modify_Authorization("Modify_Authorization"),
-        Add_Authorization("Add_Authorization"),
         Delete_Authorization("Delete_Authorization"),
+        Add_Authorization("Add_Authorization"),
         Login("Login"),
-        Login_Out("Login_Out");
+        Change_Password("Change_Password"),
+        Reset_Password("Reset_Password"),
+        Add_User("Add_User"),
+        Get_Verification_Code("Get_Verification_Code"),
+        Unknown("Unknow");
 
         private String description;
 
@@ -77,6 +86,16 @@ public class OperationLog {
         @Override
         public String toString() {
             return this.description;
+        }
+
+        public static Operation from(String value) {
+            Operation operation;
+            try {
+                operation = Operation.valueOf(value);
+            } catch (Exception e) {
+                operation = Operation.Unknown;
+            }
+            return operation;
         }
     }
 }

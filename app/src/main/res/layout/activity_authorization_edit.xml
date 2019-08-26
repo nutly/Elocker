@@ -260,7 +260,7 @@
             android:buttonTint="@color/colorPrimary"
             android:checked="true"
             android:text="@string/Monday"
-            android:textColor="@color/textColor"
+            android:textColor="@color/black"
             android:textSize="14sp"
             android:theme="@style/WeekCheckBox" />
 
@@ -272,7 +272,7 @@
             android:buttonTint="@color/colorPrimary"
             android:checked="true"
             android:text="@string/Tuesday"
-            android:textColor="@color/textColor"
+            android:textColor="@color/black"
             android:textSize="14sp"
             android:theme="@style/WeekCheckBox" />
 
@@ -284,7 +284,7 @@
             android:buttonTint="@color/colorPrimary"
             android:checked="true"
             android:text="@string/Wednesday"
-            android:textColor="@color/textColor"
+            android:textColor="@color/black"
             android:textSize="14sp"
             android:theme="@style/WeekCheckBox" />
 
@@ -296,7 +296,7 @@
             android:buttonTint="@color/colorPrimary"
             android:checked="true"
             android:text="@string/Thursday"
-            android:textColor="@color/textColor"
+            android:textColor="@color/black"
             android:textSize="14sp"
             android:theme="@style/WeekCheckBox" />
 
@@ -308,7 +308,7 @@
             android:buttonTint="@color/colorPrimary"
             android:checked="true"
             android:text="@string/Friday"
-            android:textColor="@color/textColor"
+            android:textColor="@color/black"
             android:textSize="14sp"
             android:theme="@style/WeekCheckBox" />
 
@@ -320,7 +320,7 @@
             android:buttonTint="@color/colorPrimary"
             android:checked="true"
             android:text="@string/Saturday"
-            android:textColor="@color/textColor"
+            android:textColor="@color/black"
             android:textSize="14sp"
             android:theme="@style/WeekCheckBox" />
 
@@ -332,7 +332,7 @@
             android:buttonTint="@color/colorPrimary"
             android:checked="true"
             android:text="@string/Sunday"
-            android:textColor="@color/textColor"
+            android:textColor="@color/black"
             android:textSize="14sp"
             android:theme="@style/WeekCheckBox" />
     </LinearLayout>
@@ -496,17 +496,17 @@
             android:layout_height="match_parent"
             android:layout_weight="2"
             android:padding="10dp"
-            android:text="@string/authorization_description"
+            android:text="@string/description"
             android:textSize="16sp"
             android:textColor="@color/colorPrimary"
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/authorization_description"
+            android:id="@+id/description"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="4"
-            android:hint="@string/authorization_description"
+            android:hint="@string/description"
             android:inputType="text"
             android:padding="10dp"
             android:text=""

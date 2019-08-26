@@ -79,6 +79,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         LoginRest loginRest = new LoginRest(mLoginHandler);
         loginRest.login(mPhoneNum, mEncryptPassword);
+
     }
 
     private static class LoginHandler extends Handler {
@@ -100,9 +101,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     case 200:
                         String apiKey = data.getString("apiKey");
                         LoginUtil.saveLoginInfo(context, loginActivity.mPhoneNum, loginActivity.mEncryptPassword, apiKey);
+
                         Intent intent = new Intent(context, UnlockActivity.class);
                         loginActivity.startActivity(intent);
-                        loginActivity.finish();
                         break;
                     /*用户名或者密码错误*/
                     case 601:
