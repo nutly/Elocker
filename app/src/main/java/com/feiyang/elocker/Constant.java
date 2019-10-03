@@ -2,8 +2,8 @@ package com.feiyang.elocker;
 
 public class Constant {
     public final static String CURRENT_RELEASE = "1.1";
-    public final static String BASE_REQUEST_URL = "https://180.166.27.198";
-    //public final static String BASE_REQUEST_URL = "https://10.61.2.177";
+    //public final static String BASE_REQUEST_URL = "https://180.166.27.198";
+    public final static String BASE_REQUEST_URL = "https://10.61.2.177";
     //public final static String BASE_REQUEST_URL = "https://10.0.10.100";
 
     /*消息类型（Message.what）*/

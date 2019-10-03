@@ -144,4 +144,8 @@
     <string name="scroll_to_load">滑动加载更多数据</string>
     <string name="not_support_ble">您的设备不支持低功耗蓝牙</string>
     <string name="un_authorized_request">未授权访问，请重新登录</string>
+    <string name="copy_right">Copyright©2019-2029 Elocker. All rights reserved</string>
+    <string name="input_feedback">请输入您需要反馈的内容</string>
+    <string name="power_low">电池电量不足，请尽快更换</string>
+    <string name="power_too_low">电池电量严重不足，锁将保持打开状态，请立即更换电池</string>
 </resources>

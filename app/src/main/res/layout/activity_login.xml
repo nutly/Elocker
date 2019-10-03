@@ -6,127 +6,138 @@
     android:layout_height="match_parent">
 
 
-    <Button
-        android:id="@+id/activity_login_login_btn"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:backgroundTint="@color/colorLightGray"
-        android:text="@string/login"
-        android:textAllCaps="false"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/activity_login_passwd"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/activity_login_passwd"
-        app:layout_constraintTop_toBottomOf="@+id/activity_login_passwd"
-        app:layout_constraintVertical_bias="0.146" />
-
     <EditText
         android:id="@+id/activity_login_passwd"
         android:layout_width="0dp"
-        android:layout_height="54dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_height="50dp"
+        android:background="@drawable/inputbox_white"
         android:ems="10"
         android:hint="@string/input_passwd"
         android:inputType="textPassword"
-        android:paddingStart="50dp"
-        android:paddingEnd="0dp"
         android:singleLine="true"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/activity_login_password_label"
         app:layout_constraintEnd_toEndOf="@+id/activity_login_user_name"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/activity_login_user_name"
-        app:layout_constraintTop_toBottomOf="@+id/activity_login_user_name"
-        app:layout_constraintVertical_bias="0.11"
-        android:autofillHints="" />
+        app:layout_constraintTop_toTopOf="@+id/activity_login_password_label"
+        app:layout_constraintVertical_bias="0.11" />
 
     <EditText
         android:id="@+id/activity_login_user_name"
         android:layout_width="0dp"
-        android:layout_height="54dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="8dp"
-        android:ems="10"
-        android:hint="@string/input_username"
-        android:inputType="phone"
-        android:paddingStart="50dp"
-        android:paddingEnd="0dp"
-        android:singleLine="true"
-        android:textAlignment="gravity"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.205"
-        android:autofillHints="" />
-
-    <ImageView
-        android:id="@+id/ic_username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_height="50dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:contentDescription="@null"
-        app:layout_constraintBottom_toBottomOf="@+id/activity_login_user_name"
+        android:background="@drawable/inputbox_white"
+        android:ems="10"
+        android:hint="@string/input_mobile"
+        android:inputType="phone"
+        android:singleLine="true"
+        android:textAlignment="gravity"
+        app:layout_constraintBottom_toBottomOf="@+id/activity_login_acount_label"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/activity_login_user_name"
-        app:layout_constraintTop_toTopOf="@+id/activity_login_user_name"
-        app:layout_constraintVertical_bias="0.636"
-        app:srcCompat="@drawable/ic_user" />
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:contentDescription="@null"
-        app:layout_constraintBottom_toBottomOf="@+id/activity_login_passwd"
-        app:layout_constraintEnd_toEndOf="@+id/ic_username"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/ic_username"
-        app:layout_constraintTop_toBottomOf="@+id/activity_login_user_name"
-        app:layout_constraintVertical_bias="0.879"
-        app:srcCompat="@drawable/ic_passwd" />
+        app:layout_constraintStart_toEndOf="@+id/require_tag_account"
+        app:layout_constraintTop_toTopOf="@+id/activity_login_acount_label"
+        app:layout_constraintVertical_bias="0.529" />
 
     <TextView
         android:id="@+id/activity_login_register"
         android:layout_width="68dp"
         android:layout_height="24dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="28dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="128dp"
         android:text="@string/register"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guideline"
-        app:layout_constraintHorizontal_bias="0.239"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.087"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/activity_login_login_btn"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.176" />
 
     <TextView
         android:id="@+id/activity_login_forget_pass"
         android:layout_width="113dp"
         android:layout_height="24dp"
-        android:layout_marginStart="76dp"
+        android:layout_marginEnd="32dp"
         android:text="@string/forget_pass"
         app:layout_constraintBottom_toBottomOf="@+id/activity_login_register"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/activity_login_register"
         app:layout_constraintVertical_bias="0.0" />
 
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline"
+    <Button
+        android:id="@+id/activity_login_login_btn"
+        android:layout_width="395dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="76dp"
+        android:layout_marginEnd="8dp"
+        android:background="@color/colorLightGray"
+        android:text="@string/login"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_login_passwd" />
+
+    <TextView
+        android:id="@+id/activity_login_acount_label"
+        android:layout_width="80dp"
+        android:layout_height="@dimen/list_item_height"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="@string/phone"
+        android:textAlignment="gravity"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.024"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.198" />
+
+    <TextView
+        android:id="@+id/require_tag_account"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="205dp" />
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="@string/require_tag"
+        android:textAlignment="gravity"
+        app:layout_constraintBottom_toBottomOf="@+id/activity_login_acount_label"
+        app:layout_constraintEnd_toStartOf="@+id/activity_login_user_name"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/activity_login_acount_label"
+        app:layout_constraintTop_toTopOf="@+id/activity_login_acount_label"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/activity_login_password_label"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/list_item_height"
+        android:layout_marginTop="32dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="@string/password"
+        android:textAlignment="gravity"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/require_tag_account"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/activity_login_acount_label"
+        app:layout_constraintTop_toBottomOf="@+id/activity_login_acount_label" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="@string/require_tag"
+        android:textAlignment="gravity"
+        app:layout_constraintBottom_toBottomOf="@+id/activity_login_password_label"
+        app:layout_constraintEnd_toEndOf="@+id/require_tag_account"
+        app:layout_constraintStart_toStartOf="@+id/require_tag_account"
+        app:layout_constraintTop_toTopOf="@+id/activity_login_password_label"
+        app:layout_constraintVertical_bias="0.576" />
 </android.support.constraint.ConstraintLayout>

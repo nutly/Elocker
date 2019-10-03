@@ -40,7 +40,8 @@ public class SettingActivity extends AppCompatActivity implements FragmentSettin
         mFragments.put("account", new FragmentAccount());
         mFragments.put("change_phonenum", new FragmentChangePhoneNum());
         mFragments.put("help", new FragmentHelp());
-
+        mFragments.put("about", new FragmentAbout());
+        mFragments.put("feedback", new FragmentFeedback());
 
         //设置底部导航
         NavigationFragment.newInstance(this, R.id.navigation_in_setting_activity);
@@ -81,10 +82,16 @@ public class SettingActivity extends AppCompatActivity implements FragmentSettin
                 Toast.makeText(this, R.string.update, Toast.LENGTH_LONG).show();
                 break;
             case R.id.fragment_setting_feedback:
-                Toast.makeText(this, R.string.feedback, Toast.LENGTH_LONG).show();
+                transaction.replace(R.id.setting_container, mFragments.get("feedback"));
+                transaction.commit();
+                mActionBar.setTitle(R.string.feedback);
+                mActionBar.setDisplayHomeAsUpEnabled(true);
                 break;
             case R.id.fragment_setting_about:
-                Toast.makeText(this, R.string.about, Toast.LENGTH_LONG).show();
+                transaction.replace(R.id.setting_container, mFragments.get("about"));
+                transaction.commit();
+                mActionBar.setTitle(R.string.about);
+                mActionBar.setDisplayHomeAsUpEnabled(true);
                 break;
             case R.id.fragment_setting_help:
                 transaction.replace(R.id.setting_container, mFragments.get("help"));
