@@ -147,6 +147,7 @@ public class LockerRest extends Thread {
                         locker.setLastOpenTime(lockerObject.get("lastOpenTime").getAsString());
                         locker.setHwType(lockerObject.get("hwType").getAsString());
                         locker.setToggleTimes(lockerObject.get("toggleTimes").getAsInt());
+                        locker.setPak(lockerObject.get("pak").getAsString());
                         lockers.add(locker);
                     }
                     data.putInt("status", 200);
