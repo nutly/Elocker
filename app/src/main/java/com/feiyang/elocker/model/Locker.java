@@ -10,6 +10,7 @@ public class Locker implements Serializable {
     private String lastOpenTime;
     private String hwType;
     private int toggleTimes;
+    private String pak;
 
     public String getSerial() {
         return serial;
@@ -65,5 +66,13 @@ public class Locker implements Serializable {
 
     public void setToggleTimes(int toggleTimes) {
         this.toggleTimes = toggleTimes;
+    }
+
+    public String getPak() {
+        return pak;
+    }
+
+    public void setPak(String pak) {
+        this.pak = pak;
     }
 }

@@ -166,5 +166,8 @@
     <string name="input_feedback">Please input your feedback here</string>
     <string name="power_low">The battery power is low, please replace as soon as possible</string>
     <string name="power_too_low">The battery power is too low,locker will keep open.Please replace battery right now.</string>
+    <string name="error_already_started">Blutooth is scannnig now , please try later</string>
+    <string name="error_feature_not_support">Hardware does not support the scanning</string>
+    <string name="error_app_not_registered">App could not get access to bluetooth</string>
 
 </resources>

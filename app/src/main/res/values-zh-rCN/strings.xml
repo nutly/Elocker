@@ -148,4 +148,7 @@
     <string name="input_feedback">请输入您需要反馈的内容</string>
     <string name="power_low">电池电量不足，请尽快更换</string>
     <string name="power_too_low">电池电量严重不足，锁将保持打开状态，请立即更换电池</string>
+    <string name="error_already_started">蓝牙已经开始扫描，请稍后再试</string>
+    <string name="error_feature_not_support">蓝牙硬件不不支持该扫描</string>
+    <string name="error_app_not_registered">应用无法获取蓝牙</string>
 </resources>

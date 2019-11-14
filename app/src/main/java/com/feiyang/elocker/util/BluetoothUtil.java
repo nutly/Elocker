@@ -8,8 +8,8 @@ import android.bluetooth.le.ScanSettings;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Handler;
-import android.util.Log;
 import android.widget.Toast;
+import com.feiyang.elocker.Constant;
 import com.feiyang.elocker.R;
 
 import java.util.ArrayList;
@@ -26,21 +26,37 @@ public class BluetoothUtil {
     private String mMac;
     /*每个锁的密钥*/
     private String mPAK;
-    /*加密后的密文*/
-    private String mEncPass;
-    private static int MAX_SCAN_TIME = 20000; //毫秒
+    /*校验成功后默认执行开锁操作*/
+    private short mAction = 1;
+    private static short OPEN = 0;
+    private static short CLOSE = 1;
+
+    private static int MAX_SCAN_TIME = 10000; //毫秒
     /*开锁之后等待该时间自动关锁*/
-    private static int CLOSE_WAIT_TIME = 40000; //
-    private static String SERVICE_UUID = "00";
-    private static String RANDOM_KEY_UUID = "01";
-    private static String OPEN_UUID = "02";
-    private static String CLOSE_UUID = "03";
+    private static int CLOSE_WAIT_TIME = 4000;
 
     /*扫描结果回调*/
     private ScanCallback mScanCallback = new ScanCallback() {
         @Override
         public void onScanResult(int callbackType, final ScanResult result) {
             result.getDevice().connectGatt(mContext, false, mGattCallBack);
+        }
+
+        @Override
+        public void onScanFailed(int errorCode) {
+            switch (errorCode) {
+                case SCAN_FAILED_ALREADY_STARTED:
+                    Toast.makeText(mContext, R.string.error_already_started, Toast.LENGTH_LONG).show();
+                    break;
+                case SCAN_FAILED_FEATURE_UNSUPPORTED:
+                    Toast.makeText(mContext, R.string.error_feature_not_support, Toast.LENGTH_LONG).show();
+                    break;
+                case SCAN_FAILED_APPLICATION_REGISTRATION_FAILED:
+                    Toast.makeText(mContext, R.string.error_app_not_registered, Toast.LENGTH_LONG).show();
+                    break;
+                default:
+                    Toast.makeText(mContext, R.string.internal_error, Toast.LENGTH_LONG).show();
+            }
         }
     };
 
@@ -49,64 +65,67 @@ public class BluetoothUtil {
         @Override
         public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
             super.onConnectionStateChange(gatt, status, newState);
-            if (gatt != null) {
-                if (newState == BluetoothProfile.STATE_CONNECTED) {
-                    gatt.discoverServices();
-                } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
-                    gatt.close();
-                }
+            if (newState == BluetoothProfile.STATE_CONNECTED) {
+                gatt.discoverServices();
+            } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
+                gatt.close();
             }
         }
 
         @Override
         public void onServicesDiscovered(BluetoothGatt gatt, int status) {
-            if (status == BluetoothGatt.GATT_SUCCESS && gatt != null) {
-                BluetoothGattService service = gatt.getService(UUID.fromString(SERVICE_UUID));
-                if (service != null) {
-                    mCharacteristics.clear();
-                    for (BluetoothGattCharacteristic ch : service.getCharacteristics()) {
-                        Log.e("UUID", "Characteristic find: " + ch.getUuid().toString());
-                        mCharacteristics.put(ch.getUuid().toString(), ch);
+            if (status == BluetoothGatt.GATT_SUCCESS) {
+                mCharacteristics.clear();
+                for (BluetoothGattService s : gatt.getServices()) {
+                    BluetoothGattService service = gatt.getService(UUID.fromString(Constant.SERVICE_UUID));
+                    System.out.println(service == null ? "*****************" : service.getUuid() + "########################");
+                    if (s.getUuid().toString().equals(Constant.SERVICE_UUID)) {
+                        for (BluetoothGattCharacteristic ch : s.getCharacteristics()) {
+                            mCharacteristics.put(ch.getUuid().toString(), ch);
+                        }
                     }
-                    /*读取随机码*/
-                    if (mCharacteristics.containsKey(RANDOM_KEY_UUID))
-                        gatt.readCharacteristic(mCharacteristics.get(RANDOM_KEY_UUID));
-                } else {
-                    gatt.disconnect();
                 }
-            } else if (gatt != null) {
-                gatt.disconnect();
+                /*读取随机码*/
+                if (mCharacteristics.containsKey(Constant.RANDOM_KEY_CHARACT_UUID)) {
+                    gatt.readCharacteristic(mCharacteristics.get(Constant.RANDOM_KEY_CHARACT_UUID));
+                }
+            } else {
+                gatt.close();
             }
         }
 
         @Override
         public void onCharacteristicRead(final BluetoothGatt gatt,
                                          BluetoothGattCharacteristic characteristic, int status) {
-            if (status == BluetoothGatt.GATT_SUCCESS && gatt != null) {
+            if (status == BluetoothGatt.GATT_SUCCESS) {
                 String rCode = bytesToStr(characteristic.getValue());
-                mEncPass = MD5Util.md5(mMac + mPAK + rCode);
-                mCharacteristics.get(OPEN_UUID).setValue(mEncPass);
-                gatt.writeCharacteristic(mCharacteristics.get(OPEN_UUID));
-                /*如果电量充足，自动上锁*/
-                if (!isPowerLow(rCode)) {
+                /*先替换MAC地址中的冒号，计算出加密指令后取前16位*/
+                String encPass = MD5Util.md5Hex(mMac.replaceAll(":", "") + mPAK + rCode);
+                encPass = encPass.substring(0, 16);
+                /*执行关锁或者开锁操作*/
+                if (mAction == OPEN) {
+                    mCharacteristics.get(Constant.OPEN_CHARACT_UUID).setValue(hexStringToBytes(encPass));
+                    gatt.writeCharacteristic(mCharacteristics.get(Constant.OPEN_CHARACT_UUID));
+                    /*开锁成功后自动关锁*/
+                    mAction = CLOSE;
                     mHandler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            mCharacteristics.get(CLOSE_UUID).setValue(mEncPass);
-                            gatt.writeCharacteristic(mCharacteristics.get(CLOSE_UUID));
-                            gatt.disconnect();
+                            gatt.readCharacteristic(mCharacteristics.get(Constant.RANDOM_KEY_CHARACT_UUID));
                         }
                     }, CLOSE_WAIT_TIME);
+                } /*电量充足时才执行关锁操作*/ else if (mAction == CLOSE && !isPowerLow(rCode)) {
+                    mCharacteristics.get(Constant.CLOSE_CHARACT_UUID).setValue(hexStringToBytes(encPass));
+                    gatt.writeCharacteristic(mCharacteristics.get(Constant.CLOSE_CHARACT_UUID));
+                    gatt.close();
                 }
-            } else if (gatt != null) {
-                gatt.disconnect();
             }
         }
     };
 
     public BluetoothUtil(Context context, Handler handler) {
-        mContext = context;
         mHandler = handler;
+        mContext = context;
         BluetoothManager bm = (BluetoothManager) context.getSystemService(Context.BLUETOOTH_SERVICE);
         mAdapter = bm.getAdapter();
         mCharacteristics = new HashMap<>();
@@ -115,6 +134,7 @@ public class BluetoothUtil {
     public void openLocker(String mac, String pak) {
         mMac = mac;
         mPAK = pak;
+        mAction = OPEN;
         /*检查系统是否支持蓝牙*/
         if (mContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)
                 && mAdapter != null) {
@@ -152,7 +172,7 @@ public class BluetoothUtil {
         boolean isPowerLow = false;
         int status;
         try {
-            status = Integer.parseInt(rCode.substring(4, 5));
+            status = Integer.parseInt(rCode.substring(5, 6));
         } catch (Exception e) {
             status = 4;
         }
@@ -175,5 +195,21 @@ public class BluetoothUtil {
             sb.append(hex);
         }
         return sb.toString();
+    }
+
+    private byte[] hexStringToBytes(String hex) {
+        hex = hex.toUpperCase();
+        int length = hex.length() / 2;
+        byte[] b = new byte[length];
+        char[] chs = hex.toCharArray();
+        for (int i = 0; i < length; i++) {
+            b[i] = (byte) ((charToByte(chs[2 * i]) & 0xFF) << 4 |
+                    charToByte(chs[2 * i + 1]) & 0xFF);
+        }
+        return b;
+    }
+
+    private byte charToByte(char c) {
+        return (byte) "0123456789ABCDEF".indexOf(c);
     }
 }

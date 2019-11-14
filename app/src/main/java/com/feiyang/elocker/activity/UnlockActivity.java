@@ -1,7 +1,10 @@
 package com.feiyang.elocker.activity;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -16,6 +19,7 @@ import com.feiyang.elocker.model.Locker;
 import com.feiyang.elocker.model.OperationLog;
 import com.feiyang.elocker.rest.LogRest;
 import com.feiyang.elocker.scanner.Scanner;
+import com.feiyang.elocker.util.BluetoothUtil;
 import com.feiyang.elocker.util.LoginUtil;
 
 public class UnlockActivity extends AppCompatActivity {
@@ -24,6 +28,7 @@ public class UnlockActivity extends AppCompatActivity {
     private TextView mLastOpenDateTv;
     private TextView mToggleTimesTv;
     private static Locker mLocker;
+    private Handler mHandler = new Handler();
 
     /*生成首页*/
     @Override
@@ -50,6 +55,10 @@ public class UnlockActivity extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(R.string.unlock);
+
+        if (this.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            this.requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+        }
     }
 
     @Override
@@ -89,9 +98,14 @@ public class UnlockActivity extends AppCompatActivity {
     }
 
     private void openLocker() {
+        if (this.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            this.requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+            return;
+        }
         if (mLocker != null) {
             Toast.makeText(this, R.string.open_locker_now, Toast.LENGTH_SHORT).show();
-
+            BluetoothUtil ble = new BluetoothUtil(this, mHandler);
+            ble.openLocker(mLocker.getSerial(), mLocker.getPak());
             /*上传日志*/
             OperationLog log = new OperationLog();
             log.setSerial(mLocker.getSerial());
@@ -109,4 +123,5 @@ public class UnlockActivity extends AppCompatActivity {
             Toast.makeText(this, R.string.selec_locker, Toast.LENGTH_SHORT).show();
         }
     }
+
 }

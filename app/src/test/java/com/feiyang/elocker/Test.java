@@ -1,15 +1,39 @@
 package com.feiyang.elocker;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
 public class Test {
     public static void main(String[] args) {
-        SimpleDateFormat sdf = new SimpleDateFormat(Constant.DATE_PATTERN);
-        Calendar calendar = Calendar.getInstance();
-        System.out.println(sdf.format(calendar.getTime()));
-        calendar.add(Calendar.DAY_OF_MONTH, -1);
-        System.out.println(sdf.format(calendar.getTime()));
-        Calendar calendar1 = Calendar.getInstance();
+
+        System.out.println(isPowerLow("e6ba10"));
+    }
+
+    private static boolean isPowerLow(String rCode) {
+        boolean isPowerLow = false;
+        int status;
+        try {
+            status = Integer.parseInt(rCode.substring(5, 6));
+        } catch (Exception e) {
+            status = 4;
+        }
+        if (status == 0) {
+            isPowerLow = true;
+        } else if (status == 1) {
+        }
+        return isPowerLow;
+    }
+
+    private static byte[] hexStringToBytes(String hex) {
+        hex = hex.toUpperCase();
+        int length = hex.length() / 2;
+        byte[] b = new byte[length];
+        char[] hc = hex.toCharArray();
+        for (int i = 0; i < length; i++) {
+            b[i] = (byte) ((charToByte(hc[2 * i]) & 0xFF) << 4 |
+                    charToByte(hc[2 * i + 1]) & 0xFF);
+        }
+        return b;
+    }
+
+    private static byte charToByte(char c) {
+        return (byte) "0123456789ABCDEF".indexOf(c);
     }
 }

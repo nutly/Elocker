@@ -2,8 +2,8 @@ package com.feiyang.elocker;
 
 public class Constant {
     public final static String CURRENT_RELEASE = "1.1";
-    //public final static String BASE_REQUEST_URL = "https://180.166.27.198";
-    public final static String BASE_REQUEST_URL = "https://10.61.2.177";
+    public final static String BASE_REQUEST_URL = "https://180.166.27.198";
+    //public final static String BASE_REQUEST_URL = "https://10.61.2.177";
     //public final static String BASE_REQUEST_URL = "https://10.0.10.100";
 
     /*消息类型（Message.what）*/
@@ -38,4 +38,10 @@ public class Constant {
 
     /*登录信息有效天数，超过该日期将重新登录*/
     public final static int LOGIN_EXPIRED_DAYS = 15;
+
+    /*UUID*/
+    public final static String SERVICE_UUID = "0000fff0-0000-1000-8000-00805f9b34fb";
+    public final static String RANDOM_KEY_CHARACT_UUID = "0000fff1-0000-1000-8000-00805f9b34fb";
+    public final static String OPEN_CHARACT_UUID = "0000fff2-0000-1000-8000-00805f9b34fb";
+    public final static String CLOSE_CHARACT_UUID = "0000fff3-0000-1000-8000-00805f9b34fb";
 }
