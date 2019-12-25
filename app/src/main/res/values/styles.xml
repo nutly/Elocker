@@ -3,8 +3,17 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item><!--蓝色-->
         <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="buttonBarPositiveButtonStyle">@style/AlertButtonStyle</item>
+        <item name="buttonBarNegativeButtonStyle">@style/AlertButtonStyle</item>
     </style>
 
+    <!--对话框样式-->
+    <style name="AlertButtonStyle">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:background">@null</item>
+    </style>
+
+    <!--周复选框样式-->
     <style name="WeekCheckBox" parent="@android:style/Widget.Material.CompoundButton.CheckBox">
         <item name="android:colorControlActivated">@color/colorPrimary</item>
         <item name="android:colorControlNormal">@color/colorPrimary</item>
